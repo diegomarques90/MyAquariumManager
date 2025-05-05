@@ -1,4 +1,6 @@
-﻿namespace MyAquariumManager.Core.Entities
+﻿using MyAquariumManager.Core.Constants;
+
+namespace MyAquariumManager.Core.Entities
 {
     public abstract class BaseEntity
     {
@@ -12,13 +14,20 @@
         public string UsuarioExclusao { get; private set; }
         public bool Ativo { get; private set; }
 
-        public BaseEntity(string codigoConta, string usuarioCriacao)
+        public BaseEntity(string usuarioCriacao)
         {
             Id = Guid.NewGuid();
-            CodigoConta = codigoConta;
             DataCriacao = DateTime.UtcNow;
             UsuarioCriacao = usuarioCriacao;
             Ativo = true;
+        }
+
+        public void SetarCodigoConta(string codigoConta)
+        {
+            if (string.IsNullOrEmpty(codigoConta))
+                throw new InvalidOperationException("Falha ao setar o código da conta. Não pode ser nulo ou vazio.");
+
+            CodigoConta = codigoConta;
         }
 
         public void Inativar(string usuarioExclusao)

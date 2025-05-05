@@ -2,12 +2,21 @@
 
 namespace MyAquariumManager.Core.Entities
 {
-    public class Conta(string codigoConta, string usuarioCriacao, string nome, Guid usuarioId) : BaseEntity(codigoConta, usuarioCriacao)
+    public class Conta(string usuarioCriacao) : BaseEntity(usuarioCriacao)
     {
-        public string Nome { get; private set; } = nome;
-        public Guid UsuarioId { get; private set; } = usuarioId;
+        public string Nome { get; private set; }
+        public Guid UsuarioId { get; private set; } 
 
-        public string CriarCodigoConta(Guid usuarioId) => $"{usuarioId}@{BaseConstants.SUFIXO_MAM}";
+        public string CriarCodigoConta()
+        {
+            if (string.IsNullOrEmpty(UsuarioCriacao))
+                throw new InvalidOperationException("Não foi possível criar o código da conta. UsuarioCriacao não pode ser nulo ou vazio.");
+
+            if (Id == Guid.Empty)
+                throw new InvalidOperationException("Não foi possível criar o código da conta. O Id da conta informado não é válido.");
+
+           return $"{Id}@{BaseConstants.SUFIXO_MY_AQUARIUM_MANAGER}";
+        }
 
         public override void Validar()
         {
