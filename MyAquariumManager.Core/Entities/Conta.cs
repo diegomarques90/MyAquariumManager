@@ -1,10 +1,15 @@
 ﻿using MyAquariumManager.Core.Constants;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyAquariumManager.Core.Entities
 {
     public class Conta(string usuarioCriacao) : BaseEntity(usuarioCriacao)
     {
+        [Required(ErrorMessage = "O nome da conta é obrigatório.")]
+        [MaxLength(200, ErrorMessage = "O nome da conta deve conter no máximo 200 caracteres.")]
         public string Nome { get; private set; }
+
+        [Required(ErrorMessage = "A conta deve possuir um usuário vinculado. UsuarioId não informado.")]
         public Guid UsuarioId { get; private set; } 
 
         public string CriarCodigoConta()
@@ -22,5 +27,7 @@ namespace MyAquariumManager.Core.Entities
         {
             throw new NotImplementedException();
         }
+
+        public virtual Usuario Usuario { get; set; }
     }
 }
