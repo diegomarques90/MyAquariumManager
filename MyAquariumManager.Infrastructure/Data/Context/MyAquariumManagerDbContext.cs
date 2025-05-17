@@ -7,10 +7,21 @@ namespace MyAquariumManager.Infrastructure.Data.Context
 {
     public class MyAquariumManagerDbContext : IdentityDbContext<Usuario>
     {
+        public DbSet<Conta> Conta { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Animal> Animal { get; set; }
+        public DbSet<HistoricoDeManutencao> HistoricoDeManutencao { get; set; }
+        public DbSet<ItemNoTanque> ItemNoTanque { get; set; }
+        public DbSet<Pedra> Pedra { get; set; }
+        public DbSet<Planta> Planta { get; set; }
+        public DbSet<Produto> Produto { get; set; }
+        public DbSet<Substrato> Substrato { get; set; }
+        public DbSet<Tanque> Tanque { get; set; }
+        public DbSet<UnidadeDeMedida> UnidadeDeMedidas { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             CriarIdentityRoles(builder);
-
             base.OnModelCreating(builder);
         }
 
