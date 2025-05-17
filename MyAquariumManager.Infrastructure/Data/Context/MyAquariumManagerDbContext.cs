@@ -5,7 +5,7 @@ using MyAquariumManager.Core.Entities;
 
 namespace MyAquariumManager.Infrastructure.Data.Context
 {
-    public class MyAquariumManagerDbContext : IdentityDbContext<Usuario>
+    public class MyAquariumManagerDbContext(DbContextOptions<MyAquariumManagerDbContext> options) : IdentityDbContext<Usuario>(options)
     {
         public DbSet<Conta> Conta { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
