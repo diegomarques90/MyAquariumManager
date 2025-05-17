@@ -25,7 +25,7 @@ namespace MyAquariumManager.Core.Entities
         [Range(0.01, double.MaxValue, ErrorMessage = "A litragem deve ser maior que zero.")]
         public double Litragem { get; private set; }
 
-        [MaxLength(200, ErrorMessage = "O local de aquisição deve conter no máximo 200 caracteres.")]
+        [MaxLength(100, ErrorMessage = "O local de aquisição deve conter no máximo 100 caracteres.")]
         public string? LocalAquisicao { get; private set; }
 
         public DateTime? DataAquisicao { get; private set; }
