@@ -55,12 +55,12 @@ Para uma configuração rápida do ambiente de banco de dados, utilizaremos o Do
 1.  **Baixar a Imagem do SQL Server:**
     * No terminal, execute o seguinte comando para baixar a imagem do SQL Server:
         ```bash
-        docker pull [mcr.microsoft.com/mssql/server](https://mcr.microsoft.com/mssql/server)
+        docker pull mcr.microsoft.com/mssql/server
         ```
 2.  **Criar e Executar um Contêiner do SQL Server:**
     * Após o download da imagem, você pode criar e iniciar um contêiner com o seguinte comando:
         ```bash
-        docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=SuaSenhaForte123!" -p 1433:1433 --name sqlserver -d [mcr.microsoft.com/mssql/server](https://mcr.microsoft.com/mssql/server)
+        docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=SuaSenhaForte123!" -p 1433:1433 --name sqlserver -d mcr.microsoft.com/mssql/server
         ```
     * **Importante:** Substitua `SuaSenhaForte123!` por uma senha forte de sua escolha.
     * O parâmetro `-p 1433:1433` expõe a porta padrão do SQL Server para que você possa se conectar a ele do seu host.
