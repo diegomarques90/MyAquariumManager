@@ -17,7 +17,7 @@ namespace MyAquariumManager.Infrastructure.Data.Context
         public DbSet<Produto> Produto { get; set; }
         public DbSet<Substrato> Substrato { get; set; }
         public DbSet<Tanque> Tanque { get; set; }
-        public DbSet<UnidadeDeMedida> UnidadeDeMedidas { get; set; }
+        public DbSet<UnidadeDeMedida> UnidadeDeMedida { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

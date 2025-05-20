@@ -10,7 +10,7 @@ namespace MyAquariumManager.Core.Entities
         public string Nome { get; private set; }
 
         [Required(ErrorMessage = "A conta deve possuir um usuário vinculado. UsuarioId não informado.")]
-        public Guid UsuarioId { get; private set; } 
+        public string UsuarioId { get; private set; } 
 
         public string CriarCodigoConta()
         {
