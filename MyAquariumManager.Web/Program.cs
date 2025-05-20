@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using MyAquariumManager.Infrastructure.Data.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var connectionString = builder.Configuration.GetConnectionString("MAMConnection");
+builder.Services.AddDbContext<MyAquariumManagerDbContext>(options => options.UseSqlServer(connectionString));
+
 
 var app = builder.Build();
 
