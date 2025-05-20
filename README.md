@@ -133,17 +133,17 @@ Reverte ou aplica migrations para atingir um estado específico do banco de dado
 ```PowerShell
 Update-Database -Project MyAquariumManager.Infrastructure -TargetMigration <NomeDaMigration>
 ```
-*Substitua <NomeDaMigration> pelo nome exato da migration para a qual você deseja reverter.
-*Para reverter todas as migrations e deixar o banco vazio (removendo todas as tabelas criadas pelo EF Core):
+* Substitua <NomeDaMigration> pelo nome exato da migration para a qual você deseja reverter.
+* Para reverter todas as migrations e deixar o banco vazio (removendo todas as tabelas criadas pelo EF Core):
 ```PoweShell
 Update-Database -Project MyAquariumManager.Infrastructure -TargetMigration 0
 ```
 ---
 ## ▶️ Como Rodar a Aplicação
-* 1. Abra a solução MyAquariumManager.sln no Visual Studio.
-* 2. Certifique-se de que o projeto MyAquariumManager.Web esteja definido como o projeto de inicialização.
-* 3. Pressione F5 para compilar e executar a aplicação.
-	*Alternativamente, você pode navegar até a pasta MyAquariumManager.Web no terminal e executar:
+1. * Abra a solução MyAquariumManager.sln no Visual Studio.
+2. * Certifique-se de que o projeto MyAquariumManager.Web esteja definido como o projeto de inicialização.
+3. * Pressione F5 para compilar e executar a aplicação.
+	* Alternativamente, você pode navegar até a pasta MyAquariumManager.Web no terminal e executar:
 ```Bash
 dotnet run
 ```
@@ -159,5 +159,5 @@ Este projeto segue o padrão de Arquitetura de Cebola (ou Hexagonal), promovendo
 ## 📧 Contato
 Se tiver dúvidas ou sugestões, sinta-se à vontade para entrar em contato:
 
-[Diego Marques]
+Diego Marques
 [https://www.linkedin.com/in/diegomarquesaraujo/]
