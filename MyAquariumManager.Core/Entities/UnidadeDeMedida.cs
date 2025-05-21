@@ -12,9 +12,9 @@ namespace MyAquariumManager.Core.Entities
         [MaxLength(2, ErrorMessage = "A abreviação da unidade de medida deve conter no máximo 2 caracteres.")]
         public string Abreviacao { get; private set; }
 
-        public override void Validar()
+        protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
-            throw new NotImplementedException();
+            return (true, new List<string>());
         }
     }
 }

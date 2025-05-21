@@ -23,9 +23,9 @@ namespace MyAquariumManager.Core.Entities
            return $"{Id}@{BaseConstants.SUFIXO_MY_AQUARIUM_MANAGER}";
         }
 
-        public override void Validar()
+        protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
-            throw new NotImplementedException();
+            return (true, new List<string>());
         }
 
         public virtual Usuario Usuario { get; set; }

@@ -44,9 +44,9 @@ namespace MyAquariumManager.Core.Entities
         [MaxLength(800, ErrorMessage = "As informações adicionais devem conter no máximo 800 caracteres.")]
         public string? InformacoesAdicionais { get; private set; }
 
-        public override void Validar()
+        protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
-            throw new NotImplementedException();
+            return (true, new List<string>());
         }
 
         public void CalcularLitragem()

@@ -24,9 +24,9 @@ namespace MyAquariumManager.Core.Entities
         public virtual UnidadeDeMedida UnidadeDeMedida { get; set; }
 
 
-        public override void Validar()
+        protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
-            throw new NotImplementedException();
+            return (true, new List<string>());
         }
     }
 }

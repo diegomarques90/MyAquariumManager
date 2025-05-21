@@ -18,9 +18,9 @@ namespace MyAquariumManager.Core.Entities
         [Required(ErrorMessage = "A identificação do tanque é obrigatória.")]
         public Guid TanqueId { get; private set; }
 
-        public override void Validar()
+        protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
-            throw new NotImplementedException();
+            return (true, new List<string>());
         }
     }
 }
