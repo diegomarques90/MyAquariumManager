@@ -143,7 +143,7 @@ Update-Database -Project MyAquariumManager.Infrastructure -TargetMigration 0
 1. Abra a solução MyAquariumManager.sln no Visual Studio.
 2. Certifique-se de que o projeto MyAquariumManager.Web esteja definido como o projeto de inicialização.
 3. Pressione F5 para compilar e executar a aplicação.
-* Alternativamente, você pode navegar até a pasta MyAquariumManager.Web no terminal e executar:
+   * Alternativamente, você pode navegar até a pasta MyAquariumManager.Web no terminal e executar:
 ```Bash
 dotnet run
 ```
