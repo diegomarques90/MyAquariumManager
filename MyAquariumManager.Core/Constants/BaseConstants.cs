@@ -27,5 +27,8 @@
         public const string FAIXA_TEMPERATURA_QUANTIDADE_MAXIMA = "A faixa de temperatura deve conter no máximo 100 caracteres.";
         public const string TIPO_AGUA_OBRIGATORIO = "O tipo de água é obrigatório.";
         public const string INFORMACOES_ADICIONAIS_QUANTIDADE_MAXIMA = "As informações adicionais devem conter no máximo 800 caracteres.";
+        public const string CONTA_USUARIO_NAO_VINCULADO = "A conta deve possuir um usuário vinculado. UsuarioId não informado.";
+        public const string FALHA_CRIACAO_CODIGO_CONTA_USUARIO_CRIACAO_NULO = "Não foi possível criar o código da conta. UsuarioCriacao não pode ser nulo ou vazio.";
+        public const string FALHA_CRIACAO_CODIGO_CONTA_ID_INVALIDO = "Não foi possível criar o código da conta. O Id da conta informado não é válido.";
     }
 }
