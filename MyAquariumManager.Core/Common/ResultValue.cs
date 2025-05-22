@@ -2,7 +2,7 @@
 
 namespace MyAquariumManager.Core.Common
 {
-    public class ResultValue<TValue> : Result
+    public class Result<TValue> : Result
     {
         private readonly TValue _value;
 
@@ -17,15 +17,19 @@ namespace MyAquariumManager.Core.Common
             }
         }
 
-        protected ResultValue(TValue value, bool isSuccess, HttpCode httpCode, List<string> errors) : base(isSuccess, httpCode, errors)
+        protected Result(TValue value, bool isSuccess, HttpCode httpCode, List<string> errors) : base(isSuccess, httpCode, errors)
         {
             _value = value;
         }
 
-        public static ResultValue<TValue> Success(TValue value, HttpCode httpCode) => new ResultValue<TValue>(value, true, httpCode, []);
+        public static Result<TValue> Success(TValue value) => new Result<TValue>(value, true, HttpCode.OK, []);
 
-        public new static ResultValue<TValue> Failure(HttpCode httpCode, List<string> errors) => new ResultValue<TValue>(default, false, httpCode, errors);
+        public static Result<TValue> Success(TValue value, HttpCode httpCode) => new Result<TValue>(value, true, httpCode, []);
 
-        public new static ResultValue<TValue> Failure(HttpCode httpCode, string error) => new ResultValue<TValue>(default, false, httpCode, [error]);
+        public new static Result<TValue> Failure (List<string> errors) => new Result<TValue>(default, false, HttpCode.BadRequest, errors);
+
+        public new static Result<TValue> Failure(HttpCode httpCode, List<string> errors) => new Result<TValue>(default, false, httpCode, errors);
+
+        public new static Result<TValue> Failure(HttpCode httpCode, string error) => new Result<TValue>(default, false, httpCode, [error]);
     }
 }
