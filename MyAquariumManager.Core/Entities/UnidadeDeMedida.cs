@@ -1,20 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MyAquariumManager.Core.Constants;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyAquariumManager.Core.Entities
 {
     public class UnidadeDeMedida(string usuarioCriacao) : BaseEntity(usuarioCriacao)
     {
-        [Required(ErrorMessage = "O nome da unidade de medida é obrigatório.")]
-        [MaxLength(200, ErrorMessage = "O nome da unidade de medida deve conter no máximo 200 caracteres.")]
+        [Required(ErrorMessage = BaseConstants.NOME_OBRIGATORIO)]
+        [MaxLength(200, ErrorMessage = BaseConstants.NOME_QUANTIDADE_MAXIMA)]
         public string Nome { get; private set; }
 
-        [Required(ErrorMessage = "A abreviação da unidade de medida é obrigatória.")]
-        [MaxLength(2, ErrorMessage = "A abreviação da unidade de medida deve conter no máximo 2 caracteres.")]
+        [Required(ErrorMessage = BaseConstants.ABREVIACAO_OBRIGATORIA)]
+        [MaxLength(2, ErrorMessage = BaseConstants.ABREVIACAO_QUANTIDADE_MAXIMA)]
         public string Abreviacao { get; private set; }
 
         protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
-            return (true, new List<string>());
+            var errors = new List<string>();
+            return (errors.Count == 0, errors);
         }
     }
 }

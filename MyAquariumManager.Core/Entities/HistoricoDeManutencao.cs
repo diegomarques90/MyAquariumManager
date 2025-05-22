@@ -1,26 +1,28 @@
-﻿using MyAquariumManager.Core.Enums;
+﻿using MyAquariumManager.Core.Constants;
+using MyAquariumManager.Core.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyAquariumManager.Core.Entities
 {
     public class HistoricoDeManutencao(string usuarioCriacao) : BaseEntity(usuarioCriacao)
     {
-        [Required(ErrorMessage = "A descrição é obrigatória.")]
-        [MaxLength(800, ErrorMessage = "A descrição deve conter no máximo 800 caracteres.")]
+        [Required(ErrorMessage = BaseConstants.DESCRICAO_OBRIGATORIA)]
+        [MaxLength(800, ErrorMessage = BaseConstants.DESCRICAO_QUANTIDADE_MAXIMA)]
         public string Descricao { get; private set; }
 
-        [Required(ErrorMessage = "A data da manutenção é obrigatória.")]
+        [Required(ErrorMessage = BaseConstants.DATA_MANUTENCAO_OBRIGATORIA)]
         public DateTime DataManutencao { get; private set; }
 
-        [Required(ErrorMessage = "O tipo de manutenção é obrigatório.")]
+        [Required(ErrorMessage = BaseConstants.TIPO_MANUTENCAO_OBRIGATORIO)]
         public TipoDeManutencao TipoDeManutencao { get; private set; }
 
-        [Required(ErrorMessage = "A identificação do tanque é obrigatória.")]
+        [Required]
         public Guid TanqueId { get; private set; }
 
         protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
-            return (true, new List<string>());
+            var errors = new List<string>();
+            return (errors.Count == 0, errors);
         }
     }
 }

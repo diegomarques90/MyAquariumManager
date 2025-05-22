@@ -33,10 +33,10 @@ namespace MyAquariumManager.Core.Entities
         [Required(ErrorMessage = BaseConstants.ANIMAL_CARDUMEIRO_OBRIGATORIO)]
         public bool Cardumeiro { get; private set; }
 
-        [Required(ErrorMessage = BaseConstants.QUANTIDADE_MINIMA_OBRIGATORIA)]
+        [Required(ErrorMessage = BaseConstants.QUANTIDADE_MINIMA_IDEAL_OBRIGATORIA)]
         public int QuantidadeMinima { get; private set; }
 
-        [Required(ErrorMessage = BaseConstants.LITRAGEM_MINIMA_OBRIGATORIA)]
+        [Required(ErrorMessage = BaseConstants.LITRAGEM_MINIMA_IDEAL_OBRIGATORIA)]
         public int LitragemMinima { get; private set; }
 
         [Required(ErrorMessage = BaseConstants.TIPO_ALIMENTACAO_OBRIGATORIO)]
@@ -56,7 +56,8 @@ namespace MyAquariumManager.Core.Entities
 
         protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
-            return (true, new List<string>());
+            var errors = new List<string>();
+            return (errors.Count == 0, errors);
         }
     }
 }

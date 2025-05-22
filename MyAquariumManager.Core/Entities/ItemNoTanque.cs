@@ -1,4 +1,5 @@
-﻿using MyAquariumManager.Core.Enums;
+﻿using MyAquariumManager.Core.Constants;
+using MyAquariumManager.Core.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyAquariumManager.Core.Entities
@@ -11,11 +12,11 @@ namespace MyAquariumManager.Core.Entities
         [Required]
         public Guid TanqueId { get; private set; }
 
-        [Required(ErrorMessage = "A quantidade é obrigatória.")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "A quantidade deve ser maior que zero.")]
+        [Required(ErrorMessage = BaseConstants.QUANTIDADE_OBRIGATORIA)]
+        [Range(0.01, double.MaxValue, ErrorMessage = BaseConstants.QUANTIDADE_MINIMA_OBRIGATORIA)]
         public double Quantidade { get; private set; }
 
-        [Required(ErrorMessage = "O tipo do item é obrigatório.")]
+        [Required(ErrorMessage = BaseConstants.TIPO_ITEM_OBRIGATORIO)]
         public TipoDoItem TipoDoItem { get; private set; }
 
         [Required]
@@ -26,7 +27,8 @@ namespace MyAquariumManager.Core.Entities
 
         protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
-            return (true, new List<string>());
+            var errors = new List<string>();
+            return (errors.Count == 0, errors);
         }
     }
 }
