@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAquariumManager.Web", "MyAquariumManager.Web\MyAquariumManager.Web.csproj", "{BD6E5B1C-BC21-400B-9417-DF45676AEE2A}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAquariumManager.Infrastructure", "MyAquariumManager.Infrastructure\MyAquariumManager.Infrastructure.csproj", "{F0B8A986-EA2E-4829-B343-339D86EDFBE8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAquariumManager.Application", "MyAquariumManager.Application\MyAquariumManager.Application.csproj", "{D63DA0A3-54BE-48EE-A760-5A7A87084473}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAquariumManager.Tests.Unit", "MyAquariumManager.Tests.Unit\MyAquariumManager.Tests.Unit.csproj", "{2A4A224F-09B8-493E-BD2B-770D8ACD427E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D63DA0A3-54BE-48EE-A760-5A7A87084473}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D63DA0A3-54BE-48EE-A760-5A7A87084473}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D63DA0A3-54BE-48EE-A760-5A7A87084473}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A4A224F-09B8-493E-BD2B-770D8ACD427E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A4A224F-09B8-493E-BD2B-770D8ACD427E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A4A224F-09B8-493E-BD2B-770D8ACD427E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A4A224F-09B8-493E-BD2B-770D8ACD427E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
