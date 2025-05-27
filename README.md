@@ -151,21 +151,21 @@ dotnet run
 ## 🏛️ Estrutura do Projeto (Arquitetura de Cebola)
 Este projeto segue o padrão de Arquitetura de Cebola (ou Hexagonal), promovendo uma clara separação de responsabilidades e facilitando a manutenibilidade e testabilidade.
 
-* MyAquariumManager.Core (Domínio): Contém as entidades de domínio (BaseEntity, Usuario, Conta e entre outras).
-* MyAquariumManager.Application (Aplicação): Orquestra as operações da aplicação, define casos de uso e interfaces para serviços de domínio e infraestrutura. Lida com DTOs e mapeamentos.
-* MyAquariumManager.Infrastructure (Infraestrutura): Implementa os contratos (interfaces) definidos na camada de Aplicação. Contém as implementações de persistência (EF Core, Contexto, Migrations), serviços externos e entre outros.
-* MyAquariumManager.Web (Apresentação): É a interface do usuário (ASP.NET Core MVC). Contém Controllers, Views, ViewModels e toda a configuração da aplicação web.
-* MyAquariumManager.Tests.Unit (Testes de Unidade): Contém os testes automatizados para as unidades de código das camadas Core, Application e Infrastructure, garantindo a validação do comportamento do domínio e da lógica de negócio. A estrutura de pastas dentro deste projeto espelha as camadas da solução para melhor organização.
+* **MyAquariumManager.Core (Domínio):** Contém as entidades de domínio (BaseEntity, Usuario, Conta e entre outras).
+* **MyAquariumManager.Application (Aplicação):** Orquestra as operações da aplicação, define casos de uso e interfaces para serviços de domínio e infraestrutura. Lida com DTOs e mapeamentos.
+* **MyAquariumManager.Infrastructure (Infraestrutura):** Implementa os contratos (interfaces) definidos na camada de Aplicação. Contém as implementações de persistência (EF Core, Contexto, Migrations), serviços externos e entre outros.
+* **MyAquariumManager.Web (Apresentação):** É a interface do usuário (ASP.NET Core MVC). Contém Controllers, Views, ViewModels e toda a configuração da aplicação web.
+* **MyAquariumManager.Tests.Unit (Testes de Unidade):** Contém os testes automatizados para as unidades de código das camadas Core, Application e Infrastructure, garantindo a validação do comportamento do domínio e da lógica de negócio. A estrutura de pastas dentro deste projeto espelha as camadas da solução para melhor organização.
 
 ## 🧪 Testes Automatizados
 Este projeto inclui uma suíte de testes de unidade para garantir a qualidade e o comportamento esperado das diferentes camadas da aplicação.
 
-# MyAquariumManager.Tests.Unit
-* Propósito: Contém os testes de unidade focados em validar unidades isoladas de código, como entidades de domínio, serviços de aplicação e classes de infraestrutura.
-* Tecnologia: Utiliza o framework xUnit.
-* Organização: Os testes são organizados em pastas que espelham a estrutura das camadas do projeto (ex: Core/Entities, Application/Services), facilitando a navegação e o entendimento.
+### MyAquariumManager.Tests.Unit
+* **Propósito:** Contém os testes de unidade focados em validar unidades isoladas de código, como entidades de domínio, serviços de aplicação e classes de infraestrutura.
+* **Tecnologia:** Utiliza o framework xUnit.
+* **Organização:** Os testes são organizados em pastas que espelham a estrutura das camadas do projeto (ex: Core/Entities, Application/Services), facilitando a navegação e o entendimento.
 
-# Como Rodar os Testes:
+### Como Rodar os Testes:
 
 1. No Visual Studio, vá em Test > Test Explorer (ou Ctrl+E, T).
 2. No Test Explorer, clique em Run All Tests para executar todos os testes da solução.
