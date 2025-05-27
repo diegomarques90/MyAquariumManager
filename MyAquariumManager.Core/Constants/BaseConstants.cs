@@ -65,5 +65,11 @@
         public const string DOCUMENTO_OBRIGATORIO = "O documento é obrigatório.";
         public const string DOCUMENTO_QUANTIDADE_MAXIMA = "O documento deve conter no máxumo 14 caracteres.";
         public const string TIPO_USUARIO_OBRIGATORIO = "O tipo do usuário é obrigatório.";
+        public const string QUANTIDADE_MINIMA_IDEAL_MAIOR_QUE_ZERO = "A quantidade mínima ideal deve ser maior que zero.";
+        public const string LITRAGEM_MINIMA_IDEAL_MAIOR_QUE_ZERO = "A litragem mínima ideal deve ser maior que zero.";
+        public const string TIPO_ALIMENTACAO_INVALIDO = "O Tipo de alimentação informado é inválido.";
+        public const string TIPO_AGUA_INVALIDO = "O Tipo de água informado é inválido.";
+        public const string DEVE_CONTER_APENAS_UM_ERRO = "A lista de erros deve conter apenas um erro.";
+        public const string DEVE_CONTER_MAIS_DE_UM_ERRO = "A lista de erros deve conter mais de um erro.";
     }
 }

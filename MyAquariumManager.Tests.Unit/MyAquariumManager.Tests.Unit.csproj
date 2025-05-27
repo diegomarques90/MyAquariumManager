@@ -25,4 +25,8 @@
     <Folder Include="Infrastructure\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MyAquariumManager.Core\MyAquariumManager.Core.csproj" />
+  </ItemGroup>
+
 </Project>

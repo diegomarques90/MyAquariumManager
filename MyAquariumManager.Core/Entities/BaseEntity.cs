@@ -10,7 +10,7 @@ namespace MyAquariumManager.Core.Entities
 
         [Required(ErrorMessage = BaseConstants.CODIGO_CONTA_OBRIGATORIO)]
         [MaxLength(200, ErrorMessage = BaseConstants.CODIGO_CONTA_QUANTIDADE_MAXIMA)]
-        public string CodigoConta { get; private set; }
+        public string CodigoConta { get; set; }
 
         [Required(ErrorMessage = BaseConstants.DATA_CRIACAO_OBRIGATORIA)]
         public DateTime DataCriacao { get; private set; }
@@ -39,8 +39,6 @@ namespace MyAquariumManager.Core.Entities
             UsuarioCriacao = usuarioCriacao;
             Ativo = true;
         }
-
-        public void SetarCodigoConta(string codigoConta) => CodigoConta = codigoConta;
         
         public void Inativar(string usuarioExclusao)
         {
