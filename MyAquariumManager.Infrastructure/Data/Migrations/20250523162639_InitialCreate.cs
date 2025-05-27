@@ -140,7 +140,7 @@ namespace MyAquariumManager.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    NomeCientifico = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    NomeCientifico = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     LocalAquisicao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     DataAquisicao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FaixaDeTamanho = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -442,8 +442,8 @@ namespace MyAquariumManager.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1468f380-2a88-4e04-aa9b-e66000c8d167", null, "administrador", "ADMINISTRADOR" },
-                    { "f476184e-3926-4706-bf17-6da9c7627132", null, "convidado", "CONVIDADO" }
+                    { "1518fb70-4074-41e8-8b84-606c00b6a380", null, "administrador", "ADMINISTRADOR" },
+                    { "fcf4125d-f6b6-4638-b6d5-08ca5448ad34", null, "convidado", "CONVIDADO" }
                 });
 
             migrationBuilder.CreateIndex(

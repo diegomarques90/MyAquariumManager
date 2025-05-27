@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Core.Enums;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,11 +7,11 @@ namespace MyAquariumManager.Core.Entities
 {
     public class Usuario : IdentityUser
     {
-        [Required(ErrorMessage = "O documento é obrigatório.")]
-        [MaxLength(14, ErrorMessage = "O documento deve conter no máximo 14 caracteres.")]
+        [Required(ErrorMessage = BaseConstants.DOCUMENTO_OBRIGATORIO)]
+        [MaxLength(14, ErrorMessage = BaseConstants.DOCUMENTO_QUANTIDADE_MAXIMA)]
         public string Documento { get; private set; }
 
-        [Required(ErrorMessage = "O tipo do usuário é obrigatório.")]
+        [Required(ErrorMessage = BaseConstants.TIPO_USUARIO_OBRIGATORIO)]
         public TipoUsuario TipoUsuario { get; private set; }
     }
 }

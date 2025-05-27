@@ -5,31 +5,31 @@ namespace MyAquariumManager.Core.Entities
 {
     public abstract class BaseEntity
     {
-        [Required(ErrorMessage = "O Id não pode ser nulo ou vazio.")]
+        [Required(ErrorMessage = BaseConstants.ID_NAO_PODE_SER_NULO_OU_VAZIO)]
         public Guid Id { get; private set; }
 
-        [Required(ErrorMessage = "O código da conta não pode ser nulo ou vazio.")]
-        [MaxLength(200, ErrorMessage = "O código da conta deve conter no máximo 200 caracteres.")]
-        public string CodigoConta { get; private set; }
+        [Required(ErrorMessage = BaseConstants.CODIGO_CONTA_OBRIGATORIO)]
+        [MaxLength(200, ErrorMessage = BaseConstants.CODIGO_CONTA_QUANTIDADE_MAXIMA)]
+        public string CodigoConta { get; set; }
 
-        [Required(ErrorMessage = "A data de criação não pode ser nula.")]
+        [Required(ErrorMessage = BaseConstants.DATA_CRIACAO_OBRIGATORIA)]
         public DateTime DataCriacao { get; private set; }
 
-        [Required(ErrorMessage = "O usuário de criação não pode ser nulo ou vazio.")]
-        [MaxLength(200, ErrorMessage = "O usuário de criação deve conter no máximo 200 caracteres.")]
+        [Required(ErrorMessage = BaseConstants.USUARIO_CRIACAO_OBRIGATORIO)]
+        [MaxLength(200, ErrorMessage = BaseConstants.USUARIO_CRIACAO_QUANTIDADE_MAXIMA)]
         public string UsuarioCriacao { get; private set; }
 
         public DateTime? DataAlteracao { get; private set; }
 
-        [MaxLength(200, ErrorMessage = "O usuário de alteração deve conter no máximo 200 caracteres.")]
+        [MaxLength(200, ErrorMessage = BaseConstants.USUARIO_ALTERACAO_QUANTIDADE_MAXIMA)]
         public string UsuarioAlteracao { get; private set; }
 
         public DateTime? DataExclusao { get; private set; }
 
-        [MaxLength(200, ErrorMessage = "O usuário de exclusão deve conter no máximo 200 caracteres.")]
+        [MaxLength(200, ErrorMessage = BaseConstants.USUARIO_EXCLUSAO_QUANTIDADE_MAXIMA)]
         public string UsuarioExclusao { get; private set; }
 
-        [Required(ErrorMessage = "É obrigatório informar se o registro está ativo.")]
+        [Required]
         public bool Ativo { get; private set; }
 
         public BaseEntity(string usuarioCriacao)
@@ -39,15 +39,7 @@ namespace MyAquariumManager.Core.Entities
             UsuarioCriacao = usuarioCriacao;
             Ativo = true;
         }
-
-        public void SetarCodigoConta(string codigoConta)
-        {
-            if (string.IsNullOrEmpty(codigoConta))
-                throw new InvalidOperationException("Falha ao setar o código da conta. Não pode ser nulo ou vazio.");
-
-            CodigoConta = codigoConta;
-        }
-
+        
         public void Inativar(string usuarioExclusao)
         {
             DataExclusao = DateTime.UtcNow;
@@ -61,6 +53,36 @@ namespace MyAquariumManager.Core.Entities
             UsuarioAlteracao = usuarioAlteracao;
         }
 
-        public abstract void Validar();
+        public (bool IsValid, List<string> Errors) Validate()
+        {
+            var errors = new List<string>();
+
+            ValidatePropertiesDataAnnotations(errors);
+
+            var (derivedIsValid, derivedErrors) = ValidateSpecificRules();
+            
+            if (!derivedIsValid)
+                errors.AddRange(derivedErrors);
+
+            return (errors.Count == 0, errors);
+        }
+
+        private void ValidatePropertiesDataAnnotations(List<string> errors)
+        {
+            var validationContext = new ValidationContext(this, serviceProvider: null, items: null);
+            var validationResults = new List<ValidationResult>();
+
+            if (!Validator.TryValidateObject(instance: this, validationContext: validationContext, validationResults: validationResults, validateAllProperties: true))
+            {
+                foreach (var result in validationResults)
+                {
+                    if (result is null || result.ErrorMessage is null)
+                        continue;
+                    errors.Add(result.ErrorMessage);
+                }
+            }
+        }
+
+        protected abstract (bool IsValid, List<string> Errors) ValidateSpecificRules();
     }
 }

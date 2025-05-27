@@ -1,23 +1,25 @@
-﻿using MyAquariumManager.Core.Enums;
+﻿using MyAquariumManager.Core.Constants;
+using MyAquariumManager.Core.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyAquariumManager.Core.Entities
 {
     public class Pedra(string usuarioCriacao) : BaseEntity(usuarioCriacao)
     {
-        [Required(ErrorMessage = "O nome da pedra é obrigatório.")]
-        [MaxLength(200, ErrorMessage = "O nome da pedra deve conter no máximo 200 caracteres.")]
+        [Required(ErrorMessage = BaseConstants.NOME_OBRIGATORIO)]
+        [MaxLength(200, ErrorMessage = BaseConstants.NOME_QUANTIDADE_MAXIMA)]
         public string Nome { get; private set; }
 
-        [MaxLength(200, ErrorMessage = "O nome científico da pedra deve conter no máximo 200 caracteres.")]
+        [MaxLength(200, ErrorMessage = BaseConstants.NOME_CIENTIFICO_QUANTIDADE_MAXIMA)]
         public string NomeCientifico { get; private set; }
 
-        [Required(ErrorMessage = "O tipo de efeito no PH é obrigatório.")]
+        [Required(ErrorMessage = BaseConstants.TIPO_EFEITO_PH_OBRIGATORIO)]
         public TipoDeEfeitoNoPH TipoDeEfeitoNoPH { get; private set; }
 
-        public override void Validar()
+        protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
-            throw new NotImplementedException();
+            var errors = new List<string>();
+            return (errors.Count == 0, errors);
         }
     }
 }

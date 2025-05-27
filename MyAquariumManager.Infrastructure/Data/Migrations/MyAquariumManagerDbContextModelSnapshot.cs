@@ -51,13 +51,13 @@ namespace MyAquariumManager.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1468f380-2a88-4e04-aa9b-e66000c8d167",
+                            Id = "1518fb70-4074-41e8-8b84-606c00b6a380",
                             Name = "administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "f476184e-3926-4706-bf17-6da9c7627132",
+                            Id = "fcf4125d-f6b6-4638-b6d5-08ca5448ad34",
                             Name = "convidado",
                             NormalizedName = "CONVIDADO"
                         });
@@ -561,7 +561,6 @@ namespace MyAquariumManager.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("NomeCientifico")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 

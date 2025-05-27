@@ -1,56 +1,57 @@
-﻿using MyAquariumManager.Core.Enums;
+﻿using MyAquariumManager.Core.Constants;
+using MyAquariumManager.Core.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyAquariumManager.Core.Entities
 {
     public class Planta(string usuarioCriacao) : BaseEntity(usuarioCriacao)
     {
-        [Required(ErrorMessage = "O nome da planta é obrigatório.")]
-        [MaxLength(200, ErrorMessage = "O nome da planta deve conter no máximo 200 caracteres.")]
+        [Required(ErrorMessage = BaseConstants.NOME_OBRIGATORIO)]
+        [MaxLength(200, ErrorMessage = BaseConstants.NOME_QUANTIDADE_MAXIMA)]
         public string Nome { get; private set; }
 
-        [Required(ErrorMessage = "O nome científico da planta é obrigatório.")]
-        [MaxLength(200, ErrorMessage = "O nome científico da planta deve conter no máximo 200 caracteres.")]
+        [MaxLength(200, ErrorMessage = BaseConstants.NOME_CIENTIFICO_QUANTIDADE_MAXIMA)]
         public string? NomeCientifico { get; private set; }
 
-        [MaxLength(100, ErrorMessage = "O local da aquisição deve conter no máximo 100 caracteres.")]
+        [MaxLength(100, ErrorMessage = BaseConstants.LOCAL_AQUISICAO_QUANTIDADE_MAXIMA)]
         public string? LocalAquisicao { get; private set; }
 
         public DateTime? DataAquisicao { get; private set; }
 
-        [MaxLength(100, ErrorMessage = "A faixa de tamanho deve conter no máximo 100 caracteres.")]
+        [MaxLength(100, ErrorMessage = BaseConstants.FAIXA_TAMANHO_QUANTIDADE_MAXIMA)]
         public string? FaixaDeTamanho { get; private set; }
 
-        [Required(ErrorMessage = "O tipo de crescimento é obrigatório.")]
+        [Required(ErrorMessage = BaseConstants.TIPO_CRESCIMENTO_OBRIGATORIO)]
         public TipoDeCrescimento TipoDeCrescimento { get; private set; }
 
-        [Required(ErrorMessage = "O tipo de iluminação é obrigatório")]
+        [Required(ErrorMessage = BaseConstants.TIPO_ILUMINACAO_OBRIGATORIO)]
         public TipoDeIluminacao TipoDeIluminacao { get; private set; }
 
-        [MaxLength(100, ErrorMessage = "A faixa do PH deve conter no máximo 100 caracteres.")]
+        [MaxLength(100, ErrorMessage = BaseConstants.FAIXA_PH_QUANTIDADE_MAXIMA)]
         public string? FaixaDoPH { get; private set; }
 
-        [MaxLength(100, ErrorMessage = "A faixa de temperatura deve conter no máximo 100 caracteres.")]
+        [MaxLength(100, ErrorMessage = BaseConstants.FAIXA_TEMPERATURA_QUANTIDADE_MAXIMA)]
         public string? FaixaDeTemperatura { get; private set; }
 
-        [MaxLength(100, ErrorMessage = "O nível de cultivo deve conter no máximo 100 caracteres.")]
+        [MaxLength(100, ErrorMessage = BaseConstants.NIVEL_CULTIVO_QUANTIDADE_MAXIMA)]
         public string? NivelDeCutivo { get; private set; }
 
-        [Required(ErrorMessage = "O tipo de plantio é obrigatório.")]
+        [Required(ErrorMessage = BaseConstants.TIPO_PLANTIO_OBRIGATORIO)]
         public TipoDePlantio TipoDePlantio { get; private set; }
 
-        [MaxLength(100, ErrorMessage = "A forma de reprodução deve conter no máximo 100 caracteres")]
+        [MaxLength(100, ErrorMessage = BaseConstants.FORMA_REPRODUCAO_QUANTIDADE_MAXIMA)]
         public string? FormaDeReproducao { get; private set; }
 
-        [Required(ErrorMessage = "É obrigatório informar se a planta exige CO2.")]
+        [Required]
         public bool ExigeCO2 { get; private set; }
 
-        [MaxLength(800, ErrorMessage = "As informações adicionais devem conter no máximo 800 caracteres.")]
+        [MaxLength(800, ErrorMessage = BaseConstants.INFORMACOES_ADICIONAIS_QUANTIDADE_MAXIMA)]
         public string? InformacoesAdicionais { get; private set; }
 
-        public override void Validar()
+        protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
-            throw new NotImplementedException();
+            var errors = new List<string>();
+            return (errors.Count == 0, errors);
         }
     }
 }

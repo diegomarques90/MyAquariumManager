@@ -1,61 +1,72 @@
-﻿using MyAquariumManager.Core.Enums;
+﻿using MyAquariumManager.Core.Constants;
+using MyAquariumManager.Core.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyAquariumManager.Core.Entities
 {
     public class Animal(string usuarioCriacao) : BaseEntity(usuarioCriacao)
     {
-        [Required(ErrorMessage = "O nome do animal é obrigatório.")]
-        [MaxLength(200, ErrorMessage = "O nome do animal deve conter no máximo 200 caracteres.")]
-        public string Nome { get; private set; }
+        [MaxLength(200, ErrorMessage = BaseConstants.NOME_QUANTIDADE_MAXIMA)]
+        [Required(ErrorMessage = BaseConstants.NOME_OBRIGATORIO)]
+        public string Nome { get; set; }
 
-        [MaxLength(200, ErrorMessage = "O nome científico do animal deve conter no máximo 200 caracteres.")]
-        public string? NomeCientifico { get; private set; }
+        [MaxLength(200, ErrorMessage = BaseConstants.NOME_CIENTIFICO_QUANTIDADE_MAXIMA)]
+        public string? NomeCientifico { get; set; }
 
-        [MaxLength(100, ErrorMessage = "O local da aquisição deve conter no máximo 100 caracteres.")]
-        public string? LocalAquisicao { get; private set; }
+        [MaxLength(100, ErrorMessage = BaseConstants.LOCAL_AQUISICAO_QUANTIDADE_MAXIMA)]
+        public string? LocalAquisicao { get; set; }
 
         public DateTime? DataAquisicao { get; set; }
 
-        [MaxLength(100, ErrorMessage = "A espécie do animal deve conter no máximo 100 caracteres.")]
-        public string? Especie { get; private set; }
+        [MaxLength(100, ErrorMessage = BaseConstants.ESPECIE_QUANTIDADE_MAXIMA)]
+        public string? Especie { get; set; }
 
-        [MaxLength(100, ErrorMessage = "A faixa do PH deve conter no máximo 100 caracteres.")]
-        public string? FaixaDoPH { get; private set; }
+        [MaxLength(100, ErrorMessage = BaseConstants.FAIXA_PH_QUANTIDADE_MAXIMA)]
+        public string? FaixaDoPH { get; set; }
 
-        [MaxLength(100, ErrorMessage = "A origem do animal deve conter no máximo 100 caracteres.")]
-        public string? Origem { get; private set; }
+        [MaxLength(100, ErrorMessage = BaseConstants.ORIGEM_QUANTIDADE_MAXIMA)]
+        public string? Origem { get; set; }
 
-        [MaxLength(100, ErrorMessage = "O comportamento do animal deve conter no máximo 100 caracteres.")]
-        public string? Comportamento { get; private set; }
+        [MaxLength(100, ErrorMessage = BaseConstants.COMPORTAMENTO_QUANTIDADE_MAXIMA)]
+        public string? Comportamento { get; set; }
 
-        [Required(ErrorMessage = "É obrigatório informar se o animal é cardumeiro.")]
-        public bool Cardumeiro { get; private set; }
+        [Required(ErrorMessage = BaseConstants.ANIMAL_CARDUMEIRO_OBRIGATORIO)]
+        public bool Cardumeiro { get; set; }
 
-        [Required(ErrorMessage = "A quantidade mínima ideal é obrigatória.")]
-        public int QuantidadeMinima { get; private set; }
+        [Required(ErrorMessage = BaseConstants.QUANTIDADE_MINIMA_IDEAL_OBRIGATORIA)]
+        [Range(1, int.MaxValue, ErrorMessage = BaseConstants.QUANTIDADE_MINIMA_IDEAL_MAIOR_QUE_ZERO)]
+        public int QuantidadeMinima { get; set; }
 
-        [Required(ErrorMessage = "A litragem mínima ideal é obrigatória.")]
-        public int LitragemMinima { get; private set; }
+        [Required(ErrorMessage = BaseConstants.LITRAGEM_MINIMA_IDEAL_OBRIGATORIA)]
+        [Range(1, int.MaxValue, ErrorMessage = BaseConstants.LITRAGEM_MINIMA_IDEAL_MAIOR_QUE_ZERO)]
+        public int LitragemMinima { get; set; }
 
-        [Required(ErrorMessage = "O tipo de alimentação é obrigatório.")]
-        public TipoDeAlimentacao TipoDeAlimentacao { get; private set; }
+        [Required(ErrorMessage = BaseConstants.TIPO_ALIMENTACAO_OBRIGATORIO)]
+        public TipoDeAlimentacao TipoDeAlimentacao { get;  set; }
 
-        [MaxLength(100, ErrorMessage = "A faixa de tamanho deve conter no máximo 100 caracteres.")]
-        public string? FaixaDeTamanho { get; private set; }
+        [MaxLength(100, ErrorMessage = BaseConstants.FAIXA_TAMANHO_QUANTIDADE_MAXIMA)]
+        public string? FaixaDeTamanho { get; set; }
 
-        [MaxLength(100, ErrorMessage = "A faixa de temperatura deve conter no máximo 100 caracteres.")]
-        public string? FaixaDeTemperatura { get; private set; }
+        [MaxLength(100, ErrorMessage = BaseConstants.FAIXA_TEMPERATURA_QUANTIDADE_MAXIMA)]
+        public string? FaixaDeTemperatura { get; set; }
 
-        [Required(ErrorMessage = "O tipo de água é obrigatório.")]
-        public TipoDeAgua TipoDeAgua { get; private set; }
+        [Required(ErrorMessage = BaseConstants.TIPO_AGUA_OBRIGATORIO)]
+        public TipoDeAgua TipoDeAgua { get; set; }
 
-        [MaxLength(800, ErrorMessage = "As informações adicionais devem conter no máximo 800 caracteres.")]
-        public string? InformacoesAdicionais { get; private set; }
+        [MaxLength(800, ErrorMessage = BaseConstants.INFORMACOES_ADICIONAIS_QUANTIDADE_MAXIMA)]
+        public string? InformacoesAdicionais { get; set; }
 
-        public override void Validar()
+        protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
-            throw new NotImplementedException();
+            var errors = new List<string>();
+
+            if (!Enum.IsDefined(typeof(TipoDeAlimentacao), TipoDeAlimentacao))
+                errors.Add(BaseConstants.TIPO_ALIMENTACAO_INVALIDO);
+
+            if (!Enum.IsDefined(typeof(TipoDeAgua), TipoDeAgua))
+                errors.Add(BaseConstants.TIPO_AGUA_INVALIDO);
+
+            return (errors.Count == 0, errors);
         }
     }
 }
