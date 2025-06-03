@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MyAquariumManager.Application\MyAquariumManager.Application.csproj" />
     <ProjectReference Include="..\MyAquariumManager.Infrastructure\MyAquariumManager.Infrastructure.csproj" />
   </ItemGroup>
 

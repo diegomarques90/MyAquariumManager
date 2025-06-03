@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MyAquariumManager.Application.Mappers;
 using MyAquariumManager.Core.Interfaces.Repositories;
 using MyAquariumManager.Infrastructure.Data.Context;
 using MyAquariumManager.Infrastructure.Data.Repositories;
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<MyAquariumManagerDbContext>(options => options.Use
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 
+
+builder.Services.AddAutoMapper(typeof(AnimalProfile).Assembly);
 
 var app = builder.Build();
 
