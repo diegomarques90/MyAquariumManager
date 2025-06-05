@@ -71,5 +71,6 @@
         public const string TIPO_AGUA_INVALIDO = "O Tipo de água informado é inválido.";
         public const string DEVE_CONTER_APENAS_UM_ERRO = "A lista de erros deve conter apenas um erro.";
         public const string DEVE_CONTER_MAIS_DE_UM_ERRO = "A lista de erros deve conter mais de um erro.";
+        public const string DATA_AQUISICAO_NAO_PODE_SER_FUTURA = "A data de aquisição não pode ser futura";
     }
 }

@@ -345,5 +345,22 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
             Assert.Contains(BaseConstants.LITRAGEM_MINIMA_IDEAL_MAIOR_QUE_ZERO, Errors, StringComparer.OrdinalIgnoreCase);
             Assert.Contains(BaseConstants.TIPO_ALIMENTACAO_INVALIDO, Errors, StringComparer.OrdinalIgnoreCase);
         }
+
+        [Fact]
+        public void CriarAnimal_DeveRetornarErro_QuandoDataAquisicaoForFutura()
+        {
+            var builder = new AnimalBuilder()
+                .ComTodosOsDadosValidos()
+                .ComDataAquisicaoFutura();
+
+            var animal = builder.Build();
+
+            var (IsValid, Errors) = animal.Validate();
+
+            Assert.False(IsValid, "O animal não deve ser válido quando a data de aquisição é futura");
+            Assert.NotEmpty(Errors);
+            Assert.True(Errors.Count == 1, BaseConstants.DEVE_CONTER_APENAS_UM_ERRO);
+            Assert.Contains(BaseConstants.DATA_AQUISICAO_NAO_PODE_SER_FUTURA, Errors, StringComparer.OrdinalIgnoreCase);
+        }
     }
 }

@@ -66,6 +66,12 @@ namespace MyAquariumManager.Core.Entities
             if (!Enum.IsDefined(typeof(TipoDeAgua), TipoDeAgua))
                 errors.Add(BaseConstants.TIPO_AGUA_INVALIDO);
 
+            if (DataAquisicao.HasValue)
+            {
+                if (DataAquisicao.Value > DateTime.UtcNow)
+                    errors.Add(BaseConstants.DATA_AQUISICAO_NAO_PODE_SER_FUTURA);
+            }
+
             return (errors.Count == 0, errors);
         }
     }

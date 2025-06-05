@@ -128,6 +128,12 @@ namespace MyAquariumManager.Tests.Unit.Builders
             return this;
         }
 
+        public AnimalBuilder ComDataAquisicaoFutura()
+        {
+            _animal.DataAquisicao = DateTime.Now.AddDays(14);
+            return this;
+        }
+
         public Animal Build() => _animal;
 
         private static string ObterCodigoConta()
