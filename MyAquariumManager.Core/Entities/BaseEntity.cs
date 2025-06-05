@@ -47,10 +47,9 @@ namespace MyAquariumManager.Core.Entities
             Ativo = false;
         }
 
-        public void Atualizar(string usuarioAlteracao)
+        public void Atualizar()
         {
             DataAlteracao = DateTime.UtcNow;
-            UsuarioAlteracao = usuarioAlteracao;
         }
 
         public (bool IsValid, List<string> Errors) Validate()
