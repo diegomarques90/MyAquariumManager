@@ -16,6 +16,7 @@ O projeto nasce depois da realização do curso de ASP.NET Core MVC da plataform
 * **SQL Server:** Banco de dados relacional.
 * **Docker:** Para um ambiente de desenvolvimento isolado e fácil de configurar.
 * **Arquitetura de Cebola:** Para uma separação clara de responsabilidades, facilitando a testabilidade e manutenção do código.
+* **FluentValidation:** Para validação de modelos de entrada (DTOs/ViewModels) na camada web, garantindo a integridade dos dados antes do processamento.
 * **xUnit:** Framework de testes de unidade para C#.
 * **AutoMapper:** Para automatizar o mapeamento entre objetos (DTOs, Entidades e ViewModels).
 ---

@@ -1,8 +1,11 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using MyAquariumManager.Application.Mappers;
 using MyAquariumManager.Core.Interfaces.Repositories;
 using MyAquariumManager.Infrastructure.Data.Context;
 using MyAquariumManager.Infrastructure.Data.Repositories;
+using MyAquariumManager.Web.Filters;
+using MyAquariumManager.Web.Validators.Animal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +20,13 @@ builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 
 
 builder.Services.AddAutoMapper(typeof(AnimalProfile).Assembly);
+
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationActionFilter>();
+});
+
+builder.Services.AddValidatorsFromAssemblyContaining<CriarAnimalDtoValidator>();
 
 var app = builder.Build();
 

@@ -18,6 +18,10 @@ namespace MyAquariumManager.Core.Common
 
         public static Result Success(HttpCode httpCode) => new Result(true, httpCode, []);
 
+        public static Result Success() => new Result(true, HttpCode.NoContent, []);
+
+        public static Result Failure(List<string> errors) => new Result(false, HttpCode.InternalServerError, errors);
+
         public static Result Failure(HttpCode httpCode, List<string> errors) => new Result(false, httpCode, errors);
 
         public static Result Failure(HttpCode httpCode, string error) => new Result(false, httpCode, [error]);

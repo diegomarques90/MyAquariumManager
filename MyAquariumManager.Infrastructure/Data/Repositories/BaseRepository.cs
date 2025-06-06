@@ -14,9 +14,9 @@ namespace MyAquariumManager.Infrastructure.Data.Repositories
             await _context.Set<T>().AddAsync(entity);
         }
 
-        public async Task UpdateAsync(T entity, string usuarioAlteracao)
+        public async Task UpdateAsync(T entity)
         {
-            entity.Atualizar(usuarioAlteracao);
+            entity.Atualizar();
             _context.Set<T>().Update(entity);
         }
 

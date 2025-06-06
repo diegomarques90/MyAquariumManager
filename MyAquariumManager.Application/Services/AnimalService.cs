@@ -14,9 +14,33 @@ namespace MyAquariumManager.Application.Services
         private readonly IMapper _mapper = mapper;
         private readonly IAnimalRepository _animalRepository = animalRepository;
 
-        public Task<Result<AnimalDto>> AtualizarAnimalAsync(AtualizarAnimalDto model)
+        public async Task<Result<AnimalDto>> AtualizarAnimalAsync(AtualizarAnimalDto model)
         {
-            throw new NotImplementedException();
+            var animal = _mapper.Map<Animal>(model);
+
+            var (isValid, errors) = animal.Validate();
+
+            if (!isValid)
+                return Result<AnimalDto>.Failure(errors);
+
+            try
+            {
+                await _animalRepository.UpdateAsync(animal);
+                await _animalRepository.SaveChangesAsync();
+
+                var animalDto = _mapper.Map<AnimalDto>(animal);
+                return Result<AnimalDto>.Success(animalDto, HttpCode.OK);
+            }
+            catch (DbUpdateException dbEx)
+            {
+                Console.WriteLine($"Erro ao persistir dados na atualização do animal: {dbEx.Message}");
+                return Result<AnimalDto>.Failure(["Erro de persistência atualizar o animal. Tente novamente mais tarde."]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao atualizar animais: {ex.Message}");
+                return Result<AnimalDto>.Failure([$"Ocorreu um erro inesperado ao atualizar o animal: {ex.Message}"]);
+            }
         }
 
         public async Task<Result<AnimalDto>> CadastrarAnimalAsync(CriarAnimalDto model)
@@ -48,19 +72,71 @@ namespace MyAquariumManager.Application.Services
             }
         }
 
-        public Task<Result> ExcluirAnimalAsync(Guid id, string usuarioExclusao)
+        public async Task<Result> ExcluirAnimalAsync(Guid id, string usuarioExclusao)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _animalRepository.DeleteAsync(id, usuarioExclusao);
+                await _animalRepository.SaveChangesAsync();
+
+                return Result.Success();
+            }
+            catch (DbUpdateException dbEx)
+            {
+                Console.WriteLine($"Erro ao persistir dados na exclusão de animais: {dbEx.Message}");
+                return Result.Failure(["Erro de persistência ao excluir o animal. Tente novamente mais tarde."]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao excluir animais: {ex.Message}");
+                return Result.Failure([$"Ocorreu um erro inesperado ao excluir o animal: {ex.Message}"]);
+            }
         }
 
-        public Task<Result<List<AnimalDto>>> ObterAnimaisAsync()
+        public async Task<Result<List<AnimalDto>>> ObterAnimaisAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var animais = await _animalRepository.GetAllAsync();
+                var animalDtos = _mapper.Map<List<AnimalDto>>(animais);
+
+                return Result<List<AnimalDto>>.Success(animalDtos);
+            }
+            catch (DbUpdateException dbEx)
+            {
+                Console.WriteLine($"Erro de persistência ao obter a lista de todos os animais: {dbEx.Message}");
+                return Result<List<AnimalDto>>.Failure(["Erro de persistência ao obter a lista de todos os animais. Tente novamente mais tarde."]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao obter a lista de todos os animais: {ex.Message}");
+                return Result<List<AnimalDto>>.Failure([$"Ocorreu um erro inesperado ao obter a lista de todos os animais: {ex.Message}"]);
+            }
+
         }
 
-        public Task<Result<AnimalDto>> ObterAnimalPorIdAsync(Guid id)
+        public async Task<Result<AnimalDto>> ObterAnimalPorIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var animal = await _animalRepository.GetByIdAsync(id);
+                
+                if (animal == null)
+                    return Result<AnimalDto>.Failure(["Animal não encontrado."]);
+
+                var animalDto = _mapper.Map<AnimalDto>(animal);
+                return Result<AnimalDto>.Success(animalDto);
+            }
+            catch (DbUpdateException dbEx)
+            {
+                Console.WriteLine($"Erro de persistência ao obter o animal: {dbEx.Message}");
+                return Result<AnimalDto>.Failure(["Erro de persistência ao obter o animal. Tente novamente mais tarde."]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao obter o animal: {ex.Message}");
+                return Result<AnimalDto>.Failure([$"Ocorreu um erro inesperado ao obter o animal: {ex.Message}"]);
+            }
         }
     }
 }
