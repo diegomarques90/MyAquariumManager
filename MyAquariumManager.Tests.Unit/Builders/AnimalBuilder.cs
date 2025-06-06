@@ -21,7 +21,7 @@ namespace MyAquariumManager.Tests.Unit.Builders
             _animal.Nome = "Tetra Neon Cardinal";
             _animal.NomeCientifico = "Paracheirodon axelrodi";
             _animal.LocalAquisicao = "Loja de Aquarismo Local";
-            _animal.DataAquisicao = DateTime.Now;
+            _animal.DataAquisicao = DateTime.Now.AddDays(-1);
             _animal.Especie = "Tetra Neon";
             _animal.FaixaDoPH = "5.0 - 7.0";
             _animal.Origem = "América do Sul";
