@@ -14,7 +14,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         private readonly IMapper _mapper = mapperFixture.Mapper;
 
         [Fact]
-        public void SemErros_Quando_CriarAnimalDtoForValido()
+        public void SemFalhas_Quando_CriarAnimalDtoForValido()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -30,7 +30,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_NomeVazio()
+        public void DeveTerFalha_Quando_NomeVazio()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -48,7 +48,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_Nome_ExcederCaracteres()
+        public void DeveTerFalha_Quando_Nome_ExcederCaracteres()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -66,7 +66,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_NomeCientifico_ExcederCaracteres()
+        public void DeveTerFalha_Quando_NomeCientifico_ExcederCaracteres()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -84,7 +84,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_LocalAquisicao_ExcederCaracteres()
+        public void DeveTerFalha_Quando_LocalAquisicao_ExcederCaracteres()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -102,7 +102,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_DataAquisicao_ForFutura()
+        public void DeveTerFalha_Quando_DataAquisicao_ForFutura()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -120,7 +120,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_Especie_ExcederCaracteres()
+        public void DeveTerFalha_Quando_Especie_ExcederCaracteres()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -138,7 +138,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_FaixaDoPH_ExcederCaracteres()
+        public void DeveTerFalha_Quando_FaixaDoPH_ExcederCaracteres()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -156,7 +156,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_Origem_ExcederCaracteres()
+        public void DeveTerFalha_Quando_Origem_ExcederCaracteres()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -174,7 +174,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_Comportamento_ExcederCaracteres()
+        public void DeveTerFalha_Quando_Comportamento_ExcederCaracteres()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -192,7 +192,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_QuantidadeMinima_ForZero()
+        public void DeveTerFalha_Quando_QuantidadeMinima_ForZero()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -210,7 +210,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_LitragemMinima_ForZero()
+        public void DeveTerFalha_Quando_LitragemMinima_ForZero()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -228,7 +228,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_TipoAlimentacao_ForInvalida()
+        public void DeveTerFalha_Quando_TipoAlimentacao_ForInvalida()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -246,7 +246,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
         
         [Fact]
-        public void DeveTerErro_Quando_FaixaDeTamanho_ExcederCaracteres()
+        public void DeveTerFalha_Quando_FaixaDeTamanho_ExcederCaracteres()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -264,7 +264,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_FaixaDeTemperatura_ExcederCaracteres()
+        public void DeveTerFalha_Quando_FaixaDeTemperatura_ExcederCaracteres()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -282,7 +282,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
         }
 
         [Fact]
-        public void DeveTerErro_Quando_TipoDeAgua_ForInvalida()
+        public void DeveTerFalha_Quando_TipoDeAgua_ForInvalida()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
@@ -301,7 +301,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
 
 
         [Fact]
-        public void DeveTerErro_Quando_InformacoesAdicionais_ExcederCaracteres()
+        public void DeveTerFalha_Quando_InformacoesAdicionais_ExcederCaracteres()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()

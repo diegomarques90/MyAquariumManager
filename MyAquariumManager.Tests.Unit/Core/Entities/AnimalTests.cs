@@ -22,7 +22,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoNomeEhNuloOuVazio()
+        public void CriarAnimal_DeveRetornarFalha_QuandoNomeEhNuloOuVazio()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -42,7 +42,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoNomeUltrapassaMaximoDeCaracteres()
+        public void CriarAnimal_DeveRetornarFalha_QuandoNomeUltrapassaMaximoDeCaracteres()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -62,7 +62,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoNomeCientificoUltrapassaMaximoDeCaracteres()
+        public void CriarAnimal_DeveRetornarFalha_QuandoNomeCientificoUltrapassaMaximoDeCaracteres()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -82,7 +82,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoLocalAquisicaoUltrapassaMaximoDeCaracteres()
+        public void CriarAnimal_DeveRetornarFalha_QuandoLocalAquisicaoUltrapassaMaximoDeCaracteres()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -102,7 +102,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoEspecieUltrapassaMaximoDeCaracteres()
+        public void CriarAnimal_DeveRetornarFalha_QuandoEspecieUltrapassaMaximoDeCaracteres()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -122,7 +122,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoFaixaDoPHUltrapassaMaximoDeCaracteres()
+        public void CriarAnimal_DeveRetornarFalha_QuandoFaixaDoPHUltrapassaMaximoDeCaracteres()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -142,7 +142,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoOrigemUltrapassaMaximoDeCaracteres()
+        public void CriarAnimal_DeveRetornarFalha_QuandoOrigemUltrapassaMaximoDeCaracteres()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -162,7 +162,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoComportamentoUltrapassaMaximoDeCaracteres()
+        public void CriarAnimal_DeveRetornarFalha_QuandoComportamentoUltrapassaMaximoDeCaracteres()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -182,7 +182,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoFaixaDeTamanhoUltrapassaMaximoDeCaracteres()
+        public void CriarAnimal_DeveRetornarFalha_QuandoFaixaDeTamanhoUltrapassaMaximoDeCaracteres()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -202,7 +202,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoFaixaDeTemperaturaUltrapassaMaximoDeCaracteres()
+        public void CriarAnimal_DeveRetornarFalha_QuandoFaixaDeTemperaturaUltrapassaMaximoDeCaracteres()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -222,7 +222,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoInformacoesAdicionaisUltrapassaMaximoDeCaracteres()
+        public void CriarAnimal_DeveRetornarFalha_QuandoInformacoesAdicionaisUltrapassaMaximoDeCaracteres()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -243,7 +243,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
 
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoQuantidadeMinimaIdealIgualAZero()
+        public void CriarAnimal_DeveRetornarFalha_QuandoQuantidadeMinimaIdealIgualAZero()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -263,7 +263,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoLitragemMinimaIdealIgualAZero()
+        public void CriarAnimal_DeveRetornarFalha_QuandoLitragemMinimaIdealIgualAZero()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -283,7 +283,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoTipoDeAlimentacaoEhInvalido()
+        public void CriarAnimal_DeveRetornarFalha_QuandoTipoDeAlimentacaoEhInvalido()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -303,7 +303,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoTipoDeAguaEhInvalido()
+        public void CriarAnimal_DeveRetornarFalha_QuandoTipoDeAguaEhInvalido()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -323,7 +323,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarMultiplosErros_QuandoAnimalNaoEhValido()
+        public void CriarAnimal_DeveRetornarMultiplasFalhas_QuandoAnimalNaoEhValido()
         {
             // Arrange
             var builder = new AnimalBuilder()
@@ -347,7 +347,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         }
 
         [Fact]
-        public void CriarAnimal_DeveRetornarErro_QuandoDataAquisicaoForFutura()
+        public void CriarAnimal_DeveRetornarFalha_QuandoDataAquisicaoForFutura()
         {
             var builder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
@@ -361,6 +361,40 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
             Assert.NotEmpty(Errors);
             Assert.True(Errors.Count == 1, BaseConstants.DEVE_CONTER_APENAS_UM_ERRO);
             Assert.Contains(BaseConstants.DATA_AQUISICAO_NAO_PODE_SER_FUTURA, Errors, StringComparer.OrdinalIgnoreCase);
+        }
+
+        [Fact]
+        public void AtualizarAnimal_DeveRetornarSucesso_QuandoDataAtualizacaoForPreenchida()
+        {
+            //Arrange
+            var builder = new AnimalBuilder()
+                .ComTodosOsDadosValidos();
+
+            var animal = builder.Build();
+
+            //Act
+            animal.Atualizar();
+
+            //Assert
+            Assert.True(animal.DataAlteracao.HasValue, "A data de alteração deve ser preenchida após a atualização do animal.");
+        }
+
+        [Fact]
+        public void InativarAnimal_DeveRetornarSucesso_QuandoPreencherTodosAsPropriedadesDoProcessoParaInativar()
+        {
+            //Arrange
+            var builder = new AnimalBuilder()
+                .ComTodosOsDadosValidos();
+
+            var animal = builder.Build();
+
+            //Act
+            animal.Inativar(animal.UsuarioCriacao);
+
+            //Assert
+            Assert.True(animal.DataExclusao.HasValue, "A data de exclusão deve ser preenchida após a inativação do animal.");
+            Assert.True(!animal.Ativo, "O animal deve estar desativado após a inativação.");
+            Assert.NotNull(animal.UsuarioExclusao);
         }
     }
 }
