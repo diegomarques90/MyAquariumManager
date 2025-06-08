@@ -12,6 +12,11 @@ namespace MyAquariumManager.Application.Mappers
 
             CreateMap<Animal, CriarAnimalDto>();
 
+            CreateMap<CriarAnimalDto, Animal>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.DataCriacao, opt => opt.Ignore())
+                .ForMember(dest => dest.Ativo, opt => opt.Ignore());
+
             CreateMap<AnimalDto, Animal>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.DataCriacao, opt => opt.Ignore())
