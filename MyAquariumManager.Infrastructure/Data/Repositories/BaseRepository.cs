@@ -16,24 +16,12 @@ namespace MyAquariumManager.Infrastructure.Data.Repositories
 
         public async Task UpdateAsync(T entity)
         {
-            entity.Atualizar();
             _context.Set<T>().Update(entity);
         }
 
         public async Task UpdateRangeAsync(IEnumerable<T> entities)
         {
             _context.Set<T>().UpdateRange(entities);
-        }
-
-        public async Task DeleteAsync(Guid id, string usuarioExclusao) // Recebe o usuarioExclusao
-        {
-            var entity = await _context.Set<T>().FindAsync(id);
-
-            if (entity == null)
-                return;
-            
-            entity.Inativar(usuarioExclusao);
-            _context.Set<T>().Update(entity); 
         }
 
         public async Task<List<T>> GetAllAsync()

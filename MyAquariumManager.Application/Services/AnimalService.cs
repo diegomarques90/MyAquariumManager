@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MyAquariumManager.Application.DTOs.Animal;
 using MyAquariumManager.Application.Interfaces.Services;
 using MyAquariumManager.Core.Common;
+using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Core.Entities;
 using MyAquariumManager.Core.Enums;
 using MyAquariumManager.Core.Interfaces.Repositories;
@@ -17,6 +18,7 @@ namespace MyAquariumManager.Application.Services
         public async Task<Result<AnimalDto>> AtualizarAnimalAsync(AtualizarAnimalDto model)
         {
             var animal = _mapper.Map<Animal>(model);
+            animal.Atualizar();
 
             var (isValid, errors) = animal.Validate();
 
@@ -76,7 +78,13 @@ namespace MyAquariumManager.Application.Services
         {
             try
             {
-                await _animalRepository.DeleteAsync(id, usuarioExclusao);
+                var animal = await _animalRepository.GetByIdAsync(id);
+                
+                if (animal == null)
+                    return Result.Failure([BaseConstants.ANIMAL_NAO_EXISTE_OU_JA_FOI_EXCLUIDO]);
+
+                animal.Inativar(usuarioExclusao);
+                await _animalRepository.UpdateAsync(animal);
                 await _animalRepository.SaveChangesAsync();
 
                 return Result.Success();
