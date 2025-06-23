@@ -72,5 +72,7 @@
         public const string DEVE_CONTER_APENAS_UM_ERRO = "A lista de erros deve conter apenas um erro.";
         public const string DEVE_CONTER_MAIS_DE_UM_ERRO = "A lista de erros deve conter mais de um erro.";
         public const string DATA_AQUISICAO_NAO_PODE_SER_FUTURA = "A data de aquisição não pode ser futura";
+        public const string ANIMAL_NAO_EXISTE_OU_JA_FOI_EXCLUIDO = "Animal não existe ou já foi excluído.";
+        public const string USER_UNIT_TESTS = "usertests@myaquariummanager.com";
     }
 }
