@@ -127,10 +127,13 @@ namespace MyAquariumManager.Application.Services
         {
             try
             {
+                if (id == Guid.Empty)
+                    return Result<AnimalDto>.Failure([BaseConstants.ID_NAO_PODE_SER_NULO_OU_VAZIO]);
+
                 var animal = await _animalRepository.GetByIdAsync(id);
                 
                 if (animal == null)
-                    return Result<AnimalDto>.Failure(["Animal não encontrado."]);
+                    return Result<AnimalDto>.Failure([BaseConstants.ANIMAL_NAO_EXISTE_OU_JA_FOI_EXCLUIDO]);
 
                 var animalDto = _mapper.Map<AnimalDto>(animal);
                 return Result<AnimalDto>.Success(animalDto);
