@@ -201,50 +201,95 @@ namespace MyAquariumManager.Tests.Unit.Application.Services
         public async Task ObterTodosAnimais_DeveRetornarSucesso_QuandoSolicitacaoForValida()
         {
             //Arrange
+            var animais = new List<Animal>
+            {
+                new AnimalBuilder().ComTodosOsDadosValidos().Build(),
+                new AnimalBuilder().ComTodosOsDadosValidos().Build(),
+            };
+
+            _mockAnimalRepository.Setup(s => s.GetAllAsync()).ReturnsAsync(animais);
 
             //Act
+            var result = await _animalService.ObterAnimaisAsync();
 
             //Assert
+            Assert.True(result.IsSuccess, "A obtenção de todos os animais deve ser realizada com sucesso.");
+            Assert.NotEmpty(result.Value);
+            Assert.IsType<List<AnimalDto>>(result.Value);
+            Assert.Equal(animais.Count, result.Value.Count);
+            _mockAnimalRepository.Verify(r => r.GetAllAsync(), Times.Once, "O método GetAllAsync deve ser chamado uma vez.");
         }
 
         [Fact]
-        public async Task ObterTodosAnimais_DeveRetornarFalha_QuandoNaoPossuirAnimais()
+        public async Task ObterTodosAnimais_DeveRetornarListaVazia_QuandoNaoPossuirAnimais()
         {
             //Arrange
+            var animais = new List<Animal>
+            {
+            };
+
+            _mockAnimalRepository.Setup(s => s.GetAllAsync()).ReturnsAsync(animais);
 
             //Act
+            var result = await _animalService.ObterAnimaisAsync();
 
             //Assert
+            Assert.True(result.IsSuccess, "A obtenção de todos os animais deve ser realizada com sucesso mesmo quando não houver animais.");
+            Assert.True(result.Value.Count == 0, "A lista de animais deve estar vazia quando não houver animais cadastrados.");
+            Assert.IsType<List<AnimalDto>>(result.Value);
+            Assert.Empty(result.Value);
+            _mockAnimalRepository.Verify(r => r.GetAllAsync(), Times.Once, "O método GetAllAsync deve ser chamado uma vez.");
         }
 
         [Fact]
         public async Task ObterAnimalPorId_DeveRetornarSucesso_QuandoForValido()
         {
             //Arrange
+            var animal = new AnimalBuilder().ComTodosOsDadosValidos().Build();
+
+            _mockAnimalRepository.Setup(s => s.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(animal);
 
             //Act
+            var result = await _animalService.ObterAnimalPorIdAsync(animal.Id);
 
             //Assert
+            Assert.True(result.IsSuccess, "A obtenção do animal por Id deve ser realizada com sucesso quando o Id for válido.");
+            Assert.NotNull(result.Value);
+            Assert.IsType<AnimalDto>(result.Value);
+            Assert.Equal(animal.Id, result.Value.Id);
+            _mockAnimalRepository.Verify(r => r.GetByIdAsync(It.IsAny<Guid>()), Times.Once, "O método GetByIdAsync deve ser chamado uma vez.");
         }
 
         [Fact]
         public async Task ObterAnimalPorId_DeveRetornarFalha_QuandoNaoForEncontrado()
         {
             //Arrange
+            _mockAnimalRepository.Setup(s => s.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync((Animal)null);
 
             //Act
+            var result = await _animalService.ObterAnimalPorIdAsync(Guid.NewGuid());
 
             //Assert
+            Assert.True(result.IsFailure, "A obtenção do animal por Id deve falhar quando o Id não for encontrado.");
+            Assert.NotEmpty(result.Errors);
+            Assert.Contains(BaseConstants.ANIMAL_NAO_EXISTE_OU_JA_FOI_EXCLUIDO, result.Errors, StringComparer.OrdinalIgnoreCase);
+            _mockAnimalRepository.Verify(r => r.GetByIdAsync(It.IsAny<Guid>()), Times.Once, "O método GetByIdAsync deve ser chamado uma vez.");
         }
 
         [Fact]
         public async Task ObterAnimalPorId_DeveRetornarFalha_QuandoIdForInvalido()
         {
             //Arrange
+            _mockAnimalRepository.Setup(s => s.GetByIdAsync(It.IsAny<Guid>()));
 
             //Act
+            var result = await _animalService.ObterAnimalPorIdAsync(Guid.Empty);
 
             //Assert
+            Assert.True(result.IsFailure, "A obtenção do animal por Id deve falhar quando o Id for inválido.");
+            Assert.NotEmpty(result.Errors);
+            Assert.Contains(BaseConstants.ID_NAO_PODE_SER_NULO_OU_VAZIO, result.Errors, StringComparer.OrdinalIgnoreCase);
+            _mockAnimalRepository.Verify(r => r.GetByIdAsync(It.IsAny<Guid>()), Times.Never, "O método GetByIdAsync não deve ser chamado quando o id for inválido.");
         }
     }
 }
