@@ -6,6 +6,7 @@ using MyAquariumManager.Infrastructure.Data.Context;
 using MyAquariumManager.Infrastructure.Data.Repositories;
 using MyAquariumManager.Web.Filters;
 using MyAquariumManager.Web.Validators.Animal;
+using MyAquariumManager.Core.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("MAMConnection");
 builder.Services.AddDbContext<MyAquariumManagerDbContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<MyAquariumManagerDbContext>();
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
@@ -48,5 +51,10 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+});
 
 app.Run();
