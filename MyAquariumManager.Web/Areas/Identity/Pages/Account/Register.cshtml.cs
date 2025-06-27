@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Core.Entities;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -65,9 +67,17 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             /// <summary>
+            /// Documento do usuário, podendendo ser CPF ou CNPJ
+            /// </summary>
+            [Required(ErrorMessage = BaseConstants.DOCUMENTO_OBRIGATORIO)]
+            [MaxLength(14, ErrorMessage = BaseConstants.DOCUMENTO_QUANTIDADE_MAXIMA)]
+            [Display(Name = "Documento")]
+            public string Documento { get; set; }
+            /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -78,9 +88,9 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "O {0} deve ter no mínimo {2} e no máximo {1} caracteres de comprimento.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Senha")]
             public string Password { get; set; }
 
             /// <summary>
@@ -88,8 +98,8 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirme a Senha")]
+            [Compare("Password", ErrorMessage = "A senha e a confirmação de senha não batem.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -106,7 +116,7 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                var user = CreateUser(Input.Documento);
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -125,8 +135,8 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirme o seu email",
+                        $"Por favor confirme a sua conta no My Aquarium Manager <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> clicando aqui.</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -148,11 +158,11 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Usuario CreateUser()
+        private Usuario CreateUser(string documento)
         {
             try
             {
-                return Activator.CreateInstance<Usuario>();
+                return new Usuario(documento);
             }
             catch
             {
