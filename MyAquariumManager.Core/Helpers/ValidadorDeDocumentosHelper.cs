@@ -11,6 +11,9 @@ namespace MyAquariumManager.Core.Helpers
         /// <returns>Retorna verdadeiro se o CPF for válido.</returns>
         public static bool EhUmCpfValido(string cpf)
         {
+            if (string.IsNullOrEmpty(cpf))
+                return false;
+
             cpf = RemoverCaracteresNaoNumericos(cpf);
 
             if (cpf.Length != 11 || !long.TryParse(cpf, out _))
@@ -24,7 +27,7 @@ namespace MyAquariumManager.Core.Helpers
             CalcularPrimeiroDigitoVerificadorCpf(estruturaCpf);
             CalcularSegundoDigitoVerificadorCpf(estruturaCpf);
 
-            return estruturaCpf.Cpf.EndsWith(estruturaCpf.Digito);
+            return cpf.EndsWith(estruturaCpf.Digito);
         }
 
         private static void CalcularPrimeiroDigitoVerificadorCpf(EstruturaCpf estruturaCpf)
@@ -76,6 +79,9 @@ namespace MyAquariumManager.Core.Helpers
         /// <returns>Retorna verdadeiro se o CNPJ for válido.</returns>
         public static bool EhUmCnpjValido(string cnpj)
         {
+            if (string.IsNullOrEmpty(cnpj))
+                return false;
+
             cnpj = RemoverCaracteresNaoNumericos(cnpj);
 
             if (cnpj.Length != 14 || !long.TryParse(cnpj, out _))
@@ -89,7 +95,7 @@ namespace MyAquariumManager.Core.Helpers
             CalcularPrimeiroDigitoVerificadorCnpj(estruturaCnpj);
             CalcularSegundoDigitoVerificadorCnpj(estruturaCnpj);
 
-            return estruturaCnpj.Cnpj.EndsWith(estruturaCnpj.Digito);
+            return cnpj.EndsWith(estruturaCnpj.Digito);
         }
 
         private static void CalcularPrimeiroDigitoVerificadorCnpj(EstruturaCnpj estruturaCnpj)
