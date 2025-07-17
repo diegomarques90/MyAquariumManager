@@ -64,8 +64,13 @@
         public const string ABREVIACAO_QUANTIDADE_MAXIMA = "A abreviação deve conter no máximo 2 caracteres.";
         public const string DOCUMENTO_OBRIGATORIO = "O documento é obrigatório.";
         public const string DOCUMENTO_QUANTIDADE_MAXIMA = "O documento deve conter no máxumo 14 caracteres.";
+        public const string DOCUMENTO_INVALIDO = "O documento informado é inválido.";
         public const string TIPO_USUARIO_OBRIGATORIO = "O tipo do usuário é obrigatório.";
+        public const string TIPO_USUARIO_INVALIDO = "O tipo do usuário informado é inválido.";
         public const string QUANTIDADE_MINIMA_IDEAL_MAIOR_QUE_ZERO = "A quantidade mínima ideal deve ser maior que zero.";
+        public const string EMAIL_OBRIGATORIO = "O e-mail é obrigatório.";
+        public const string EMAIL_INVALIDO = "O e-mail informado é inválido.";
+        public const string EMAIL_QUANTIDADE_MAXIMA = "O e-mail deve conter no máximo 512 caracteres.";
         public const string LITRAGEM_MINIMA_IDEAL_MAIOR_QUE_ZERO = "A litragem mínima ideal deve ser maior que zero.";
         public const string TIPO_ALIMENTACAO_INVALIDO = "O Tipo de alimentação informado é inválido.";
         public const string TIPO_AGUA_INVALIDO = "O Tipo de água informado é inválido.";

@@ -112,12 +112,11 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            var user = CreateUser();
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser(Input.Documento);
-
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -158,11 +157,23 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Usuario CreateUser(string documento)
+        private Usuario CreateUser()
         {
             try
             {
-                return new Usuario(documento);
+                var usuario = new Usuario(Input.Documento, Input.Email);
+                var (IsValid, Errors) = usuario.Validate();
+                
+                if (!IsValid)
+                {
+                    foreach (var error in Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
+                    //throw new InvalidOperationException("Usuário inválido.");
+                }
+
+                return usuario;
             }
             catch
             {

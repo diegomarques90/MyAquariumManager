@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyAquariumManager.Infrastructure.Data.Context;
 
@@ -11,9 +12,11 @@ using MyAquariumManager.Infrastructure.Data.Context;
 namespace MyAquariumManager.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(MyAquariumManagerDbContext))]
-    partial class MyAquariumManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250701203519_AlterUsuarioSetNewMaxLenghtIntoEmail")]
+    partial class AlterUsuarioSetNewMaxLenghtIntoEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
