@@ -79,5 +79,7 @@
         public const string DATA_AQUISICAO_NAO_PODE_SER_FUTURA = "A data de aquisição não pode ser futura";
         public const string ANIMAL_NAO_EXISTE_OU_JA_FOI_EXCLUIDO = "Animal não existe ou já foi excluído.";
         public const string USER_UNIT_TESTS = "usertests@myaquariummanager.com";
+        public const string NOME_USUARIO_OBRIGATORIO = "O nome do usuário é obrigatório.";
+        public const string NOME_USUARIO_QUANTIDADE_MAXIMA = "O nome do usuário deve conter no máximo 512 caracteres.";
     }
 }

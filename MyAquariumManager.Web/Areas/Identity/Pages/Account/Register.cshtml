@@ -17,7 +17,12 @@
                 <span asp-validation-for="Input.Documento" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="nome@provedor.com" />
+                <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="Nome de Usuário" />
+                <label asp-for="Input.UserName">Nome de Usuário</label>
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" autocomplete="email" aria-required="true" placeholder="nome@provedor.com" />
                 <label asp-for="Input.Email">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
