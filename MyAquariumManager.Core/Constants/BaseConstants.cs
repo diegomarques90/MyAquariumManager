@@ -81,5 +81,6 @@
         public const string USER_UNIT_TESTS = "usertests@myaquariummanager.com";
         public const string NOME_USUARIO_OBRIGATORIO = "O nome do usuário é obrigatório.";
         public const string NOME_USUARIO_QUANTIDADE_MAXIMA = "O nome do usuário deve conter no máximo 512 caracteres.";
+        public const string NOME_PROJETO = "My Aquarium Manager";
     }
 }
