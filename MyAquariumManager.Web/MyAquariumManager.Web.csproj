@@ -29,4 +29,8 @@
     <ProjectReference Include="..\MyAquariumManager.Infrastructure\MyAquariumManager.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\datatables\" />
+  </ItemGroup>
+
 </Project>

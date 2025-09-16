@@ -8,6 +8,7 @@ using MyAquariumManager.Web.Filters;
 using MyAquariumManager.Web.Validators.Animal;
 using MyAquariumManager.Core.Entities;
 using Microsoft.AspNetCore.Identity;
+using MyAquariumManager.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,9 @@ builder.Services.AddDbContext<MyAquariumManagerDbContext>(options => options.Use
 builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<MyAquariumManagerDbContext>()
     .AddDefaultUI()
-    .AddDefaultTokenProviders(); 
+    .AddDefaultTokenProviders();
+
+builder.Services.AddApplication();
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();

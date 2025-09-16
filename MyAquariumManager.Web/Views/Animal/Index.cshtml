@@ -1,5 +1,60 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+<link rel="stylesheet" href="~/lib/datatables/datatables.min.css" asp-append-version="true" />
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/datatables/datatables.min.js" asp-append-version="true"></script>
+
+<table id="table-animais" class="display" style="width: 100%">
+    <thead>
+        <tr>
+            <th class="d-none">Id</th>
+            <th>Nome</th>
+            <th>Nome Científico</th>
+            <th>Espécie</th>
+            <th>Data Aquisição</th>
+            <th>Local da Aquisição</th>
+            <th>Tipo de Água</th>
+            <th>Origem</th>
+        </tr>
+    </thead>
+</table>
+
+<script>
+    $(document).ready(function() {
+        carregarTableAnimais();
+    });
+
+    function carregarTableAnimais() {
+        return $('#tabelaAcordos').DataTable({
+            scrollY: 400,
+            pageLength: 25,
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ordering: true,
+            order: [[0, 'desc']],
+            searching: false,
+            paging: true,
+            ajax: {
+                url: "/animal/carregar-table-animais",
+                type: "GET",
+                datatype: "json"
+            },
+            columns: [
+                { data: "id" }, 
+                { data: "nome" },
+                { data: "nomeCientifico" },
+                { data: "especie" },
+                { data: "dataAquisicao" },
+                { data: "localAquisicao" },
+                { data: "tipoAgua" },
+                { data: "origem" }
+            ]
+        });
+    }
+</script>
+
 @{
 }
+
