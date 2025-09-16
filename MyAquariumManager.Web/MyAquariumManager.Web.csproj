@@ -31,6 +31,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\datatables\" />
+    <Folder Include="wwwroot\lib\fontawesome\css\" />
+    <Folder Include="wwwroot\lib\fontawesome\webfonts\" />
   </ItemGroup>
 
 </Project>
