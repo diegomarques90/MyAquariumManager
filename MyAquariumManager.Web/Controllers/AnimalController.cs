@@ -32,7 +32,7 @@ namespace MyAquariumManager.Web.Controllers
             return View();
         }
 
-        [HttpPost("cadastrar-animal")]
+        [HttpPost]
         public async Task<IActionResult> CadastrarAnimal([FromBody] CriarAnimalDto model)
         {
             var result = await _animalService.CadastrarAnimalAsync(model);

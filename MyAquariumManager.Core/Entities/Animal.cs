@@ -6,6 +6,7 @@ namespace MyAquariumManager.Core.Entities
 {
     public class Animal(string usuarioCriacao) : BaseEntity(usuarioCriacao)
     {
+
         [MaxLength(200, ErrorMessage = BaseConstants.NOME_QUANTIDADE_MAXIMA)]
         [Required(ErrorMessage = BaseConstants.NOME_OBRIGATORIO)]
         public string Nome { get; set; }

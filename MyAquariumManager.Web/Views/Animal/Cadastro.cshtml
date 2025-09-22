@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-2 mb-3">
                 <label for="dataAquisicao" class="form-label">Data Aquisição:</label> 
-                <input type="date" id="dataAquisicao" name="Data da Aquisição" class="form-control" />
+                <input type="date" id="dataAquisicao" name="Data da Aquisição" class="form-control" required />
             </div>
             <div class="col-sm-12 col-md-4 mb-3">
                 <label for="localAquisicao" class="form-label">Local Aquisição: </label>
@@ -74,9 +74,10 @@
                     <option value="selecione">-- Selecione --</option>
                     @{
                         string tipoDeAlimentacao = string.Empty;
-
                         foreach (var tipo in Enum.GetValues(typeof(TipoDeAlimentacao)))
                         {
+                            int valor = (int)tipo;
+
                             switch (tipo)
                             {
                                 case TipoDeAlimentacao.Onivoro:
@@ -93,7 +94,7 @@
                                     break;
                             }
 
-                            <option value="@tipo">@tipoDeAlimentacao</option>
+                            <option value="@valor">@tipoDeAlimentacao</option>
                         }
                     }
                 </select>
@@ -105,7 +106,8 @@
                     @{
                         foreach (var tipo in Enum.GetValues(typeof(TipoDeAgua)))
                         {
-                            <option value="@tipo">@tipo</option>
+                            int valor = (int)tipo;
+                            <option value="@valor">@tipo</option>
                         }
                     }
                 </select>
@@ -157,6 +159,40 @@
 
         let criarAnimalDto = obterDadosFormulario();
 
+        let cadastrarAnimalUrl = '@Url.Action("CadastrarAnimal", "Animal")';
+
+        $.ajax({
+            url: cadastrarAnimalUrl,
+            type: 'POST',
+            data: JSON.stringify(criarAnimalDto),
+            contentType: 'application/json',
+            success: function(response) {
+                if (response.success) {
+                    toastr.success('Animal cadastrado com sucesso!', 'Sucesso');
+                    window.location.reload;
+                } else {
+                    response.errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                }
+            },
+            error: function(xhr, status, errors) {
+                if (errors && Array.isArray(errors)) {
+                    errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                }
+                else if (xhr.responseJSON && Array.isArray(xhr.responseJSON.errors)) {
+                    xhr.responseJSON.errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                } else {
+                    toastr.error('Ocorreu uma falha ao cadastrar o animal. Tente novamente mais tarde!');
+                }
+
+                console.log(`Ocorreu uma falha ao cadastrar o animal. ErrorInfo: ${xhr} + ${errors}`);
+            }
+        });
     }
 
     function validarFormulario() { 
@@ -192,8 +228,8 @@
             Cardumeiro: document.getElementById('cardumeiro').checked,
             QuantidadeMinima: parseInt(document.getElementById('quantidadeMinima').value) || 0,
             LitragemMinima: parseInt(document.getElementById('litragemMinima').value) || 0,
-            TipoDeAlimentacao: document.getElementById('tipoDeAlimentacao').value,
-            TipoDeAgua: document.getElementById('tipoDeAgua').value,
+            TipoDeAlimentacao: parseInt(document.getElementById('tipoDeAlimentacao').value) || 0,
+            TipoDeAgua: parseInt(document.getElementById('tipoDeAgua').value) || 0,
             FaixaDeTamanho: document.getElementById('faixaDeTamanho').value.trim(),
             FaixaDeTemperatura: document.getElementById('faixaDeTemperatura').value.trim(),
             InformacoesAdicionais: document.getElementById('informacoesAdicionais').value.trim()

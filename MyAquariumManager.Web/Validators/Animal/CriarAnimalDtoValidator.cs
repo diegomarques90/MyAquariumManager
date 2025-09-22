@@ -38,11 +38,11 @@ namespace MyAquariumManager.Web.Validators.Animal
 
             RuleFor(x => x.QuantidadeMinima)
                 .NotNull().WithMessage(BaseConstants.QUANTIDADE_MINIMA_IDEAL_OBRIGATORIA)
-                .ExclusiveBetween(1, int.MaxValue).WithMessage(BaseConstants.QUANTIDADE_MINIMA_IDEAL_MAIOR_QUE_ZERO);
+                .ExclusiveBetween(0, int.MaxValue).WithMessage(BaseConstants.QUANTIDADE_MINIMA_IDEAL_MAIOR_QUE_ZERO);
 
             RuleFor(x => x.LitragemMinima)
                 .NotNull().WithMessage(BaseConstants.LITRAGEM_MINIMA_IDEAL_OBRIGATORIA)
-                .ExclusiveBetween(1, int.MaxValue).WithMessage(BaseConstants.LITRAGEM_MINIMA_IDEAL_MAIOR_QUE_ZERO);
+                .ExclusiveBetween(0, int.MaxValue).WithMessage(BaseConstants.LITRAGEM_MINIMA_IDEAL_MAIOR_QUE_ZERO);
 
             RuleFor(x => x.TipoDeAlimentacao)
                 .NotNull().WithMessage(BaseConstants.TIPO_ALIMENTACAO_OBRIGATORIO)
