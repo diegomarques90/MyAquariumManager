@@ -30,6 +30,7 @@
         public const string CONTA_USUARIO_NAO_VINCULADO = "A conta deve possuir um usuário vinculado. UsuarioId não informado.";
         public const string FALHA_CRIACAO_CODIGO_CONTA_USUARIO_CRIACAO_NULO = "Não foi possível criar o código da conta. UsuarioCriacao não pode ser nulo ou vazio.";
         public const string FALHA_CRIACAO_CODIGO_CONTA_ID_INVALIDO = "Não foi possível criar o código da conta. O Id da conta informado não é válido.";
+        public const string FALHA_CRIACAO_CODIGO_CONTA = "Não foi possível criar o código conta. Tente novamente mais tarde.";
         public const string DESCRICAO_OBRIGATORIA = "A descrição é obrigatória.";
         public const string DESCRICAO_QUANTIDADE_MAXIMA = "A descrição deve conter no máximo 800 caracteres.";
         public const string DATA_MANUTENCAO_OBRIGATORIA = "A data da manutenção é obrigatória.";
@@ -79,5 +80,8 @@
         public const string DATA_AQUISICAO_NAO_PODE_SER_FUTURA = "A data de aquisição não pode ser futura";
         public const string ANIMAL_NAO_EXISTE_OU_JA_FOI_EXCLUIDO = "Animal não existe ou já foi excluído.";
         public const string USER_UNIT_TESTS = "usertests@myaquariummanager.com";
+        public const string NOME_USUARIO_OBRIGATORIO = "O nome do usuário é obrigatório.";
+        public const string NOME_USUARIO_QUANTIDADE_MAXIMA = "O nome do usuário deve conter no máximo 512 caracteres.";
+        public const string NOME_PROJETO = "My Aquarium Manager";
     }
 }

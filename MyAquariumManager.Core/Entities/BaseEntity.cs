@@ -22,12 +22,12 @@ namespace MyAquariumManager.Core.Entities
         public DateTime? DataAlteracao { get; private set; }
 
         [MaxLength(200, ErrorMessage = BaseConstants.USUARIO_ALTERACAO_QUANTIDADE_MAXIMA)]
-        public string UsuarioAlteracao { get; private set; }
+        public string UsuarioAlteracao { get; private set; } = string.Empty;
 
         public DateTime? DataExclusao { get; private set; }
 
         [MaxLength(200, ErrorMessage = BaseConstants.USUARIO_EXCLUSAO_QUANTIDADE_MAXIMA)]
-        public string UsuarioExclusao { get; private set; }
+        public string UsuarioExclusao { get; private set; } = string.Empty;
 
         [Required]
         public bool Ativo { get; private set; }
@@ -47,9 +47,10 @@ namespace MyAquariumManager.Core.Entities
             Ativo = false;
         }
 
-        public void Atualizar()
+        public void Atualizar(string usuarioAlteracao)
         {
             DataAlteracao = DateTime.UtcNow;
+            UsuarioAlteracao = usuarioAlteracao;
         }
 
         public (bool IsValid, List<string> Errors) Validate()

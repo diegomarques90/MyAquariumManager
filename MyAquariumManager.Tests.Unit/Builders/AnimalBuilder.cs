@@ -1,4 +1,5 @@
-﻿using MyAquariumManager.Core.Entities;
+﻿using MyAquariumManager.Core.Constants;
+using MyAquariumManager.Core.Entities;
 using MyAquariumManager.Core.Enums;
 
 namespace MyAquariumManager.Tests.Unit.Builders
@@ -131,6 +132,12 @@ namespace MyAquariumManager.Tests.Unit.Builders
         public AnimalBuilder ComDataAquisicaoFutura()
         {
             _animal.DataAquisicao = DateTime.Now.AddDays(14);
+            return this;
+        }
+
+        public AnimalBuilder ComUsuarioAlteracao()
+        {
+            _animal.Atualizar(BaseConstants.USER_UNIT_TESTS);
             return this;
         }
 

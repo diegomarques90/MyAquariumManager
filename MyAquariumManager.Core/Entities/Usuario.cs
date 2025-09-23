@@ -1,19 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Query.Internal;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Core.Enums;
 using MyAquariumManager.Core.Helpers;
-using System.ComponentModel.DataAnnotations;
-using System.Xml;
 
 namespace MyAquariumManager.Core.Entities
 {
     public class Usuario : IdentityUser
     {
-        public Usuario(string documento, string email)
+        public Usuario(string documento, string email, string userName)
         {
             Documento = documento;
             Email = email;
+            UserName = userName;
             TipoUsuario = TipoUsuario.Administrador;
         }
 

@@ -1,27 +1,25 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Moq;
 using MyAquariumManager.Application.DTOs.Animal;
 using MyAquariumManager.Application.Interfaces.Services;
+using MyAquariumManager.Application.Mappers;
 using MyAquariumManager.Application.Services;
 using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Core.Entities;
 using MyAquariumManager.Core.Interfaces.Repositories;
 using MyAquariumManager.Tests.Unit.Builders;
-using MyAquariumManager.Tests.Unit.Fixtures;
 
 namespace MyAquariumManager.Tests.Unit.Application.Services
 {
-    public class AnimalServiceTests : IClassFixture<MapperFixture>
+    public class AnimalServiceTests
     {
-        private readonly IMapper _mapper;
         private readonly Mock<IAnimalRepository> _mockAnimalRepository;
         private readonly IAnimalService _animalService;
 
-        public AnimalServiceTests(MapperFixture mapperFixture)
+        public AnimalServiceTests()
         {
-            _mapper = mapperFixture.Mapper;
             _mockAnimalRepository = new Mock<IAnimalRepository>();
-            _animalService = new AnimalService(_mapper, _mockAnimalRepository.Object);
+            _animalService = new AnimalService(_mockAnimalRepository.Object);
         }
 
         [Fact]
@@ -31,7 +29,7 @@ namespace MyAquariumManager.Tests.Unit.Application.Services
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
             _mockAnimalRepository.Setup(x => x.AddAsync(It.IsAny<Animal>())).Returns(Task.CompletedTask);
             _mockAnimalRepository.Setup(x => x.SaveChangesAsync()).Returns(Task.CompletedTask);
 
@@ -58,7 +56,7 @@ namespace MyAquariumManager.Tests.Unit.Application.Services
                 .ComTodosOsDadosValidos()
                 .ComONomeInvalido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
             _mockAnimalRepository.Setup(x => x.AddAsync(It.IsAny<Animal>())).Returns(Task.CompletedTask);
             _mockAnimalRepository.Setup(x => x.SaveChangesAsync()).Returns(Task.CompletedTask);
 
@@ -84,7 +82,7 @@ namespace MyAquariumManager.Tests.Unit.Application.Services
                 .ComONomeInvalido()
                 .ComDataAquisicaoFutura();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
             _mockAnimalRepository.Setup(x => x.AddAsync(It.IsAny<Animal>())).Returns(Task.CompletedTask);
             _mockAnimalRepository.Setup(x => x.SaveChangesAsync()).Returns(Task.CompletedTask);
 
@@ -106,12 +104,14 @@ namespace MyAquariumManager.Tests.Unit.Application.Services
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
-                .ComTodosOsDadosValidos();
-                        
-            var atualizarAnimalDto = _mapper.Map<AtualizarAnimalDto>(animalBuilder.Build());
+                .ComTodosOsDadosValidos()
+                .ComUsuarioAlteracao();
+
+            var animal = animalBuilder.Build();
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animal);
             atualizarAnimalDto.LocalAquisicao = "Loja de Aquarismo Atualizada";
-            atualizarAnimalDto.UsuarioAlteracao = "usertests@myaquariummanager.com";
-            
+
+            _mockAnimalRepository.Setup(x => x.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(animal);
             _mockAnimalRepository.Setup(x => x.UpdateAsync(It.IsAny<Animal>())).Returns(Task.CompletedTask);
             _mockAnimalRepository.Setup(x => x.SaveChangesAsync()).Returns(Task.CompletedTask);
 
@@ -135,12 +135,14 @@ namespace MyAquariumManager.Tests.Unit.Application.Services
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComUsuarioAlteracao()
                 .ComLitragemMinimaIdealIgualAZero();
 
-            var atualizarAnimalDto = _mapper.Map<AtualizarAnimalDto>(animalBuilder.Build());
+            var animal = animalBuilder.Build();
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animal);
             atualizarAnimalDto.LocalAquisicao = "Loja de Aquarismo Atualizada";
-            atualizarAnimalDto.UsuarioAlteracao = BaseConstants.USER_UNIT_TESTS;
 
+            _mockAnimalRepository.Setup(x => x.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(animal);
             _mockAnimalRepository.Setup(x => x.UpdateAsync(It.IsAny<Animal>())).Returns(Task.CompletedTask);
             _mockAnimalRepository.Setup(x => x.SaveChangesAsync()).Returns(Task.CompletedTask);
 

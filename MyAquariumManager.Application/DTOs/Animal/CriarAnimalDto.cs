@@ -1,10 +1,11 @@
-﻿using MyAquariumManager.Application.DTOs.Commons;
-using MyAquariumManager.Core.Enums;
+﻿using MyAquariumManager.Core.Enums;
 
 namespace MyAquariumManager.Application.DTOs.Animal
 {
-    public class CriarAnimalDto : BaseDto
+    public class CriarAnimalDto
     {
+        public string CodigoConta { get; set; }
+        public string UsuarioCriacao { get; set; }
         public string Nome { get; set; }
         public string NomeCientifico { get; set; }
         public string? LocalAquisicao { get; set; }

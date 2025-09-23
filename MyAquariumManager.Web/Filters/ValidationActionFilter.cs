@@ -31,10 +31,15 @@ namespace MyAquariumManager.Web.Filters
 
                 if (!validationResult.IsValid)
                 {
+                    var responseErrors = new List<string>();
+
                     foreach (var error in validationResult.Errors)
+                    {
                         context.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                 
-                    context.Result = new BadRequestObjectResult(context.ModelState);
+                        responseErrors.Add(error.ErrorMessage);
+                    }
+                        
+                    context.Result = new BadRequestObjectResult(new { errors = responseErrors });
                     return;
                 }
             }

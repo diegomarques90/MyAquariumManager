@@ -29,4 +29,11 @@
     <ProjectReference Include="..\MyAquariumManager.Infrastructure\MyAquariumManager.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\datatables\" />
+    <Folder Include="wwwroot\lib\fontawesome\css\" />
+    <Folder Include="wwwroot\lib\fontawesome\webfonts\" />
+    <Folder Include="wwwroot\lib\toastr\" />
+  </ItemGroup>
+
 </Project>
