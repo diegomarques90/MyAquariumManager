@@ -368,14 +368,12 @@ namespace MyAquariumManager.Tests.Unit.Core.Entities
         {
             //Arrange
             var builder = new AnimalBuilder()
-                .ComTodosOsDadosValidos();
+                .ComTodosOsDadosValidos()
+                .ComUsuarioAlteracao();
 
             var animal = builder.Build();
 
-            //Act
-            animal.Atualizar();
-
-            //Assert
+            //Assert && Act
             Assert.True(animal.DataAlteracao.HasValue, "A data de alteração deve ser preenchida após a atualização do animal.");
         }
 

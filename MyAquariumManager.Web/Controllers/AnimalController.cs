@@ -35,6 +35,10 @@ namespace MyAquariumManager.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CadastrarAnimal([FromBody] CriarAnimalDto model)
         {
+            //Criar algo para pegar o usuario logado e também o código da conta;
+            //model.CodigoConta = "codigoConta@MyAquariumManager.com.br";
+            //model.UsuarioCriacao = "usuariologado@myaquariummanager.com.br";
+
             var result = await _animalService.CadastrarAnimalAsync(model);
 
             if (result.IsFailure)

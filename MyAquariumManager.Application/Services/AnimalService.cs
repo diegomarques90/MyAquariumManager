@@ -1,24 +1,26 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MyAquariumManager.Application.DTOs.Animal;
 using MyAquariumManager.Application.Interfaces.Services;
+using MyAquariumManager.Application.Mappers;
 using MyAquariumManager.Core.Common;
 using MyAquariumManager.Core.Constants;
-using MyAquariumManager.Core.Entities;
 using MyAquariumManager.Core.Enums;
 using MyAquariumManager.Core.Interfaces.Repositories;
 
 namespace MyAquariumManager.Application.Services
 {
-    public class AnimalService(IMapper mapper, IAnimalRepository animalRepository) : IAnimalService
+    public class AnimalService(IAnimalRepository animalRepository) : IAnimalService
     {
-        private readonly IMapper _mapper = mapper;
         private readonly IAnimalRepository _animalRepository = animalRepository;
 
         public async Task<Result<AnimalDto>> AtualizarAnimalAsync(AtualizarAnimalDto model)
         {
-            var animal = _mapper.Map<Animal>(model);
-            animal.Atualizar();
+            var animal = await _animalRepository.GetByIdAsync(model.Id);
+
+            if (animal is null) 
+                return Result<AnimalDto>.Failure([BaseConstants.ANIMAL_NAO_EXISTE_OU_JA_FOI_EXCLUIDO]);
+
+            AnimalHelper.AtualizarAnimal(animal, model);
 
             var (isValid, errors) = animal.Validate();
 
@@ -30,7 +32,7 @@ namespace MyAquariumManager.Application.Services
                 await _animalRepository.UpdateAsync(animal);
                 await _animalRepository.SaveChangesAsync();
 
-                var animalDto = _mapper.Map<AnimalDto>(animal);
+                var animalDto = AnimalHelper.ObterAnimalDto(animal);
                 return Result<AnimalDto>.Success(animalDto, HttpCode.OK);
             }
             catch (DbUpdateException dbEx)
@@ -47,7 +49,7 @@ namespace MyAquariumManager.Application.Services
 
         public async Task<Result<AnimalDto>> CadastrarAnimalAsync(CriarAnimalDto model)
         {
-            var animal = _mapper.Map<Animal>(model);
+            var animal = AnimalHelper.ObterAnimal(model);
 
             var (isValid, errors) = animal.Validate();
 
@@ -59,7 +61,7 @@ namespace MyAquariumManager.Application.Services
                 await _animalRepository.AddAsync(animal);
                 await _animalRepository.SaveChangesAsync();
 
-                var animalDto = _mapper.Map<AnimalDto>(animal);
+                var animalDto = AnimalHelper.ObterAnimalDto(animal);
                 return Result<AnimalDto>.Success(animalDto, HttpCode.Created);
             }
             catch (DbUpdateException dbEx)
@@ -106,7 +108,7 @@ namespace MyAquariumManager.Application.Services
             try
             {
                 var animais = await _animalRepository.GetAllAsync();
-                var animalDtos = _mapper.Map<List<AnimalDto>>(animais);
+                var animalDtos = AnimalHelper.ObterListaDeAnimalDto(animais);
 
                 return Result<List<AnimalDto>>.Success(animalDtos);
             }
@@ -135,7 +137,7 @@ namespace MyAquariumManager.Application.Services
                 if (animal == null)
                     return Result<AnimalDto>.Failure([BaseConstants.ANIMAL_NAO_EXISTE_OU_JA_FOI_EXCLUIDO]);
 
-                var animalDto = _mapper.Map<AnimalDto>(animal);
+                var animalDto = AnimalHelper.ObterAnimalDto(animal);
                 return Result<AnimalDto>.Success(animalDto);
             }
             catch (DbUpdateException dbEx)

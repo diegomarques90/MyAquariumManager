@@ -35,8 +35,6 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
-builder.Services.AddAutoMapper(typeof(AnimalProfile).Assembly);
-
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ValidationActionFilter>();

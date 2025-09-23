@@ -1,17 +1,14 @@
-﻿using AutoMapper;
-using FluentValidation.TestHelper;
-using MyAquariumManager.Application.DTOs.Animal;
+﻿using FluentValidation.TestHelper;
+using MyAquariumManager.Application.Mappers;
 using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Tests.Unit.Builders;
-using MyAquariumManager.Tests.Unit.Fixtures;
 using MyAquariumManager.Web.Validators.Animal;
 
 namespace MyAquariumManager.Tests.Unit.Web.Validators
 {
-    public class CriarAnimalDtoValidatorTests(MapperFixture mapperFixture) : IClassFixture<MapperFixture>
+    public class CriarAnimalDtoValidatorTests()
     {
         private readonly CriarAnimalDtoValidator _validator = new CriarAnimalDtoValidator();
-        private readonly IMapper _mapper = mapperFixture.Mapper;
 
         [Fact]
         public void SemFalhas_Quando_CriarAnimalDtoForValido()
@@ -20,7 +17,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -37,7 +34,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComONomeInvalido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -55,7 +52,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComNomeMaiorQueOPermitido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -73,7 +70,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComNomeCientificoMaiorQueOPermitido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -91,7 +88,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComLocalAquisicaoMaiorQueOPermitido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -109,7 +106,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComDataAquisicaoFutura();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -127,7 +124,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComEspecieMaiorQueOPermitido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -145,7 +142,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComFaixaDoPHMaiorQueOPermitido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -163,7 +160,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComOrigemMaiorQueOPermitido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -181,7 +178,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComComportamentoMaiorQueOPermitido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -199,7 +196,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComQuantidadeMinimaIdealIgualAZero();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -217,7 +214,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComLitragemMinimaIdealIgualAZero();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -235,7 +232,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComTipoDeAlimentacaoInvalido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -253,7 +250,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComFaixaDeTamanhoMaiorQueOPermitido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -271,7 +268,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComFaixaDeTemperaturaMaiorQueOPermitido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -289,7 +286,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComTipoDeAguaInvalido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
@@ -308,7 +305,7 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
                 .ComTodosOsDadosValidos()
                 .ComInformacoesAdicionaisMaiorQueOPermitido();
 
-            var criarAnimalDto = _mapper.Map<CriarAnimalDto>(animalBuilder.Build());
+            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
 
             //Act
             var result = _validator.TestValidate(criarAnimalDto);
