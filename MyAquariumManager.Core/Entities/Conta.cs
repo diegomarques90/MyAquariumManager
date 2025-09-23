@@ -4,8 +4,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyAquariumManager.Core.Entities
 {
-    public class Conta(string usuarioCriacao) : BaseEntity(usuarioCriacao)
+    public class Conta : BaseEntity
     {
+        public Conta(string usuarioCriacao) : base(usuarioCriacao)
+        {
+            
+        }
+
+        public Conta(string usuarioCriacao, string nome, string usuarioId) : base(usuarioCriacao)
+        {
+            Nome = nome;
+            UsuarioId = usuarioId;
+        }
+
         [Required(ErrorMessage = BaseConstants.NOME_OBRIGATORIO)]
         [MaxLength(200, ErrorMessage = BaseConstants.NOME_QUANTIDADE_MAXIMA)]
         public string Nome { get; private set; }

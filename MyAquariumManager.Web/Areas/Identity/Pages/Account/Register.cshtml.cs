@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using MyAquariumManager.Application.DTOs.Conta;
+using MyAquariumManager.Application.Interfaces.Services;
+using MyAquariumManager.Core.Common;
 using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Core.Entities;
 using System.ComponentModel;
@@ -25,13 +28,14 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<Usuario> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
+        private readonly IContaService _contaService;
         public RegisterModel(
             UserManager<Usuario> userManager,
             IUserStore<Usuario> userStore,
             SignInManager<Usuario> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IContaService contaService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -39,6 +43,7 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _contaService = contaService;
         }
 
         /// <summary>
@@ -117,7 +122,7 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            var user = CreateUser();
+            var user = await CreateUser();
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
@@ -131,27 +136,12 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
+                    await CriarConta(userId);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirme o seu email",
-                        $"Por favor confirme a sua conta no My Aquarium Manager <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> clicando aqui.</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);                    
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -162,7 +152,7 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Usuario CreateUser()
+        private async Task<Usuario> CreateUser()
         {
             try
             {
@@ -175,7 +165,6 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
                     {
                         ModelState.AddModelError(string.Empty, error);
                     }
-                    //throw new InvalidOperationException("Usuário inválido.");
                 }
 
                 return usuario;
@@ -187,7 +176,24 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
+        
+        private async Task CriarConta(string usuarioId)
+        {
+            var criarContaDto = new CriarContaDto
+            {
+                Nome = Input.UserName,
+                UsuarioCriacao = Input.Email,
+                UsuarioId = usuarioId,
+            };
 
+            var result = await _contaService.CriarContaAsync(criarContaDto);
+
+            if (result.IsFailure)
+            {
+                Console.WriteLine(BaseConstants.FALHA_CRIACAO_CODIGO_CONTA);
+                ModelState.AddModelError("CodigoConta", BaseConstants.FALHA_CRIACAO_CODIGO_CONTA);
+            }
+        }
         private IUserEmailStore<Usuario> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)

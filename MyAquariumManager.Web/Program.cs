@@ -9,6 +9,7 @@ using MyAquariumManager.Web.Validators.Animal;
 using MyAquariumManager.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using MyAquariumManager.Application;
+using MyAquariumManager.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,9 +25,8 @@ builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireCo
     .AddDefaultTokenProviders();
 
 builder.Services.AddApplication();
+builder.Services.AddInfrastructure();
 
-builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Identity/Account/Login"; 

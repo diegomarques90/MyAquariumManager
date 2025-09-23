@@ -17,7 +17,7 @@ namespace MyAquariumManager.Application
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddTransient<IAnimalService, AnimalService>();
-
+            services.AddTransient<IContaService, ContaService>();
             return services;
         }
     }
