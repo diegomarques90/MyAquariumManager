@@ -18,10 +18,10 @@ namespace MyAquariumManager.Web.Controllers
         [HttpGet("carregar-table-animais")]
         public async Task<IActionResult> CarregarTableAnimais()
         {
-            var result = await _animalService.ObterAnimaisAsync();
+            var result = await _animalService.CarregarTabelaAnimaisAsync();
 
             if (result.IsFailure)
-                return Json(new { data = new List<AnimalDto>() });
+                return Json(new { data = new List<TableAnimalDto>() });
 
             return Json(new { data = result.Value });
         }

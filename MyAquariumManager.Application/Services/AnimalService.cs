@@ -76,6 +76,27 @@ namespace MyAquariumManager.Application.Services
             }
         }
 
+        public async Task<Result<List<TableAnimalDto>>> CarregarTabelaAnimaisAsync()
+        {
+            try
+            {
+                var animais = await _animalRepository.GetAllAsync();
+                var tabelaAnimais = AnimalHelper.ObterListaDeTabelaAnimalDto(animais);
+
+                return Result<List<TableAnimalDto>>.Success(tabelaAnimais);
+            }
+            catch (DbUpdateException dbEx)
+            {
+                Console.WriteLine($"Erro de persistência ao carregar a tabela animais: {dbEx.Message}");
+                return Result<List<TableAnimalDto>>.Failure(["Erro de persistência ao carregar a tabela animais. Tente novamente mais tarde."]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao carregar a tabela animais: {ex.Message}");
+                return Result<List<TableAnimalDto>>.Failure([$"Ocorreu um erro inesperado ao carregar a tabela animais: {ex.Message}"]);
+            }
+        }
+
         public async Task<Result> ExcluirAnimalAsync(Guid id, string usuarioExclusao)
         {
             try
@@ -122,7 +143,6 @@ namespace MyAquariumManager.Application.Services
                 Console.WriteLine($"Erro ao obter a lista de todos os animais: {ex.Message}");
                 return Result<List<AnimalDto>>.Failure([$"Ocorreu um erro inesperado ao obter a lista de todos os animais: {ex.Message}"]);
             }
-
         }
 
         public async Task<Result<AnimalDto>> ObterAnimalPorIdAsync(Guid id)

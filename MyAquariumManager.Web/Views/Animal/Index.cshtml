@@ -2,7 +2,6 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 <link rel="stylesheet" href="~/lib/datatables/datatables.min.css" asp-append-version="true" />
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/datatables/datatables.min.js" asp-append-version="true"></script>
 
 @{
@@ -42,7 +41,7 @@
     });
 
     function carregarTableAnimais() {
-        return $('#tabelaAcordos').DataTable({
+        return $('#table-animais').DataTable({
             scrollY: 400,
             pageLength: 25,
             responsive: true,
@@ -53,7 +52,7 @@
             searching: false,
             paging: true,
             ajax: {
-                url: "/animal/carregar-table-animais",
+                url: "/carregar-table-animais",
                 type: "GET",
                 datatype: "json"
             },
