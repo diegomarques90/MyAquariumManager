@@ -3,6 +3,7 @@ using MyAquariumManager.Application.DTOs.Conta;
 using MyAquariumManager.Application.Interfaces.Services;
 using MyAquariumManager.Application.Mappers;
 using MyAquariumManager.Core.Common;
+using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Core.Entities;
 using MyAquariumManager.Core.Enums;
 using MyAquariumManager.Core.Interfaces.Repositories;
@@ -66,6 +67,44 @@ namespace MyAquariumManager.Application.Services
                 return Result<string>.Failure([$"Já existe conta cadastrada com o código: {conta.CodigoConta}"]);
 
             return result;
+        }
+
+        public async Task<Result<ContaSessionDto>> ObterContaParaSessionPorNomeAsync(string nome)
+        {
+            try
+            {
+                var conta = await _contaRepository.ObterContaPorNome(nome);
+                
+                if (conta is null)
+                    return Result<ContaSessionDto>.Failure([BaseConstants.CONTA_NAO_EXISTE_OU_JA_FOI_EXCLUIDA]);
+
+                var contaSessionDto = ContaHelper.ObterContaSessionDto(conta);
+                return Result<ContaSessionDto>.Success(contaSessionDto, HttpCode.Created);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao buscar os dados da conta por nome para a sessão: {ex.Message}");
+                return Result<ContaSessionDto>.Failure([$"Ocorreu um erro inesperado ao buscar os dados da conta por nome para a sessão: {ex.Message}"]);
+            }
+        }
+
+        public async Task<Result<ContaSessionDto>> ObterContaParaSessionPorUsuarioIdAsync(string usuarioId)
+        {
+            try
+            {
+                var conta = await _contaRepository.ObterContaPorUsuarioId(usuarioId);
+
+                if (conta is null)
+                    return Result<ContaSessionDto>.Failure([BaseConstants.CONTA_NAO_EXISTE_OU_JA_FOI_EXCLUIDA]);
+
+                var contaSessionDto = ContaHelper.ObterContaSessionDto(conta);
+                return Result<ContaSessionDto>.Success(contaSessionDto, HttpCode.Created);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao buscar os dados da conta por usuarioId para a sessão: {ex.Message}");
+                return Result<ContaSessionDto>.Failure([$"Ocorreu um erro inesperado ao buscar os dados da conta por usuarioId para a sessão: {ex.Message}"]);
+            }
         }
     }
 }

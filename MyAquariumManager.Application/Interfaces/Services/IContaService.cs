@@ -6,5 +6,7 @@ namespace MyAquariumManager.Application.Interfaces.Services
     public interface IContaService
     {
         Task<Result<ContaDto>> CriarContaAsync(CriarContaDto dto);
+        Task<Result<ContaSessionDto>> ObterContaParaSessionPorUsuarioIdAsync(string usuarioId);
+        Task<Result<ContaSessionDto>> ObterContaParaSessionPorNomeAsync(string nome);
     }
 }

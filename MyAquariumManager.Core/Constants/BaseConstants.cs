@@ -31,6 +31,7 @@
         public const string FALHA_CRIACAO_CODIGO_CONTA_USUARIO_CRIACAO_NULO = "Não foi possível criar o código da conta. UsuarioCriacao não pode ser nulo ou vazio.";
         public const string FALHA_CRIACAO_CODIGO_CONTA_ID_INVALIDO = "Não foi possível criar o código da conta. O Id da conta informado não é válido.";
         public const string FALHA_CRIACAO_CODIGO_CONTA = "Não foi possível criar o código conta. Tente novamente mais tarde.";
+        public const string CONTA_NAO_EXISTE_OU_JA_FOI_EXCLUIDA = "Conta não existe ou já foi excluída.";
         public const string DESCRICAO_OBRIGATORIA = "A descrição é obrigatória.";
         public const string DESCRICAO_QUANTIDADE_MAXIMA = "A descrição deve conter no máximo 800 caracteres.";
         public const string DATA_MANUTENCAO_OBRIGATORIA = "A data da manutenção é obrigatória.";

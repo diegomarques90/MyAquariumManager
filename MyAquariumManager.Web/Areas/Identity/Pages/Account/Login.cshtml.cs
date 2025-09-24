@@ -6,8 +6,13 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Identity.Client;
+using MyAquariumManager.Application.DTOs.Usuario;
+using MyAquariumManager.Application.Interfaces.Services;
 using MyAquariumManager.Core.Entities;
+using MyAquariumManager.Web.Extensions;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
 {
@@ -15,11 +20,13 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<Usuario> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IContaService _contaService;
 
-        public LoginModel(SignInManager<Usuario> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<Usuario> signInManager, ILogger<LoginModel> logger, IContaService contaService)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _contaService = contaService;
         }
 
         /// <summary>
@@ -108,7 +115,34 @@ namespace MyAquariumManager.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    
+
+                    var usuario = _signInManager.UserManager.Users.FirstOrDefault(x => x.UserName == Input.UserName);
+                    if (usuario == null)
+                    {
+                        var resultContaSession = await _contaService.ObterContaParaSessionPorNomeAsync(Input.UserName);
+                        
+                        if (resultContaSession.IsFailure)
+                        {
+                            ModelState.AddModelError(string.Empty, "Erro ao obter dados da conta.");
+                            return Page();
+                        }
+
+                        HttpContext.Session.SetObjectAsJson("conta", resultContaSession.Value);
+                    }
+                    else
+                    {
+                        var resultContaSession = await _contaService.ObterContaParaSessionPorUsuarioIdAsync(usuario.Id);
+
+                        if (resultContaSession.IsFailure)
+                        {
+                            ModelState.AddModelError(string.Empty, "Erro ao obter dados da conta.");
+                            return Page();
+                        }
+
+                        HttpContext.Session.SetObjectAsJson("conta", resultContaSession.Value);
+                        HttpContext.Session.SetObjectAsJson("usuario", new UsuarioSessionDto { Email = usuario.Email });
+                    }
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

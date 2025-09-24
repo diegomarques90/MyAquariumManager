@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MyAquariumManager.Application.DTOs.Animal;
 using MyAquariumManager.Application.Interfaces.Services;
@@ -7,7 +6,7 @@ using MyAquariumManager.Application.Interfaces.Services;
 namespace MyAquariumManager.Web.Controllers
 {
     [Authorize]
-    public class AnimalController(IAnimalService animalService) : Controller
+    public class AnimalController(IAnimalService animalService) : BaseController
     {
         private readonly IAnimalService _animalService = animalService;
 
@@ -35,9 +34,11 @@ namespace MyAquariumManager.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CadastrarAnimal([FromBody] CriarAnimalDto model)
         {
-            //Criar algo para pegar o usuario logado e também o código da conta;
-            //model.CodigoConta = "codigoConta@MyAquariumManager.com.br";
-            //model.UsuarioCriacao = "usuariologado@myaquariummanager.com.br";
+            if (model is null)
+                return BadRequest(new { success = false, errors = new List<string> { "CriarAnimalDto não pode ser nulo." } });
+
+            model.UsuarioCriacao = UsuarioLogado.Email;
+            model.CodigoConta = ContaLogada.CodigoConta;
 
             var result = await _animalService.CadastrarAnimalAsync(model);
 
