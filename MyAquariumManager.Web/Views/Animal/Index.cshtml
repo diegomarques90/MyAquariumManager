@@ -40,6 +40,12 @@
         carregarTableAnimais();
     });
 
+    const tipoDeAguaMap = {
+        1: "Água Doce",
+        2: "Água Salgada",
+        3: "Salobra"
+    }
+
     function carregarTableAnimais() {
         return $('#table-animais').DataTable({
             scrollY: 400,
@@ -61,10 +67,34 @@
                 { data: "nome" },
                 { data: "nomeCientifico" },
                 { data: "especie" },
-                { data: "dataAquisicao" },
+                { data: "dataAquisicao",
+                  render: function (data, type, row) {
+                    if (data) {
+                        var date = new Date(data);
+                        var dia = ('0' + date.getDate()).slice(-2);
+                        var mes = ('0' + (date.getMonth() + 1)).slice(-2);
+                        var ano = date.getFullYear();
+
+                        return dia + '/' + mes + '/' + ano;
+                    }
+
+                    return '';
+                  }
+                },
                 { data: "localAquisicao" },
-                { data: "tipoAgua" },
+                { data: "tipoDeAgua",
+                  render: function (data, type, row) {
+                      return tipoDeAguaMap[data] || 'Não Informado';
+                  }
+                },
                 { data: "origem" }
+            ],
+            columnDefs: [
+                {
+                    targets: 0,
+                    visible: false,
+                    searchable: false
+                }
             ]
         });
     }

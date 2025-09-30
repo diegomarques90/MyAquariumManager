@@ -9,7 +9,7 @@ namespace MyAquariumManager.Application.Interfaces.Services
         Task <Result<AnimalDto>> AtualizarAnimalAsync(AtualizarAnimalDto model);
         Task <Result> ExcluirAnimalAsync(Guid id, string usuarioExclusao);
         Task <Result<List<AnimalDto>>> ObterAnimaisAsync();
-        Task<Result<List<TableAnimalDto>>> CarregarTabelaAnimaisAsync();
+        Task<Result<DataTableResult<TableAnimalDto>>> CarregarTabelaAnimaisAsync(DataTableFilters dataTableFilters);
         Task <Result<AnimalDto>> ObterAnimalPorIdAsync(Guid id);
     }
 }
