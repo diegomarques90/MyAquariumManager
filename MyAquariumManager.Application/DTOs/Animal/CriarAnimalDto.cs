@@ -4,8 +4,8 @@ namespace MyAquariumManager.Application.DTOs.Animal
 {
     public class CriarAnimalDto
     {
-        public string CodigoConta { get; set; }
-        public string UsuarioCriacao { get; set; }
+        public string? CodigoConta { get; set; }
+        public string? UsuarioCriacao { get; set; }
         public string Nome { get; set; }
         public string NomeCientifico { get; set; }
         public string? LocalAquisicao { get; set; }

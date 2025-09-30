@@ -83,9 +83,30 @@ namespace MyAquariumManager.Application.Mappers
             };
         }
 
+
+        public static TableAnimalDto ObterTabelaAnimalDto(Animal animal)
+        {
+            return new TableAnimalDto
+            {
+                Id = animal.Id,
+                Nome = animal.Nome,
+                NomeCientifico = animal.NomeCientifico,
+                LocalAquisicao = animal.LocalAquisicao,
+                DataAquisicao = animal.DataAquisicao,
+                Especie = animal.Especie,
+                Origem = animal.Origem,
+                TipoDeAgua = animal.TipoDeAgua,
+            };
+        }
+
         public static List<AnimalDto> ObterListaDeAnimalDto(List<Animal> animais)
         {
             return [.. animais.Select(animal => ObterAnimalDto(animal))];
+        }
+
+        public static List<TableAnimalDto> ObterListaDeTabelaAnimalDto(List<Animal> animais)
+        {
+            return [.. animais.Select(animal => ObterTabelaAnimalDto(animal))];
         }
 
         public static CriarAnimalDto ObterCriarAnimalDto(Animal animal)

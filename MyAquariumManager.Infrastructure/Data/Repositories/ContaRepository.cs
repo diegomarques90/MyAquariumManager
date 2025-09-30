@@ -13,5 +13,19 @@ namespace MyAquariumManager.Infrastructure.Data.Repositories
                 .AsNoTracking()
                 .AnyAsync(conta => conta.CodigoConta == codigoConta);
         }
+
+        public async Task<Conta> ObterContaPorNome(string nome)
+        {
+            return await _context.Conta
+                .AsNoTracking()
+                .FirstOrDefaultAsync(conta => conta.Nome == nome);
+        }
+
+        public async Task<Conta> ObterContaPorUsuarioId(string usuarioId)
+        {
+            return await _context.Conta
+                .AsNoTracking()
+                .FirstOrDefaultAsync(conta => conta.UsuarioId == usuarioId);
+        }
     }
 }

@@ -19,5 +19,16 @@ namespace MyAquariumManager.Application.Mappers
                 CodigoConta = conta.CodigoConta,
             };
         }
+
+        public static ContaSessionDto ObterContaSessionDto(Conta conta)
+        {
+            return new ContaSessionDto
+            {
+                Id = conta.Id,
+                Nome = conta.Nome,
+                CodigoConta = conta.CodigoConta,
+                UsuarioId = conta.UsuarioId,
+            };
+        }
     }
 }

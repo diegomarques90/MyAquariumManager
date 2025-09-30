@@ -4,5 +4,6 @@
     {
         Doce = 1,
         Salgada = 2,
+        Salobra = 3
     }
 }

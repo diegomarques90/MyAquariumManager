@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyAquariumManager.Application.DTOs.Animal;
+using MyAquariumManager.Application.DTOs.Commons;
 using MyAquariumManager.Application.Interfaces.Services;
 using MyAquariumManager.Application.Mappers;
 using MyAquariumManager.Core.Common;
@@ -76,6 +77,33 @@ namespace MyAquariumManager.Application.Services
             }
         }
 
+        public async Task<Result<DataTableResult<TableAnimalDto>>> CarregarTabelaAnimaisAsync(DataTableFilters dataTableFilters)
+        {
+            try
+            {
+                var animais = await _animalRepository.ObterDataTableAsync(dataTableFilters);
+                var animaisTableDto = AnimalHelper.ObterListaDeTabelaAnimalDto(animais);
+                var dataTable = new DataTableResult<TableAnimalDto>
+                {
+                    Dados = animaisTableDto,
+                    TotalFiltrado = animaisTableDto.Count,
+                    TotalGeral = animais.Count,
+                };
+
+                return Result<DataTableResult<TableAnimalDto>>.Success(dataTable);
+            }
+            catch (DbUpdateException dbEx)
+            {
+                Console.WriteLine($"Erro de persistência ao carregar a tabela animais: {dbEx.Message}");
+                return Result<DataTableResult<TableAnimalDto>>.Failure(["Erro de persistência ao carregar a tabela animais. Tente novamente mais tarde."]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao carregar a tabela animais: {ex.Message}");
+                return Result<DataTableResult<TableAnimalDto>>.Failure([$"Ocorreu um erro inesperado ao carregar a tabela animais: {ex.Message}"]);
+            }
+        }
+
         public async Task<Result> ExcluirAnimalAsync(Guid id, string usuarioExclusao)
         {
             try
@@ -122,7 +150,6 @@ namespace MyAquariumManager.Application.Services
                 Console.WriteLine($"Erro ao obter a lista de todos os animais: {ex.Message}");
                 return Result<List<AnimalDto>>.Failure([$"Ocorreu um erro inesperado ao obter a lista de todos os animais: {ex.Message}"]);
             }
-
         }
 
         public async Task<Result<AnimalDto>> ObterAnimalPorIdAsync(Guid id)
