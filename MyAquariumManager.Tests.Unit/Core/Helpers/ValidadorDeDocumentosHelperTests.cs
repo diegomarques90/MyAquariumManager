@@ -17,7 +17,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Helpers
         [InlineData("", false)]
         [InlineData("abc.def.ghi-jk", false)]
         [InlineData("73.298.712/0001-02", false)]
-        public void EhUmCpfValido_DeveRetornarResultadoCorreto(string cpf, bool esperado) 
+        public void AoValidarUmCpf_DeveRetornarResultadoCorreto(string cpf, bool esperado) 
         {
             //Act
             bool resultado = ValidadorDeDocumentosHelper.EhUmCpfValido(cpf);
@@ -27,8 +27,14 @@ namespace MyAquariumManager.Tests.Unit.Core.Helpers
         }
 
         [Theory]
+        [InlineData("12.ABC.345/01DE-35", true)]
+        [InlineData("12ABC34501DE35", true)]
         [InlineData("73.298.712/0001-02", true)]
         [InlineData("74764064000103", true)]
+        [InlineData("12.ABC.345/01DE-37", false)]
+        [InlineData("12ABC34501DE37", false)]
+        [InlineData("12.XXX.345/01XX-37", false)]
+        [InlineData("XX.XXX.XXX/XXXX-XX", false)]
         [InlineData("00.000.000/0000-00", false)]
         [InlineData("11111111111111", false)]
         [InlineData("11.222.333/0001-82", false)]
@@ -37,7 +43,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Helpers
         [InlineData("bg.hjj.asd/asec-da", false)]
         [InlineData(null, false)]
         [InlineData("", false)]
-        public void EhUmCnpjValido_DeveRetornarResultadoCorreto(string cnpj, bool esperado)
+        public void AoValidarUmCnpj_DeveRetornarResultadoCorreto(string cnpj, bool esperado)
         { 
             //Act
             bool resultado = ValidadorDeDocumentosHelper.EhUmCnpjValido(cnpj);
@@ -61,7 +67,7 @@ namespace MyAquariumManager.Tests.Unit.Core.Helpers
         [InlineData("123", false)]
         [InlineData(null, false)]
         [InlineData("", false)]
-        public void EhUmDocumentoValido_DeveRetornarResultadoCorreto(string documento, bool esperado)
+        public void AoValidarUmDocumento_DeveRetornarResultadoCorreto(string documento, bool esperado)
         {
             //Act
             bool resultado = ValidadorDeDocumentosHelper.EhUmDocumentoValido(documento);

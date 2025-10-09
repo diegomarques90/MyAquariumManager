@@ -22,6 +22,7 @@ namespace MyAquariumManager.Infrastructure.Data.Repositories
             return await query
                 .Skip(dataTableFilters.Start)
                 .Take(dataTableFilters.Length)
+                .Where(animal => animal.Ativo)
                 .ToListAsync();
         }
     }
