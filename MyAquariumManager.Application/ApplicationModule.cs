@@ -18,6 +18,8 @@ namespace MyAquariumManager.Application
         {
             services.AddTransient<IAnimalService, AnimalService>();
             services.AddTransient<IContaService, ContaService>();
+            services.AddTransient<IUsuarioService, UsuarioService>();
+
             return services;
         }
     }

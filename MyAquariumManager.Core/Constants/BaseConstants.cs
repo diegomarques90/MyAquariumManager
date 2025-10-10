@@ -84,5 +84,6 @@
         public const string NOME_USUARIO_OBRIGATORIO = "O nome do usuário é obrigatório.";
         public const string NOME_USUARIO_QUANTIDADE_MAXIMA = "O nome do usuário deve conter no máximo 512 caracteres.";
         public const string NOME_PROJETO = "My Aquarium Manager";
+        public const string USUARIO_NAO_EXISTE_OU_JA_FOI_EXCLUIDO = "Usuário não existe ou já foi excluído.";
     }
 }

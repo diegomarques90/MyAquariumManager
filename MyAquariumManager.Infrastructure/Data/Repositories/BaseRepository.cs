@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MyAquariumManager.Core.Entities;
 using MyAquariumManager.Core.Interfaces.Repositories;
 using MyAquariumManager.Infrastructure.Data.Context;

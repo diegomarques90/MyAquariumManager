@@ -19,6 +19,7 @@ namespace MyAquariumManager.Infrastructure
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IAnimalRepository, AnimalRepository>();
             services.AddTransient<IContaRepository, ContaRepository>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 
             return services;
         }
