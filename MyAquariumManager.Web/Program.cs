@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyAquariumManager.Application;
+using MyAquariumManager.Application.DTOs.Conta;
 using MyAquariumManager.Application.DTOs.Usuario;
 using MyAquariumManager.Application.Interfaces.Services;
 using MyAquariumManager.Application.Mappers;
@@ -50,10 +51,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Events.OnValidatePrincipal = async context =>
     {
-        var userId = context.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
-        var session = context.HttpContext.Session;
-        var usuarioSessao = session.GetObjectFromJson<UsuarioSessionDto>("usuario");
         var serviceProvider = context.HttpContext.RequestServices;
+        var session = context.HttpContext.Session;
+        
+        var userId = context.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        var usuarioSessao = session.GetObjectFromJson<UsuarioSessionDto>("usuario");
 
         if (usuarioSessao == null && !string.IsNullOrEmpty(userId))
         {
@@ -67,7 +69,19 @@ builder.Services.ConfigureApplicationCookie(options =>
             session.SetObjectAsJson("usuario", result.Value);
         }
 
-        
+        var contaSessao = session.GetObjectFromJson<ContaSessionDto>("conta");
+
+        if (contaSessao == null && !string.IsNullOrEmpty(userId))
+        {
+            var contaService = serviceProvider.GetRequiredService<IContaService>();
+            
+            var result = await contaService.ObterContaParaSessionPorUsuarioIdAsync(userId);
+            if (result.IsFailure)
+                return;
+            
+            session.SetObjectAsJson("conta", result.Value);
+        }
+
         var stampValidator = serviceProvider.GetRequiredService<ISecurityStampValidator>();
         await stampValidator.ValidateAsync(context);
     };
