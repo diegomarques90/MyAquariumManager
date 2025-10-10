@@ -7,6 +7,7 @@ using MyAquariumManager.Application.Interfaces.Services;
 namespace MyAquariumManager.Web.Controllers
 {
     [Authorize]
+    [Route("[controller]")]
     public class AnimalController(IAnimalService animalService) : BaseController
     {
         private readonly IAnimalService _animalService = animalService;
@@ -37,12 +38,13 @@ namespace MyAquariumManager.Web.Controllers
             );
         }
 
+        [HttpGet("Cadastro")]
         public IActionResult Cadastro()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("CadastrarAnimal")]
         public async Task<IActionResult> CadastrarAnimal([FromBody] CriarAnimalDto model)
         {
             if (model is null)
@@ -57,6 +59,17 @@ namespace MyAquariumManager.Web.Controllers
                 return BadRequest(new { success = false, errors = result.Errors });
 
             return Ok(new { success = true, result.Value.Id });
+        }
+
+        [HttpDelete("ExcluirAnimal/{id:guid}")]
+        public async Task<IActionResult> ExcluirAnimal(Guid id) 
+        {
+            var result = await _animalService.ExcluirAnimalAsync(id, UsuarioLogado.Email);
+            
+            if (result.IsFailure)
+                return BadRequest(new { success = false, errors = result.Errors });
+
+            return Ok(new { success = true });
         }
     }
 }

@@ -4,6 +4,8 @@ namespace MyAquariumManager.Core.Helpers
 {
     public static class ValidadorDeDocumentosHelper
     {
+        private const int SUBTRACAO_ASCII = 48;
+
         /// <summary>
         /// Valida um número de CPF.
         /// </summary>
@@ -82,9 +84,9 @@ namespace MyAquariumManager.Core.Helpers
             if (string.IsNullOrEmpty(cnpj))
                 return false;
 
-            cnpj = RemoverCaracteresNaoNumericos(cnpj);
+            cnpj = RemoverCaracteresInvalidosParaCNPJ(cnpj);
 
-            if (cnpj.Length != 14 || !long.TryParse(cnpj, out _))
+            if (cnpj.Length != 14)
                 return false;
 
             if (new string(cnpj[0], 14) == cnpj)
@@ -105,7 +107,7 @@ namespace MyAquariumManager.Core.Helpers
             var cnpj = estruturaCnpj.Cnpj.Substring(0, 12);
 
             for (int i = 0; i < 12; i++)
-                soma += int.Parse(cnpj[i].ToString()) * multiplicador[i];
+                soma += (cnpj[i] - SUBTRACAO_ASCII) * multiplicador[i];
 
             var resto = ObterResto(soma);
 
@@ -120,7 +122,7 @@ namespace MyAquariumManager.Core.Helpers
             int soma = 0;
 
             for (int i = 0; i < 13; i++)
-                soma += int.Parse(cnpj[i].ToString()) * multiplicador[i];
+                soma += (cnpj[i] - SUBTRACAO_ASCII) * multiplicador[i];
 
             var resto = ObterResto(soma);
 
@@ -149,6 +151,7 @@ namespace MyAquariumManager.Core.Helpers
         }
 
         private static string RemoverCaracteresNaoNumericos(string documento) => Regex.Replace(documento, @"[^\d]", "");
+        private static string RemoverCaracteresInvalidosParaCNPJ(string cnpj) => Regex.Replace(cnpj, @"[ ./-]", "");
     }
 
     public class EstruturaCpf

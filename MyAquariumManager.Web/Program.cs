@@ -1,15 +1,20 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MyAquariumManager.Application;
+using MyAquariumManager.Application.DTOs.Conta;
+using MyAquariumManager.Application.DTOs.Usuario;
+using MyAquariumManager.Application.Interfaces.Services;
 using MyAquariumManager.Application.Mappers;
+using MyAquariumManager.Core.Entities;
 using MyAquariumManager.Core.Interfaces.Repositories;
+using MyAquariumManager.Infrastructure;
 using MyAquariumManager.Infrastructure.Data.Context;
 using MyAquariumManager.Infrastructure.Data.Repositories;
+using MyAquariumManager.Web.Extensions;
 using MyAquariumManager.Web.Filters;
 using MyAquariumManager.Web.Validators.Animal;
-using MyAquariumManager.Core.Entities;
-using Microsoft.AspNetCore.Identity;
-using MyAquariumManager.Application;
-using MyAquariumManager.Infrastructure;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +47,46 @@ builder.Services.AddSession(options => {
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Events.OnValidatePrincipal = async context =>
+    {
+        var serviceProvider = context.HttpContext.RequestServices;
+        var session = context.HttpContext.Session;
+        
+        var userId = context.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        var usuarioSessao = session.GetObjectFromJson<UsuarioSessionDto>("usuario");
+
+        if (usuarioSessao == null && !string.IsNullOrEmpty(userId))
+        {
+            var usuarioService = serviceProvider.GetRequiredService<IUsuarioService>();
+            
+            var result = await usuarioService.ObterUsuarioSessionDtoPorIdAsync(userId);
+
+            if (result.IsFailure)
+                return;
+            
+            session.SetObjectAsJson("usuario", result.Value);
+        }
+
+        var contaSessao = session.GetObjectFromJson<ContaSessionDto>("conta");
+
+        if (contaSessao == null && !string.IsNullOrEmpty(userId))
+        {
+            var contaService = serviceProvider.GetRequiredService<IContaService>();
+            
+            var result = await contaService.ObterContaParaSessionPorUsuarioIdAsync(userId);
+            if (result.IsFailure)
+                return;
+            
+            session.SetObjectAsJson("conta", result.Value);
+        }
+
+        var stampValidator = serviceProvider.GetRequiredService<ISecurityStampValidator>();
+        await stampValidator.ValidateAsync(context);
+    };
+});
+
 
 builder.Services.AddControllers(options =>
 {
@@ -64,9 +109,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

@@ -25,6 +25,7 @@
             <th>Local da Aquisição</th>
             <th>Tipo de Água</th>
             <th>Origem</th>
+            <th>Ações</th>
         </tr>
     </thead>
 </table>
@@ -58,7 +59,7 @@
             searching: false,
             paging: true,
             ajax: {
-                url: "/carregar-table-animais",
+                url: "Animal/carregar-table-animais",
                 type: "GET",
                 datatype: "json"
             },
@@ -87,7 +88,30 @@
                       return tipoDeAguaMap[data] || 'Não Informado';
                   }
                 },
-                { data: "origem" }
+                { data: "origem" },
+                {
+                    data: null,
+                    defaultContent: '',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        let animalId = row.id;
+                        let html = '';
+                        
+                        html += '<a href="/Animal/Detalhes/' + animalId + '" class="btn btn-sm btn-primary me-1" title="Visualizar Detalhes">' +
+                                '   <i class="fas fa-eye"></i>' + 
+                                '</a>';
+
+                        html += '<a href="/Animal/Editar/' + animalId + '" class="btn btn-sm btn-info me-1" title="Editar">' +
+                                '   <i class="fas fa-edit"></i>' +
+                                '</a>';
+
+                        html += '<a href="javascript:void(0);" onclick="excluirAnimal(\'' + animalId + '\')" class="btn btn-sm btn-danger" title="Excluir">' +
+                                '   <i class="fas fa-trash-alt"></i>' +
+                                '</a>';
+
+                        return html;
+                    }
+                }
             ],
             columnDefs: [
                 {
@@ -98,8 +122,40 @@
             ]
         });
     }
-</script>
 
-@{
-}
+    function excluirAnimal(animalId) {
+        let excluirAnimalUrl = '@Url.Action("ExcluirAnimal", "Animal")';
+
+        $.ajax({
+            url: `${excluirAnimalUrl}/${animalId}`,
+            type: 'DELETE',
+            success: function(response) {
+                if (response.success) {
+                    toastr.success('Animal excluído com sucesso!', 'Sucesso');
+                    $('#table-animais').DataTable().ajax.reload(null, false);
+                } else {
+                    response.errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                }
+            },
+            error: function(xhr, status, errors) {
+                if (errors && Array.isArray(errors)) {
+                    errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                }
+                else if (xhr.responseJSON && Array.isArray(xhr.responseJSON.errors)) {
+                    xhr.responseJSON.errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                } else {
+                    toastr.error('Ocorreu uma falha ao excluir o animal. Tente novamente mais tarde!');
+                }
+
+                console.log(`Ocorreu uma falha ao excluir o animal. ErrorInfo: ${xhr} + ${errors}`);
+            }
+        });
+    }
+</script>
 
