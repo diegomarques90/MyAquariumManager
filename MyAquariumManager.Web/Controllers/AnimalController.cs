@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using MyAquariumManager.Application.DTOs.Animal;
 using MyAquariumManager.Core.Common;
 using MyAquariumManager.Application.Interfaces.Services;
+using System.Threading.Tasks;
+using MyAquariumManager.Web.Models.Animal;
 
 namespace MyAquariumManager.Web.Controllers
 {
@@ -42,6 +44,19 @@ namespace MyAquariumManager.Web.Controllers
         public IActionResult Cadastro()
         {
             return View();
+        }
+
+        [HttpGet("Detalhes/{id}")]
+        public async Task<IActionResult> Detalhes(Guid id)
+        {
+            var result = await _animalService.ObterAnimalPorIdAsync(id);
+            
+            if (result.IsFailure)
+                return BadRequest(new { success = false, errors = result.Errors });
+
+            var viewModel = DetalhesViewModel.FromAnimalDto(result.Value);
+
+            return View("Detalhes", viewModel);
         }
 
         [HttpPost("CadastrarAnimal")]
