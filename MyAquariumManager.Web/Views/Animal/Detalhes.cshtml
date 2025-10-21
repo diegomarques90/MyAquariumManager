@@ -4,4 +4,44 @@
     ViewData["Title"] = "Detalhes do Animal";
 }
 
+<div class="mt-3 mb-3">
+    <h4>Detalhes do @Model.Nome</h4>
+</div>
+
+<div class="container mt-3"></div>
+
+<div class="row">
+    <div class="col-12 col-sm-6 mt-2">
+        <label><strong>Nome:</strong> @Model.Nome</label><br />
+    </div>
+    <div class="col-12 col-sm-6 mt-2">
+        <label><strong>Nome Científico:</strong> @Model.NomeCientifico</label><br />
+    </div>
+
+    <div class="col-12 col-sm-6 mt-2">
+        <label><strong>Espécie:</strong> @Model.Especie</label><br />
+    </div>
+    <div class="col-12 col-sm-6 mt-2">
+        <label><strong>Origem:</strong> @Model.Origem</label><br />
+    </div>
+
+    <div class="col-12 col-sm-6 mt-2">
+        <label><strong>Local de Aquisição:</strong> @Model.LocalAquisicao</label><br />
+    </div>
+    <div class="col-12 col-sm-6 mt-2">
+        <label><strong>Data de Aquisição:</strong> @Model.DataAquisicao </label><br /> 
+    </div>
+
+    <div class="col-12 col-sm-4 mt-2">
+        <label><strong>Comportamento:</strong> @Model.Comportamento</label><br />
+    </div>
+    <div class="col-12 col-sm-4 mt-2">
+        <label><strong>Cardumeiro?</strong> @Model.Cardumeiro</label>
+    </div>
+    <div class="col-12 col-sm-4 mt-2">
+        <label><strong>Quantidade Mínima:</strong> @Model.QuantidadeMinima</label>
+    </div>
+
+
+</div>
 

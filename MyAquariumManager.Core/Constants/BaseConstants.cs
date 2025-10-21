@@ -3,6 +3,8 @@
     public static class BaseConstants
     {
         internal const string SUFIXO_MY_AQUARIUM_MANAGER = "MyAquariumManager";
+        public const string SIM = "Sim";
+        public const string NAO = "Não";
         public const string ID_NAO_PODE_SER_NULO_OU_VAZIO = "O Id não pode ser nulo ou vazio.";
         public const string USUARIO_CRIACAO_OBRIGATORIO = "O usuário de criação é obrigatório.";
         public const string USUARIO_CRIACAO_QUANTIDADE_MAXIMA = "O usuário de criação deve conter no máximo 200 caracteres.";
