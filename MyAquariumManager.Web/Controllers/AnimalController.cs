@@ -46,7 +46,7 @@ namespace MyAquariumManager.Web.Controllers
             return View();
         }
 
-        [HttpGet("Detalhes/{id}")]
+        [HttpGet("Detalhes/{id:guid}")]
         public async Task<IActionResult> Detalhes(Guid id)
         {
             var result = await _animalService.ObterAnimalPorIdAsync(id);
@@ -58,6 +58,33 @@ namespace MyAquariumManager.Web.Controllers
 
             return View("Detalhes", viewModel);
         }
+
+        [HttpGet("Editar/{id:guid}")]
+        public async Task<IActionResult> Editar(Guid id)
+        {
+            var result = await _animalService.ObterAnimalPorIdAsync(id);
+
+            if (result.IsFailure)
+                return BadRequest(new { success = false, errors = result.Errors });
+
+            var viewModel = EditarViewModel.FromAnimalDto(result.Value);
+
+            return View("Editar", viewModel);
+        }
+
+        [HttpPut("Atualizar")]
+        public async Task<IActionResult> AtualizarAnimal([FromBody] AtualizarAnimalDto dto)
+        {
+            dto.UsuarioAlteracao = UsuarioLogado.Email;
+
+            var result = await _animalService.AtualizarAnimalAsync(dto);
+
+            if (result.IsFailure)
+                return BadRequest(new { success = false, errors = result.Errors });
+
+            return Ok(new { success = true });
+        }
+
 
         [HttpPost("CadastrarAnimal")]
         public async Task<IActionResult> CadastrarAnimal([FromBody] CriarAnimalDto model)
