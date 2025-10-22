@@ -38,3 +38,11 @@ body {
     margin-right: auto;
     max-width: 100%;
 }
+
+.separator 
+{
+    height: 1px;
+    width: 100%;
+    background-color: #e9ecef;
+    margin: 1rem 0;
+}
