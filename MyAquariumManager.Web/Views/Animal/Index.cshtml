@@ -8,8 +8,13 @@
     ViewData["Title"] = "Animais";
 }
 
-<div class="container mt-3 d-flex justify-content-center">
-    <h3>Animais Cadastrados</h3>
+<div class="container d-flex">
+    <div class="col-12 col-sm-9 mt-3">
+        <h4>ANIMAIS CADASTRADOS</h4>
+    </div>
+    <div class="col-12 col-sm-3 mt-3 justify-content-end">
+        <a asp-action="Cadastro" class="btn btn-outline-dark d-flex justify-content-center align-items-center">Cadastrar Animal<i class="fa fa-square-plus fa-2x"></i></a>
+    </div>
 </div>
 
 <div class="container mt-4"></div>
@@ -32,9 +37,7 @@
 
 <div class="container mt-3"></div>
 
-<div class="container d-flex justify-content-end">
-    <a asp-action="Cadastro" class="btn btn-outline-dark d-flex justify-content-center align-items-center">Cadastrar Animal<i class="fa fa-square-plus fa-2x"></i></a>
-</div>
+
 
 <script>
     $(document).ready(function() {
@@ -93,19 +96,20 @@
                     data: null,
                     defaultContent: '',
                     orderable: false,
+                    width: '120px',
                     render: function (data, type, row) {
                         let animalId = row.id;
                         let html = '';
                         
-                        html += '<a href="/Animal/Detalhes/' + animalId + '" class="btn btn-sm btn-primary me-1" title="Visualizar Detalhes">' +
+                        html += '<a href="/Animal/Detalhes/' + animalId + '" class="btn btn-sm btn-action-hover-white btn-radius-100 me-1" title="Visualizar Detalhes">' +
                                 '   <i class="fas fa-eye"></i>' + 
                                 '</a>';
 
-                        html += '<a href="/Animal/Editar/' + animalId + '" class="btn btn-sm btn-info me-1" title="Editar">' +
+                        html += '<a href="/Animal/Editar/' + animalId + '" class="btn btn-sm btn-action-hover-white btn-radius-100 me-1" title="Editar">' +
                                 '   <i class="fas fa-edit"></i>' +
                                 '</a>';
 
-                        html += '<a href="javascript:void(0);" onclick="excluirAnimal(\'' + animalId + '\')" class="btn btn-sm btn-danger" title="Excluir">' +
+                        html += '<a href="javascript:void(0);" onclick="excluirAnimal(\'' + animalId + '\')" class="btn btn-sm btn-action-hover-white btn-radius-100" title="Excluir">' +
                                 '   <i class="fas fa-trash-alt"></i>' +
                                 '</a>';
 

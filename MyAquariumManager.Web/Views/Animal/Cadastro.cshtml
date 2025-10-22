@@ -7,7 +7,7 @@
 }
 
 <div class="container d-flex justify-content-center">
-    <h4>Informe os dados para cadastrar um novo animal</h4>
+    <h4>CADASTRAR NOVO ANIMAL</h4>
 </div>
 
 <div class="container mt-3"></div>
@@ -169,7 +169,7 @@
             success: function(response) {
                 if (response.success) {
                     toastr.success('Animal cadastrado com sucesso!', 'Sucesso');
-                    window.location.reload;
+                    window.location.href = '/Animal';
                 } else {
                     response.errors.forEach(error => {
                         toastr.warning(error);
