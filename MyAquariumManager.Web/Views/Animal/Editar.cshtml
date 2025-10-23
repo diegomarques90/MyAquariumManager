@@ -11,10 +11,240 @@
 
 <div class="container mt-3"></div>
 
+<input hidden id="id-animal" value="@Model.Id" />
 
-<div class="row">
-    <div class="container d-flex justify-content-end">
-        <a asp-action="Index" class="btn btn-outline-dark d-flex justify-content-center align-items-center mx-3">Voltar</a>
-    </div>
+<div class="container">
+    <form id="form-editar-animal">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="nome" class="form-label">Nome: </label>
+                <input type="text" id="nome" name="Nome" class="form-control" maxlength="200" value="@Model.Nome" required />
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="nomeCientifico" class="form-label">Nome Científico: </label>
+                <input type="text" id="nomeCientifico" name="Nome Científico" class="form-control" maxlength="200" value="@Model.NomeCientifico" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-2 mb-3">
+                @{
+                    var dataAquisicaoValue = Model.DataAquisicao.HasValue ? Model.DataAquisicao.Value.ToString("yyyy-MM-dd") : string.Empty;
+                }
+                <label for="dataAquisicao" class="form-label">Data Aquisição:</label>
+                <input type="date" id="dataAquisicao" name="Data da Aquisição" class="form-control" value="@dataAquisicaoValue" required />
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="localAquisicao" class="form-label">Local Aquisição: </label>
+                <input type="text" id="localAquisicao" name="Local da Aquisição" class="form-control" maxlength="100" value="@Model.LocalAquisicao"/>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="especie" class="form-label">Espécie: </label>
+                <input type="text" id="especie" name="Espécie" class="form-control" maxlength="100" value="@Model.Especie" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="origem" class="form-label">Origem: </label>
+                <input type="text" id="origem" name="Origem" class="form-control" maxlength="100" value="@Model.Origem" />
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="comportamento" class="form-label">Comportamento: </label>
+                <input type="text" id="comportamento" name="Comportamento" class="form-control" maxlength="100" value="@Model.Comportamento" />
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="faixaPH" class="form-label">Faixa do PH: </label>
+                <input type="text" id="faixaPH" name="Faixa do PH" class="form-control" maxlength="100" value="@Model.FaixaDoPH" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-2 mb-3">
+                <label for="cardumeiro" class="form-label">Cardumeiro?</label>
+                <input type="checkbox" id="cardumeiro" name="É cardumeiro?" class="form-control form-check-input" value="@Model.Cardumeiro" checked="@Model.Cardumeiro" />
+            </div>
+            <div class="col-sm-12 col-md-2 mb-3">
+                <label for="quantidadeMinima" class="form-label">Quantidade Mínima</label>
+                <input type="number" id="quantidadeMinima" name="Quantidade Mínima" class="form-control" required value="@Model.QuantidadeMinima" />
+            </div>
+            <div class="col-sm-12 col-md-2 mb-3">
+                <label for="litragemMinima" class="form-label">Litragem Mínima</label>
+                <input type="number" id="litragemMinima" name="Litragem Mínima" class="form-control" required value="@Model.LitragemMinima" />
+            </div>
+            <div class="col-sm-12 col-md-3 mb-3">
+                <label for="tipoDeAlimentacao" class="form-label">Tipo de Alimentação</label>
+                <select id="tipoDeAlimentacao" name="Tipo de Alimentação" class="form-select" required value="">
+                    <option value="selecione">-- Selecione --</option>
+                    @{
+                        string tipoDeAlimentacao = string.Empty;
+                        foreach (var tipo in Enum.GetValues(typeof(TipoDeAlimentacao)))
+                        {
+                            int valor = (int)tipo;
+
+                            switch (tipo)
+                            {
+                                case TipoDeAlimentacao.Onivoro:
+                                    tipoDeAlimentacao = "Onívoro";
+                                    break;
+                                case TipoDeAlimentacao.Detritivoro:
+                                    tipoDeAlimentacao = "Detritívoro";
+                                    break;
+                                case TipoDeAlimentacao.Herbivoro:
+                                    tipoDeAlimentacao = "Herbívoro";
+                                    break;
+                                case TipoDeAlimentacao.Carnivoro:
+                                    tipoDeAlimentacao = "Carnívoro";
+                                    break;
+                            }
+
+                            if (valor == (int)Model.TipoDeAlimentacao)
+                            {
+                                <option value="@valor" selected>@tipoDeAlimentacao</option>
+                                continue;
+                            } 
+                            
+                            <option value="@valor">@tipoDeAlimentacao</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-sm-12 col-md-3 mb-3">
+                <label for="tipoDeAgua" class="form-label">Tipo de Água</label>
+                <select id="tipoDeAgua" name="Tipo de Água" class="form-select" required>
+                    <option value="selecione">-- Selecione --</option>
+                    @{
+                        foreach (var tipo in Enum.GetValues(typeof(TipoDeAgua)))
+                        {
+                            int valor = (int)tipo;
+
+                            if (valor == (int)Model.TipoDeAgua)
+                            {
+                                <option value="@valor" selected>@tipo</option>
+                                continue;
+                            }
+
+                            <option value="@valor">@tipo</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="faixaDeTamanho" class="form-label">Faixa de Tamanho: </label>
+                <input type="text" id="faixaDeTamanho" name="Faixa de Tamanho" class="form-control" maxlength="100" value="@Model.FaixaDeTamanho" />
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="faixaDeTemperatura" class="form-label">Faixa de Temperatura: </label>
+                <input type="text" id="faixaDeTemperatura" name="Faixa de Temperatura" class="form-control" maxlength="100" value="@Model.FaixaDeTemperatura"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 mb-3">
+                <label for="informacoesAdicionais" class="form-label">Informações Adicionais: </label>
+                <textarea id="informacoesAdicionais" rows="4" cols="50" style="resize: none;" maxlength="800" class="form-control">@Model.InformacoesAdicionais</textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container d-flex justify-content-end">
+                <a asp-action="Index" class="btn btn-outline-dark d-flex justify-content-center align-items-center mx-3">Voltar</a>
+                <button type="button" onclick="atualizarAnimal()" class="btn btn-dark d-flex justify-content-center align-items-center">Salvar</button>
+            </div>
+        </div>
+    </form>
 </div>
+<style>
 
+</style>
+
+<script>
+    addAllEventListener();
+
+    function atualizarAnimal() {
+        if (!validarFormulario()) {
+            return;
+        }
+
+        let atualizarAnimalDto = obterDadosFormulario();
+
+        let atualizarAnimalUrl = '@Url.Action("Atualizar", "Animal")';
+
+        $.ajax({
+            url: atualizarAnimalUrl,
+            type: 'PUT',
+            data: JSON.stringify(atualizarAnimalDto),
+            contentType: 'application/json',
+            success: function(response) {
+                if (response.success) {
+                    toastr.success('Animal editado com sucesso!', 'Sucesso');
+                    window.location.href = '/Animal';
+                } else {
+                    response.errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                }
+            },
+            error: function(xhr, status, errors) {
+                if (errors && Array.isArray(errors)) {
+                    errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                }
+                else if (xhr.responseJSON && Array.isArray(xhr.responseJSON.errors)) {
+                    xhr.responseJSON.errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                } else {
+                    toastr.error('Ocorreu uma falha ao editar o animal. Tente novamente mais tarde!');
+                }
+
+                console.log(`Ocorreu uma falha ao editar o animal. ErrorInfo: ${xhr} + ${errors}`);
+            }
+        });
+    }
+
+    function validarFormulario() {
+        let formularioValido = true;
+
+        let camposObrigatorios = document.querySelectorAll('input[required], textarea[required], select[required]');
+
+        camposObrigatorios.forEach(campo => {
+            campo.classList.remove('is-invalid');
+        });
+
+        camposObrigatorios.forEach(campo => {
+            if (campo.value.trim() === '') {
+                toastr.warning(`O campo ${campo.name} é obrigatório.`);
+                campo.classList.add('is-invalid');
+                formularioValido = false;
+            }
+        });
+
+        return formularioValido;
+    }
+
+    function obterDadosFormulario() {
+        let animal = {
+            Id: document.getElementById('id-animal').value,
+            Nome: document.getElementById('nome').value.trim(),
+            NomeCientifico: document.getElementById('nomeCientifico').value.trim(),
+            DataAquisicao: document.getElementById('dataAquisicao').value,
+            LocalAquisicao: document.getElementById('localAquisicao').value.trim(),
+            Especie: document.getElementById('especie').value.trim(),
+            Origem: document.getElementById('origem').value.trim(),
+            Comportamento: document.getElementById('comportamento').value.trim(),
+            FaixaDoPH: document.getElementById('faixaPH').value.trim(),
+            Cardumeiro: document.getElementById('cardumeiro').checked,
+            QuantidadeMinima: parseInt(document.getElementById('quantidadeMinima').value) || 0,
+            LitragemMinima: parseInt(document.getElementById('litragemMinima').value) || 0,
+            TipoDeAlimentacao: parseInt(document.getElementById('tipoDeAlimentacao').value) || 0,
+            TipoDeAgua: parseInt(document.getElementById('tipoDeAgua').value) || 0,
+            FaixaDeTamanho: document.getElementById('faixaDeTamanho').value.trim(),
+            FaixaDeTemperatura: document.getElementById('faixaDeTemperatura').value.trim(),
+            InformacoesAdicionais: document.getElementById('informacoesAdicionais').value.trim()
+        };
+
+        return animal;
+    }
+</script>

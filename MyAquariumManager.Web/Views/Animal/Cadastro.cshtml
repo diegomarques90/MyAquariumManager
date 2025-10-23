@@ -139,17 +139,6 @@
 </div>
 
 <script>
-    function addAllEventListener() {
-        let campos = document.querySelectorAll('input, textarea, select');
-        campos.forEach(campo => {
-            campo.addEventListener('input', function() {
-                if (this.classList.contains('is-invalid')) {
-                    this.classList.remove('is-invalid');
-                }
-            });
-        });
-    }
-    
     addAllEventListener();
 
     function cadastrarAnimal() {
@@ -224,7 +213,7 @@
             Especie: document.getElementById('especie').value.trim(),
             Origem: document.getElementById('origem').value.trim(),
             Comportamento: document.getElementById('comportamento').value.trim(),
-            FaixaPH: document.getElementById('faixaPH').value.trim(),
+            FaixaDoPH: document.getElementById('faixaPH').value.trim(),
             Cardumeiro: document.getElementById('cardumeiro').checked,
             QuantidadeMinima: parseInt(document.getElementById('quantidadeMinima').value) || 0,
             LitragemMinima: parseInt(document.getElementById('litragemMinima').value) || 0,

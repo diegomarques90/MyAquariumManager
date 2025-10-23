@@ -6,7 +6,7 @@ namespace MyAquariumManager.Application.DTOs.Animal
     public class AtualizarAnimalDto
     {
         public Guid Id { get; set; }
-        public string UsuarioAlteracao { get; set; }
+        public string? UsuarioAlteracao { get; set; }
         public DateTime DataAlteracao { get; set; }
         public string Nome { get; set; }
         public string NomeCientifico { get; set; }

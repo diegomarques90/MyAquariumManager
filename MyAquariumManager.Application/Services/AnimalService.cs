@@ -21,7 +21,7 @@ namespace MyAquariumManager.Application.Services
             if (animal is null) 
                 return Result<AnimalDto>.Failure([BaseConstants.ANIMAL_NAO_EXISTE_OU_JA_FOI_EXCLUIDO]);
 
-            AnimalHelper.AtualizarAnimal(animal, model);
+            animal = AnimalHelper.AtualizarAnimal(animal, model);
 
             var (isValid, errors) = animal.Validate();
 

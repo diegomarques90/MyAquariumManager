@@ -156,9 +156,9 @@ Este projeto segue o padrão de Arquitetura de Cebola (ou Hexagonal), promovendo
 * **MyAquariumManager.Application (Aplicação):** Orquestra as operações da aplicação, define casos de uso e interfaces para serviços de domínio e infraestrutura. Lida com DTOs e mapeamentos.
 * **MyAquariumManager.Infrastructure (Infraestrutura):** Implementa os contratos (interfaces) definidos na camada de Aplicação. Contém as implementações de persistência (EF Core, Contexto, Migrations), serviços externos e entre outros.
 * **MyAquariumManager.Web (Apresentação):** É a interface do usuário (ASP.NET Core MVC). Contém Controllers, Views, ViewModels e toda a configuração da aplicação web.
-* **MyAquariumManager.Tests.Unit (Testes de Unidade):** Contém os testes automatizados para as unidades de código das camadas Core, Application e Infrastructure, garantindo a validação do comportamento do domínio e da lógica de negócio. A estrutura de pastas dentro deste projeto espelha as camadas da solução para melhor organização.
+* **MyAquariumManager.Tests.Unit (Testes de Unidade):** Contém os testes unitários para as unidades de código das camadas Core, Application e Infrastructure, garantindo a validação do comportamento do domínio e da lógica de negócio. A estrutura de pastas dentro deste projeto espelha as camadas da solução para melhor organização.
 
-## 🧪 Testes Automatizados
+## 🧪 Testes Unitários
 Este projeto inclui uma suíte de testes de unidade para garantir a qualidade e o comportamento esperado das diferentes camadas da aplicação.
 
 ### MyAquariumManager.Tests.Unit

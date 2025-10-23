@@ -10,12 +10,12 @@ namespace MyAquariumManager.Web.Models.Animal
         public string Nome { get; set; }
         public string NomeCientifico { get; set; }
         public string? LocalAquisicao { get; set; }
-        public string DataAquisicao { get; set; }
+        public DateTime? DataAquisicao { get; set; }
         public string? Especie { get; set; }
         public string? FaixaDoPH { get; set; }
         public string? Origem { get; set; }
         public string? Comportamento { get; set; }
-        public string Cardumeiro { get; set; }
+        public bool Cardumeiro { get; set; }
         public int QuantidadeMinima { get; set; }
         public int LitragemMinima { get; set; }
         public TipoDeAlimentacao TipoDeAlimentacao { get; set; }
@@ -32,12 +32,12 @@ namespace MyAquariumManager.Web.Models.Animal
                 Nome = dto.Nome,
                 NomeCientifico = dto.NomeCientifico,
                 LocalAquisicao = dto.LocalAquisicao,
-                DataAquisicao = dto.DataAquisicao.HasValue ? dto.DataAquisicao.Value.ToString("dd/MM/yyyy") : string.Empty,
+                DataAquisicao = dto.DataAquisicao.HasValue ? dto.DataAquisicao.Value : null,
                 Especie = dto.Especie,
                 FaixaDoPH = dto.FaixaDoPH,
                 Origem = dto.Origem,
                 Comportamento = dto.Comportamento,
-                Cardumeiro = dto.Cardumeiro ? BaseConstants.SIM : BaseConstants.NAO,
+                Cardumeiro = dto.Cardumeiro,
                 QuantidadeMinima = dto.QuantidadeMinima,
                 LitragemMinima = dto.LitragemMinima,
                 TipoDeAlimentacao = dto.TipoDeAlimentacao,
