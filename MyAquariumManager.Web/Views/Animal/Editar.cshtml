@@ -1,76 +1,80 @@
-﻿@using MyAquariumManager.Core.Enums
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model MyAquariumManager.Web.Models.Animal.EditarViewModel;
+@using MyAquariumManager.Core.Enums;
+
 @{
-    ViewData["Title"] = "Cadastrar Animal";
+    ViewData["Title"] = "Editar Animal";
 }
 
-<div class="container d-flex justify-content-center">
-    <h4>CADASTRAR NOVO ANIMAL</h4>
+<div class="mt-3 mb-3">
+    <h4>EDITAR ANIMAL</h4>
 </div>
 
 <div class="container mt-3"></div>
 
+<input hidden id="id-animal" value="@Model.Id" />
+
 <div class="container">
-    <form id="form-cadastro-animal">
+    <form id="form-editar-animal">
         <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
                 <label for="nome" class="form-label">Nome: </label>
-                <input type="text" id="nome" name="Nome" class="form-control" maxlength="200" required />
+                <input type="text" id="nome" name="Nome" class="form-control" maxlength="200" value="@Model.Nome" required />
             </div>
             <div class="col-sm-12 col-md-6 mb-3">
                 <label for="nomeCientifico" class="form-label">Nome Científico: </label>
-                <input type="text" id="nomeCientifico" name="Nome Científico" class="form-control" maxlength="200" />
+                <input type="text" id="nomeCientifico" name="Nome Científico" class="form-control" maxlength="200" value="@Model.NomeCientifico" />
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-12 col-md-2 mb-3">
-                <label for="dataAquisicao" class="form-label">Data Aquisição:</label> 
-                <input type="date" id="dataAquisicao" name="Data da Aquisição" class="form-control" required />
+                @{
+                    var dataAquisicaoValue = Model.DataAquisicao.HasValue ? Model.DataAquisicao.Value.ToString("yyyy-MM-dd") : string.Empty;
+                }
+                <label for="dataAquisicao" class="form-label">Data Aquisição:</label>
+                <input type="date" id="dataAquisicao" name="Data da Aquisição" class="form-control" value="@dataAquisicaoValue" required />
             </div>
             <div class="col-sm-12 col-md-4 mb-3">
                 <label for="localAquisicao" class="form-label">Local Aquisição: </label>
-                <input type="text" id="localAquisicao" name="Local da Aquisição" class="form-control" maxlength="100" />
+                <input type="text" id="localAquisicao" name="Local da Aquisição" class="form-control" maxlength="100" value="@Model.LocalAquisicao"/>
             </div>
             <div class="col-sm-12 col-md-6 mb-3">
                 <label for="especie" class="form-label">Espécie: </label>
-                <input type="text" id="especie" name="Espécie" class="form-control" maxlength="100" />
+                <input type="text" id="especie" name="Espécie" class="form-control" maxlength="100" value="@Model.Especie" />
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-sm-12 col-md-4 mb-3">
                 <label for="origem" class="form-label">Origem: </label>
-                <input type="text" id="origem" name="Origem" class="form-control" maxlength="100" />
+                <input type="text" id="origem" name="Origem" class="form-control" maxlength="100" value="@Model.Origem" />
             </div>
             <div class="col-sm-12 col-md-4 mb-3">
                 <label for="comportamento" class="form-label">Comportamento: </label>
-                <input type="text" id="comportamento" name="Comportamento" class="form-control" maxlength="100" />
+                <input type="text" id="comportamento" name="Comportamento" class="form-control" maxlength="100" value="@Model.Comportamento" />
             </div>
             <div class="col-sm-12 col-md-4 mb-3">
                 <label for="faixaPH" class="form-label">Faixa do PH: </label>
-                <input type="text" id="faixaPH" name="Faixa do PH" class="form-control" maxlength="100" />
+                <input type="text" id="faixaPH" name="Faixa do PH" class="form-control" maxlength="100" value="@Model.FaixaDoPH" />
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-12 col-md-2 mb-3">
                 <label for="cardumeiro" class="form-label">Cardumeiro?</label>
-                <input type="checkbox" id="cardumeiro" name="É cardumeiro?" class="form-control form-check-input" />
+                <input type="checkbox" id="cardumeiro" name="É cardumeiro?" class="form-control form-check-input" value="@Model.Cardumeiro" checked="@Model.Cardumeiro" />
             </div>
             <div class="col-sm-12 col-md-2 mb-3">
                 <label for="quantidadeMinima" class="form-label">Quantidade Mínima</label>
-                <input type="number" id="quantidadeMinima" name="Quantidade Mínima" class="form-control" required />
+                <input type="number" id="quantidadeMinima" name="Quantidade Mínima" class="form-control" required value="@Model.QuantidadeMinima" />
             </div>
             <div class="col-sm-12 col-md-2 mb-3">
                 <label for="litragemMinima" class="form-label">Litragem Mínima</label>
-                <input type="number" id="litragemMinima" name="Litragem Mínima" class="form-control" required />
+                <input type="number" id="litragemMinima" name="Litragem Mínima" class="form-control" required value="@Model.LitragemMinima" />
             </div>
             <div class="col-sm-12 col-md-3 mb-3">
                 <label for="tipoDeAlimentacao" class="form-label">Tipo de Alimentação</label>
-                <select id="tipoDeAlimentacao" name="Tipo de Alimentação" class="form-select" required>
+                <select id="tipoDeAlimentacao" name="Tipo de Alimentação" class="form-select" required value="">
                     <option value="selecione">-- Selecione --</option>
                     @{
                         string tipoDeAlimentacao = string.Empty;
@@ -94,6 +98,12 @@
                                     break;
                             }
 
+                            if (valor == (int)Model.TipoDeAlimentacao)
+                            {
+                                <option value="@valor" selected>@tipoDeAlimentacao</option>
+                                continue;
+                            } 
+                            
                             <option value="@valor">@tipoDeAlimentacao</option>
                         }
                     }
@@ -107,6 +117,13 @@
                         foreach (var tipo in Enum.GetValues(typeof(TipoDeAgua)))
                         {
                             int valor = (int)tipo;
+
+                            if (valor == (int)Model.TipoDeAgua)
+                            {
+                                <option value="@valor" selected>@tipo</option>
+                                continue;
+                            }
+
                             <option value="@valor">@tipo</option>
                         }
                     }
@@ -116,51 +133,55 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
                 <label for="faixaDeTamanho" class="form-label">Faixa de Tamanho: </label>
-                <input type="text" id="faixaDeTamanho" name="Faixa de Tamanho" class="form-control" maxlength="100" />
+                <input type="text" id="faixaDeTamanho" name="Faixa de Tamanho" class="form-control" maxlength="100" value="@Model.FaixaDeTamanho" />
             </div>
             <div class="col-sm-12 col-md-6 mb-3">
                 <label for="faixaDeTemperatura" class="form-label">Faixa de Temperatura: </label>
-                <input type="text" id="faixaDeTemperatura" name="Faixa de Temperatura" class="form-control" maxlength="100" />
+                <input type="text" id="faixaDeTemperatura" name="Faixa de Temperatura" class="form-control" maxlength="100" value="@Model.FaixaDeTemperatura"/>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-12 mb-3">
                 <label for="informacoesAdicionais" class="form-label">Informações Adicionais: </label>
-                <textarea id="informacoesAdicionais" rows="4" cols="50" style="resize: none;" maxlength="800" class="form-control"></textarea>
+                <textarea id="informacoesAdicionais" rows="4" cols="50" style="resize: none;" maxlength="800" class="form-control">@Model.InformacoesAdicionais</textarea>
             </div>
         </div>
         <div class="row">
             <div class="container d-flex justify-content-end">
                 <a asp-action="Index" class="btn btn-outline-dark d-flex justify-content-center align-items-center mx-3">Voltar</a>
-                <button type="button" onclick="cadastrarAnimal()" class="btn btn-dark d-flex justify-content-center align-items-center">Cadastrar Animal</button>
+                <button type="button" onclick="atualizarAnimal()" class="btn btn-dark d-flex justify-content-center align-items-center">Salvar</button>
             </div>
         </div>
     </form>
 </div>
+<style>
+
+</style>
 
 <script>
     addAllEventListener();
 
-    function cadastrarAnimal() {
+    function atualizarAnimal() {
         if (!validarFormulario()) {
             return;
         }
 
-        let criarAnimalDto = obterDadosFormulario();
+        let atualizarAnimalDto = obterDadosFormulario();
 
-        let cadastrarAnimalUrl = '@Url.Action("CadastrarAnimal", "Animal")';
+        let atualizarAnimalUrl = '@Url.Action("Atualizar", "Animal")';
 
         $.ajax({
-            url: cadastrarAnimalUrl,
-            type: 'POST',
-            data: JSON.stringify(criarAnimalDto),
+            url: atualizarAnimalUrl,
+            type: 'PUT',
+            data: JSON.stringify(atualizarAnimalDto),
             contentType: 'application/json',
             success: function(response) {
                 if (response.success) {
-                    toastr.success('Animal cadastrado com sucesso!', 'Sucesso');
+                    toastr.success('Animal editado com sucesso!', 'Sucesso');
                     setTimeout(function() {
                         window.location.href = '/Animal';
                     }, 1500);
+                    
                 } else {
                     response.errors.forEach(error => {
                         toastr.warning(error);
@@ -178,23 +199,23 @@
                         toastr.warning(error);
                     });
                 } else {
-                    toastr.error('Ocorreu uma falha ao cadastrar o animal. Tente novamente mais tarde!');
+                    toastr.error('Ocorreu uma falha ao editar o animal. Tente novamente mais tarde!');
                 }
 
-                console.log(`Ocorreu uma falha ao cadastrar o animal. ErrorInfo: ${xhr} + ${errors}`);
+                console.log(`Ocorreu uma falha ao editar o animal. ErrorInfo: ${xhr} + ${errors}`);
             }
         });
     }
 
-    function validarFormulario() { 
+    function validarFormulario() {
         let formularioValido = true;
-        
+
         let camposObrigatorios = document.querySelectorAll('input[required], textarea[required], select[required]');
-        
+
         camposObrigatorios.forEach(campo => {
             campo.classList.remove('is-invalid');
         });
-        
+
         camposObrigatorios.forEach(campo => {
             if (campo.value.trim() === '') {
                 toastr.warning(`O campo ${campo.name} é obrigatório.`);
@@ -208,6 +229,7 @@
 
     function obterDadosFormulario() {
         let animal = {
+            Id: document.getElementById('id-animal').value,
             Nome: document.getElementById('nome').value.trim(),
             NomeCientifico: document.getElementById('nomeCientifico').value.trim(),
             DataAquisicao: document.getElementById('dataAquisicao').value,
@@ -228,7 +250,4 @@
 
         return animal;
     }
-
 </script>
-
-

@@ -138,6 +138,7 @@ namespace MyAquariumManager.Application.Mappers
         {
             return new AtualizarAnimalDto
             {
+                Id = animal.Id,
                 UsuarioAlteracao = animal.UsuarioAlteracao,
                 DataAlteracao = animal.DataAlteracao.Value,
                 Nome = animal.Nome,
