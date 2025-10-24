@@ -39,6 +39,19 @@ namespace MyAquariumManager.Tests.Unit.Builders
             return this;
         }
 
+        public AnimalBuilder ComIdInvalido()
+        {
+            _animal.SetarId(Guid.Empty);
+            return this;
+        }
+
+        public AnimalBuilder ComAtualizacao()
+        {
+            _animal.SetarId(Guid.NewGuid());
+            _animal.Atualizar(USUARIO_CRIACAO);
+            return this;
+        }
+
         public AnimalBuilder ComONomeInvalido()
         {
             _animal.Nome = string.Empty;

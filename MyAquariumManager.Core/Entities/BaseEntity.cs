@@ -83,6 +83,8 @@ namespace MyAquariumManager.Core.Entities
             }
         }
 
+        public void SetarId(Guid id) => Id = id;
+
         protected abstract (bool IsValid, List<string> Errors) ValidateSpecificRules();
     }
 }
