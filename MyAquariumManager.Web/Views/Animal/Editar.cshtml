@@ -178,7 +178,10 @@
             success: function(response) {
                 if (response.success) {
                     toastr.success('Animal editado com sucesso!', 'Sucesso');
-                    window.location.href = '/Animal';
+                    setTimeout(function() {
+                        window.location.href = '/Animal';
+                    }, 1500);
+                    
                 } else {
                     response.errors.forEach(error => {
                         toastr.warning(error);
