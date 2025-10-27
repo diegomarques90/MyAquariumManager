@@ -2,7 +2,7 @@
 {
     public enum TipoDeIluminacao
     {
-        Iluminacao1 = 1,
+        Forte = 1,
         Iluminacao2 = 2,
     }
 }

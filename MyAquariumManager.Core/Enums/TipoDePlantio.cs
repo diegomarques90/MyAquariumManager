@@ -2,7 +2,7 @@
 {
     public enum TipoDePlantio
     {
-        Plantio1 = 1,
+        FundoEMeio = 1,
         Plantio2 = 2,
     }
 }

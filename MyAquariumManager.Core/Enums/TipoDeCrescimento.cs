@@ -2,7 +2,7 @@
 {
     public enum TipoDeCrescimento
     {
-        Crescimento1 = 1,
-        Crescimento2 = 2,
+        Lento = 1,
+        Rapido = 2,
     }
 }

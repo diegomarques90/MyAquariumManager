@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using Moq;
+﻿using Moq;
 using MyAquariumManager.Application.DTOs.Animal;
 using MyAquariumManager.Application.Interfaces.Services;
 using MyAquariumManager.Application.Mappers;
