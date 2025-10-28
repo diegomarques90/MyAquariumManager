@@ -51,6 +51,22 @@ namespace MyAquariumManager.Core.Entities
         protected override (bool IsValid, List<string> Errors) ValidateSpecificRules()
         {
             var errors = new List<string>();
+
+            if (!Enum.IsDefined(typeof(TipoDeCrescimento), TipoDeCrescimento))
+                errors.Add(BaseConstants.TIPO_CRESCIMENTO_INVALIDO);
+
+            if (!Enum.IsDefined(typeof(TipoDeIluminacao), TipoDeIluminacao))
+                errors.Add(BaseConstants.TIPO_ILUMINACAO_INVALIDO);
+
+            if (!Enum.IsDefined(typeof(TipoDePlantio), TipoDePlantio))
+                errors.Add(BaseConstants.TIPO_PLANTIO_INVALIDO);
+
+            if (DataAquisicao.HasValue)
+            {
+                if (DataAquisicao.Value > DateTime.UtcNow)
+                    errors.Add(BaseConstants.DATA_AQUISICAO_NAO_PODE_SER_FUTURA);
+            }
+
             return (errors.Count == 0, errors);
         }
     }

@@ -36,6 +36,66 @@ namespace MyAquariumManager.Tests.Unit.Builders
             return this;
         }
 
+        public PlantaBuilder ComONomeInvalido()
+        {
+            _planta.Nome = string.Empty;
+            return this;
+        }
+
+        public PlantaBuilder ComNomeMaiorQueOPermitido()
+        {
+            _planta.Nome = new string('A', 201);
+            return this;
+        }
+
+        public PlantaBuilder ComNomeCientificoMaiorQueOPermitido()
+        {
+            _planta.Nome = new string('A', 201);
+            return this;
+        }
+
+        public PlantaBuilder ComLocalAquisicaoMaiorQueOPermitido()
+        {
+            _planta.LocalAquisicao = new string('A', 101);
+            return this;
+        }
+
+        public PlantaBuilder ComDataAquisicaoFutura()
+        {
+            _planta.DataAquisicao = DateTime.UtcNow.AddDays(5);
+            return this;
+        }
+
+        public PlantaBuilder ComFaixaDeTamanhoMaiorQueOPermitido()
+        {
+            _planta.FaixaDeTamanho = new string('A', 101);
+            return this;
+        }
+
+        public PlantaBuilder ComTipoDeCrescimentoInvalido()
+        {
+            _planta.TipoDeCrescimento = (TipoDeCrescimento)999;
+            return this;
+        }
+
+        public PlantaBuilder ComTipoDeIluminacaoInvalido()
+        {
+            _planta.TipoDeIluminacao = (TipoDeIluminacao)999;
+            return this;
+        }
+
+        public PlantaBuilder ComTipoDePlantioInvalido()
+        {
+            _planta.TipoDePlantio = (TipoDePlantio)999;
+            return this;
+        }
+
+        public PlantaBuilder ComFaixaDoPhMaiorQueOPermitido()
+        {
+            _planta.FaixaDoPH = new string('A', 101);
+            return this;
+        }
+
         public Planta Build() => _planta;
         
         private static string ObterCodigoConta()
