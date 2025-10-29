@@ -1,4 +1,5 @@
-﻿using MyAquariumManager.Core.Entities;
+﻿using MyAquariumManager.Core.Constants;
+using MyAquariumManager.Core.Entities;
 using MyAquariumManager.Core.Enums;
 
 namespace MyAquariumManager.Tests.Unit.Builders
@@ -50,7 +51,7 @@ namespace MyAquariumManager.Tests.Unit.Builders
 
         public PlantaBuilder ComNomeCientificoMaiorQueOPermitido()
         {
-            _planta.Nome = new string('A', 201);
+            _planta.NomeCientifico = new string('A', 201);
             return this;
         }
 
@@ -93,6 +94,36 @@ namespace MyAquariumManager.Tests.Unit.Builders
         public PlantaBuilder ComFaixaDoPhMaiorQueOPermitido()
         {
             _planta.FaixaDoPH = new string('A', 101);
+            return this;
+        }
+
+        public PlantaBuilder ComFaixaDeTemperaturaMaiorQueOPermitido()
+        {
+            _planta.FaixaDeTemperatura = new string('A', 101);
+            return this;
+        }
+
+        public PlantaBuilder ComNivelDeCultivoMaiorQueOPermitido()
+        {
+            _planta.NivelDeCutivo = new string('A', 101);
+            return this;
+        }
+
+        public PlantaBuilder ComFormaDeReproducaoMaiorQueOPermitido()
+        {
+            _planta.FormaDeReproducao = new string('A', 101);
+            return this;
+        }
+
+        public PlantaBuilder ComInformacoesAdicionaisMaiorQueOPermitido()
+        {
+            _planta.InformacoesAdicionais = new string('A', 801);
+            return this;
+        }
+
+        public PlantaBuilder ComUsuarioAlteracao()
+        {
+            _planta.Atualizar(BaseConstants.USER_UNIT_TESTS);
             return this;
         }
 
