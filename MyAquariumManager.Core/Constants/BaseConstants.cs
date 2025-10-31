@@ -1,4 +1,6 @@
-﻿namespace MyAquariumManager.Core.Constants
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
+namespace MyAquariumManager.Core.Constants
 {
     public static class BaseConstants
     {
@@ -77,6 +79,9 @@
         public const string EMAIL_QUANTIDADE_MAXIMA = "O e-mail deve conter no máximo 512 caracteres.";
         public const string LITRAGEM_MINIMA_IDEAL_MAIOR_QUE_ZERO = "A litragem mínima ideal deve ser maior que zero.";
         public const string TIPO_ALIMENTACAO_INVALIDO = "O Tipo de alimentação informado é inválido.";
+        public const string TIPO_CRESCIMENTO_INVALIDO = "O Tipo de crescimento informado é inválido.";
+        public const string TIPO_ILUMINACAO_INVALIDO = "O Tipo de iluminação informado é inválido.";
+        public const string TIPO_PLANTIO_INVALIDO = "O Tipo de plantio informado é inválido.";
         public const string TIPO_AGUA_INVALIDO = "O Tipo de água informado é inválido.";
         public const string DEVE_CONTER_APENAS_UM_ERRO = "A lista de erros deve conter apenas um erro.";
         public const string DEVE_CONTER_MAIS_DE_UM_ERRO = "A lista de erros deve conter mais de um erro.";
@@ -87,5 +92,6 @@
         public const string NOME_USUARIO_QUANTIDADE_MAXIMA = "O nome do usuário deve conter no máximo 512 caracteres.";
         public const string NOME_PROJETO = "My Aquarium Manager";
         public const string USUARIO_NAO_EXISTE_OU_JA_FOI_EXCLUIDO = "Usuário não existe ou já foi excluído.";
+        public const string PLANTA_NAO_EXISTE_OU_JA_FOI_EXCLUIDA = "Planta não existe ou já foi excluída.";
     }
 }
