@@ -8,5 +8,6 @@ namespace MyAquariumManager.Application.DTOs.Planta
 {
     public class AtualizarPlantaDto
     {
+        public Guid Id { get; set; }
     }
 }

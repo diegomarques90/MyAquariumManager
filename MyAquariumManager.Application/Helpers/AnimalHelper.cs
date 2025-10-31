@@ -65,7 +65,7 @@ namespace MyAquariumManager.Application.Mappers
                 DataAlteracao = animal.DataAlteracao,
                 UsuarioAlteracao = animal.UsuarioAlteracao,
                 Nome = animal.Nome,
-                NomeCientifico = animal.NomeCientifico,
+                NomeCientifico = animal.NomeCientifico ?? string.Empty,
                 LocalAquisicao = animal.LocalAquisicao,
                 DataAquisicao = animal.DataAquisicao,
                 Especie = animal.Especie,

@@ -1,4 +1,6 @@
-﻿namespace MyAquariumManager.Core.Constants
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
+namespace MyAquariumManager.Core.Constants
 {
     public static class BaseConstants
     {
@@ -90,5 +92,6 @@
         public const string NOME_USUARIO_QUANTIDADE_MAXIMA = "O nome do usuário deve conter no máximo 512 caracteres.";
         public const string NOME_PROJETO = "My Aquarium Manager";
         public const string USUARIO_NAO_EXISTE_OU_JA_FOI_EXCLUIDO = "Usuário não existe ou já foi excluído.";
+        public const string PLANTA_NAO_EXISTE_OU_JA_FOI_EXCLUIDA = "Planta não existe ou já foi excluída.";
     }
 }
