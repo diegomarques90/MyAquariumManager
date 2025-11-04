@@ -1,4 +1,5 @@
-﻿using MyAquariumManager.Application.DTOs.Planta;
+﻿using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using MyAquariumManager.Application.DTOs.Planta;
 using MyAquariumManager.Core.Entities;
 
 namespace MyAquariumManager.Application.Helpers
@@ -35,6 +36,27 @@ namespace MyAquariumManager.Application.Helpers
         public static Planta ObterPlanta(CriarPlantaDto dto)
         {
             return new Planta(dto.CodigoConta, dto.UsuarioCriacao, dto.Nome, dto.NomeCientifico, dto.LocalAquisicao, dto.DataAquisicao, dto.FaixaDeTamanho, dto.TipoDeCrescimento, dto.TipoDeIluminacao, dto.FaixaDoPH, dto.FaixaDeTemperatura, dto.NivelDeCutivo, dto.TipoDePlantio, dto.FormaDeReproducao, dto.ExigeCO2, dto.InformacoesAdicionais);
+        }
+
+        public static List<TablePlantaDto> ObterListaDeTabelaPlantaDto(List<Planta> plantas)
+        {
+            return [.. plantas.Select(planta => ObterTabelaPlantaDto(planta))];
+        }
+
+        public static TablePlantaDto ObterTabelaPlantaDto(Planta planta)
+        {
+            return new TablePlantaDto
+            {
+                Id = planta.Id,
+                Nome = planta.Nome,
+                NomeCientifico = planta.NomeCientifico,
+                LocalAquisicao = planta.LocalAquisicao,
+                DataAquisicao = planta.DataAquisicao,
+                TipoDeCrescimento = planta.TipoDeCrescimento,
+                TipoDeIluminacao = planta.TipoDeIluminacao,
+                TipoDePlantio = planta.TipoDePlantio,
+                ExigeCO2 = planta.ExigeCO2
+            };
         }
     }
 }

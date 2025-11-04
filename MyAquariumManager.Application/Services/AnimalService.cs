@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyAquariumManager.Application.DTOs.Animal;
-using MyAquariumManager.Application.DTOs.Commons;
 using MyAquariumManager.Application.Interfaces.Services;
 using MyAquariumManager.Application.Mappers;
 using MyAquariumManager.Core.Common;
@@ -110,7 +109,7 @@ namespace MyAquariumManager.Application.Services
             {
                 var animal = await _animalRepository.GetByIdAsync(id);
                 
-                if (animal == null)
+                if (animal is null)
                     return Result.Failure([BaseConstants.ANIMAL_NAO_EXISTE_OU_JA_FOI_EXCLUIDO]);
 
                 animal.Inativar(usuarioExclusao);
