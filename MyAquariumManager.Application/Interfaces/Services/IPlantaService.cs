@@ -10,6 +10,7 @@ namespace MyAquariumManager.Application.Interfaces.Services
         Task<Result> ExcluirPlantaAsync(Guid id, string usuarioExclusao);
         Task<Result<DataTableResult<TablePlantaDto>>> CarregarTablePlantasAsync(DataTableFilters dataTableFilters);
         Task<Result<PlantaDto>> ObterPlantaPorIdAsync(Guid id);
+        Task<Result<List<PlantaDto>>> ObterPlantasAsync();
 
     }
 }
