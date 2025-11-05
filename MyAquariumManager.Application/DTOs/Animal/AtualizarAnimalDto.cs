@@ -8,8 +8,8 @@ namespace MyAquariumManager.Application.DTOs.Animal
         public Guid Id { get; set; }
         public string? UsuarioAlteracao { get; set; }
         public DateTime DataAlteracao { get; set; }
-        public string Nome { get; set; }
-        public string NomeCientifico { get; set; }
+        public string Nome { get; set; } = string.Empty;
+        public string NomeCientifico { get; set; } = string.Empty;
         public string? LocalAquisicao { get; set; }
         public DateTime? DataAquisicao { get; set; }
         public string? Especie { get; set; }

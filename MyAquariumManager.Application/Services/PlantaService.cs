@@ -154,5 +154,26 @@ namespace MyAquariumManager.Application.Services
                 return Result<PlantaDto>.Failure([$"Ocorreu um erro inesperado ao obter a planta: {ex.Message}"]);
             }
         }
+
+        public async Task<Result<List<PlantaDto>>> ObterPlantasAsync()
+        {
+            try
+            {
+                var plantas = await _plantaRepository.GetAllAsync();
+                var plantasDtos = PlantaHelper.ObterListaDePlantaDto(plantas);
+
+                return Result<List<PlantaDto>>.Success(plantasDtos);
+            }
+            catch (DbUpdateException dbEx)
+            {
+                Console.WriteLine($"Erro de persistência ao obter a lista de todas as plantas: {dbEx.Message}");
+                return Result<List<PlantaDto>>.Failure(["Erro de persistência ao obter a lista de todas as plantas. Tente novamente mais tarde."]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao obter a lista de todas as plantas: {ex.Message}");
+                return Result<List<PlantaDto>>.Failure([$"Ocorreu um erro inesperado ao obter a lista de todas as plantas: {ex.Message}"]);
+            }
+        }
     }
 }

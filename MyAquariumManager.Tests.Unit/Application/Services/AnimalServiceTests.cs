@@ -292,5 +292,35 @@ namespace MyAquariumManager.Tests.Unit.Application.Services
             Assert.Contains(BaseConstants.ID_NAO_PODE_SER_NULO_OU_VAZIO, result.Errors, StringComparer.OrdinalIgnoreCase);
             _mockAnimalRepository.Verify(r => r.GetByIdAsync(It.IsAny<Guid>()), Times.Never, "O método GetByIdAsync não deve ser chamado quando o id for inválido.");
         }
+
+        [Fact]
+        public async Task ObterTableAnimais_DeveRetornarSucesso_QuandoSolicitacaoForValida()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+        }
+
+        [Fact]
+        public async Task ObterTableAnimais_DeveRetornarListaVazia_QuandoNaoPossuirAnimaisCadastrados() 
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+        }
+
+        [Fact]
+        public async Task ObterTableAnimais_DeveRetornarFalha_QuandoOcorrerExcecao()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+        }
     }
 }
