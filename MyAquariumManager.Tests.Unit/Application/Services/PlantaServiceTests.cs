@@ -3,10 +3,12 @@ using MyAquariumManager.Application.DTOs.Planta;
 using MyAquariumManager.Application.Helpers;
 using MyAquariumManager.Application.Interfaces.Services;
 using MyAquariumManager.Application.Services;
+using MyAquariumManager.Core.Common;
 using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Core.Entities;
 using MyAquariumManager.Core.Interfaces.Repositories;
 using MyAquariumManager.Tests.Unit.Builders;
+using System.Numerics;
 
 namespace MyAquariumManager.Tests.Unit.Application.Services
 {
@@ -245,61 +247,121 @@ namespace MyAquariumManager.Tests.Unit.Application.Services
         public async Task ObterPlantaPorId_DeveRetornarSucesso_QuandoForValida()
         {
             //Arrange
+            var planta = new PlantaBuilder()
+                .ComTodosOsDadosValidos()
+                .Build();
+
+            _mockPlantaRepository.Setup(x => x.GetByIdAsync(planta.Id)).ReturnsAsync(planta);
 
             //Act
+            var result = await _plantaService.ObterPlantaPorIdAsync(planta.Id);
 
             //Assert
+            Assert.True(result.IsSuccess, "A obtenção da planta por Id deve ser realizada com sucesso.");
+            Assert.Empty(result.Errors);
+            Assert.NotNull(result.Value);
+            Assert.IsType<PlantaDto>(result.Value);
+            Assert.Equal(planta.Id, result.Value.Id);
+            _mockPlantaRepository.Verify(r => r.GetByIdAsync(planta.Id), Times.Once, "O método GetByIdAsync deve ser chamado uma vez.");
         }
 
         [Fact]
         public async Task ObterPlantaPorId_DeveRetornarFalha_QuandoNaoForEncontrada()
         {
             //Arrange
+            _mockPlantaRepository.Setup(s => s.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync((Planta)null);
 
             //Act
+            var result = await _plantaService.ObterPlantaPorIdAsync(Guid.NewGuid());
 
             //Assert
+            Assert.True(result.IsFailure, "A obtenção da planta por Id deve falhar quando não for encontrada.");
+            Assert.NotEmpty(result.Errors);
+            Assert.Contains(BaseConstants.PLANTA_NAO_EXISTE_OU_JA_FOI_EXCLUIDA, result.Errors, StringComparer.OrdinalIgnoreCase);
+            _mockPlantaRepository.Verify(r => r.GetByIdAsync(It.IsAny<Guid>()), Times.Once, "O método GetByIdAsync deve ser chamado uma vez.");
         }
 
         [Fact]
         public async Task ObterPlantaPorId_DeveRetornarFalha_QuandoForInvalido()
         {
             //Arrange
+            _mockPlantaRepository.Setup(s => s.GetByIdAsync(It.IsAny<Guid>()));
 
             //Act
+            var result = await _plantaService.ObterPlantaPorIdAsync(Guid.Empty);
 
             //Assert
+            Assert.True(result.IsFailure, "A obtenção da planta por Id deve falhar quando o Id for inválido.");
+            Assert.NotEmpty(result.Errors);
+            Assert.Contains(BaseConstants.ID_NAO_PODE_SER_NULO_OU_VAZIO, result.Errors, StringComparer.OrdinalIgnoreCase);
+            _mockPlantaRepository.Verify(r => r.GetByIdAsync(It.IsAny<Guid>()), Times.Never, "O método GetByIdAsync não deve ser chamado quando o Id for inválido.");
         }
 
         [Fact]
         public async Task ObterTablePlantas_DeveRetornarSucesso_QuandoSolicitacaoForValida()
         {
             //Arrange
+            var plantas = new List<Planta>
+            {
+                new PlantaBuilder().ComTodosOsDadosValidos().Build(),
+                new PlantaBuilder().ComTodosOsDadosValidos().Build(),
+                new PlantaBuilder().ComTodosOsDadosValidos().Build()
+            };
+
+            var listaTablePlantasDto = PlantaHelper.ObterListaDeTabelaPlantaDto(plantas);
+
+            var dataTable = new DataTableResult<TablePlantaDto>
+            {
+                Dados = listaTablePlantasDto,
+                TotalFiltrado = listaTablePlantasDto.Count,
+                TotalGeral = plantas.Count,
+            };
+
+            var dataTableFilters = new DataTableFilters("", 0, 20, "1", "desc");
+
+            _mockPlantaRepository.Setup(s => s.ObterDataTableAsync(It.IsAny<DataTableFilters>())).ReturnsAsync(plantas);
 
             //Act
+            var result = await _plantaService.CarregarTablePlantasAsync(dataTableFilters);
 
             //Assert
+            Assert.True(result.IsSuccess, "A obtenção da tabela de plantas deve ser realizada com sucesso.");
+            Assert.Empty(result.Errors);
+            Assert.NotNull(result.Value);
+            Assert.IsType<DataTableResult<TablePlantaDto>>(result.Value);
+            Assert.Equal(dataTable.TotalGeral, result.Value.TotalGeral);
+            _mockPlantaRepository.Verify(r => r.ObterDataTableAsync(It.IsAny<DataTableFilters>()), Times.Once, "O método ObterDataTableAsync deve ser chamado uma vez.");
         }
 
         [Fact]
         public async Task ObterTablePlantas_DeveRetornarListaVazia_QuandoNaoPossuirPlantasCadastrados()
         {
             //Arrange
+            var plantas = new List<Planta>();
+
+            var listaTablePlantasDto = PlantaHelper.ObterListaDeTabelaPlantaDto(plantas);
+
+            var dataTable = new DataTableResult<TablePlantaDto>
+            {
+                Dados = listaTablePlantasDto,
+                TotalFiltrado = listaTablePlantasDto.Count,
+                TotalGeral = plantas.Count,
+            };
+
+            var dataTableFilters = new DataTableFilters("", 0, 20, "1", "desc");
+
+            _mockPlantaRepository.Setup(s => s.ObterDataTableAsync(It.IsAny<DataTableFilters>())).ReturnsAsync(plantas);
 
             //Act
+            var result = await _plantaService.CarregarTablePlantasAsync(dataTableFilters);
 
             //Assert
+            Assert.True(result.IsSuccess, "A obtenção da tabela de plantas deve ser realizada com sucesso.");
+            Assert.Empty(result.Errors);
+            Assert.NotNull(result.Value);
+            Assert.IsType<DataTableResult<TablePlantaDto>>(result.Value);
+            Assert.Equal(0, result.Value.TotalGeral);
+            _mockPlantaRepository.Verify(r => r.ObterDataTableAsync(It.IsAny<DataTableFilters>()), Times.Once, "O método ObterDataTableAsync deve ser chamado uma vez.");
         }
-
-        [Fact]
-        public async Task ObterTablePlantas_DeveRetornarFalha_QuandoOcorrerExcecao()
-        {
-            //Arrange
-
-            //Act
-
-            //Assert
-        }
-
     }
 }

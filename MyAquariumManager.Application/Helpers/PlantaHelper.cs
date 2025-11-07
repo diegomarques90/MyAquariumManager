@@ -110,5 +110,25 @@ namespace MyAquariumManager.Application.Helpers
         {
             return [.. plantas.Select(planta => ObterPlantaDto(planta))];
         }
+
+        public static Planta AtualizarPlanta(Planta planta, AtualizarPlantaDto dto)
+        {
+            planta.Atualizar(dto.UsuarioAlteracao);
+            planta.Nome = dto.Nome;
+            planta.NomeCientifico = dto.NomeCientifico;
+            planta.LocalAquisicao = dto.LocalAquisicao;
+            planta.DataAquisicao = dto.DataAquisicao;
+            planta.FaixaDeTamanho = dto.FaixaDeTamanho;
+            planta.TipoDeCrescimento = dto.TipoDeCrescimento;
+            planta.TipoDeIluminacao = dto.TipoDeIluminacao;
+            planta.FaixaDoPH = dto.FaixaDoPH;
+            planta.FaixaDeTemperatura = dto.FaixaDeTemperatura;
+            planta.NivelDeCutivo = dto.NivelDeCutivo;
+            planta.TipoDePlantio = dto.TipoDePlantio;
+            planta.FormaDeReproducao = dto.FormaDeReproducao;
+            planta.ExigeCO2 = dto.ExigeCO2;
+            planta.InformacoesAdicionais = dto.InformacoesAdicionais;
+            return planta;
+        }
     }
 }

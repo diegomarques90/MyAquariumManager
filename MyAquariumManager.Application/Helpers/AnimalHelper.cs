@@ -159,5 +159,18 @@ namespace MyAquariumManager.Application.Mappers
                 InformacoesAdicionais = animal.InformacoesAdicionais, 
             };
         }
+
+        public static List<TableAnimalDto> ObterTableAnimalDto(List<Animal> animais)
+        {
+            var listaTableAnimalDto = new List<TableAnimalDto>();
+
+            foreach (var animal in animais)
+            {
+                var tableAnimalDto = ObterTabelaAnimalDto(animal);
+                listaTableAnimalDto.Add(tableAnimalDto);
+            }
+
+            return listaTableAnimalDto;
+        }
     }
 }
