@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using MyAquariumManager.Application.DTOs.Planta;
+using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Core.Entities;
 using System.Net.NetworkInformation;
 
@@ -56,7 +57,7 @@ namespace MyAquariumManager.Application.Helpers
                 TipoDeCrescimento = planta.TipoDeCrescimento,
                 TipoDeIluminacao = planta.TipoDeIluminacao,
                 TipoDePlantio = planta.TipoDePlantio,
-                ExigeCO2 = planta.ExigeCO2
+                ExigeCO2 = planta.ExigeCO2 ? BaseConstants.SIM : BaseConstants.NAO,
             };
         }
 

@@ -17,8 +17,7 @@
 <div class="container mt-4"></div>
 
 <table id="table-plantas" class="display" style="width: 100%">
-    
-    <thread>
+    <thead>
         <tr>
             <th class="d-none">Id</th>
             <th>Nome</th>
@@ -31,7 +30,7 @@
             <th>Exige CO2?</th>
             <th>Ações</th>
         </tr>
-    </thread>
+    </thead>
 </table>
 
 <div class="container mt-3"></div>
@@ -101,14 +100,14 @@
                         return tipoDeCrescimento[data] || 'Não Informado';
                     }
                 },
-                { data: 'tipoDePlantio',
-                    render: function(data, type, row) {
-                        return tipoDePlantio[data] || 'Não Informado';
-                    }
-                },
                 { data: 'tipoDeIluminacao',
                     render: function(data, type, row) {
                         return tipoDeIluminacao[data] || 'Não Informado';
+                    }
+                },
+                { data: 'tipoDePlantio',
+                    render: function(data, type, row) {
+                        return tipoDePlantio[data] || 'Não Informado';
                     }
                 },
                 { data: 'exigeCO2' },
