@@ -127,6 +127,19 @@ namespace MyAquariumManager.Tests.Unit.Builders
             return this;
         }
 
+        public PlantaBuilder ComAtualizacao() 
+        { 
+            _planta.SetarId(Guid.NewGuid());
+            _planta.Atualizar(USUARIO_CRIACAO);
+            return this;
+        }
+
+        public PlantaBuilder ComIdInvalido()
+        {
+            _planta.SetarId(Guid.Empty);
+            return this;
+        }
+
         public Planta Build() => _planta;
         
         private static string ObterCodigoConta()

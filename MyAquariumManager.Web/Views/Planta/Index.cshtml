@@ -25,7 +25,7 @@
             <th>Nome Científico</th>
             <th>Local Aquisição</th>
             <th>Data Aquisição</th>
-            <th>Tipo de Cultivo</th>
+            <th>Tipo de Crescimento</th>
             <th>Tipo de Plantio</th>
             <th>Tipo de Iluminação</th>
             <th>Exige CO2?</th>
@@ -37,19 +37,24 @@
 <div class="container mt-3"></div>
 
 <script>
-    const tipoDeCultivo = {
-        1: "",
-        2: "",
+    const tipoDeCrescimento = {
+        1: "Lento",
+        2: "Moderado",
+        3: "Rápido"
     };
 
     const tipoDePlantio = {
-        1: "",
-        2: "",
+        1: "Frontal",
+        2: "Medio",
+        3: "Fundo",
+        4: "Fixada",
+        5: "Flutuante"
     };
 
     const tipoDeIluminacao = {
-        1: "",
-        2: "",
+        1: "Baixa",
+        2: "Média",
+        3: "Alta"
     };
 
     $(document).ready(function() {
@@ -91,9 +96,9 @@
                         return '';
                     }
                 },
-                { data: 'tipoDeCultivo',
+                { data: 'tipoDeCrescimento',
                     render: function(data, type, row) {
-                        return tipoDeCultivo[data] || 'Não Informado';
+                        return tipoDeCrescimento[data] || 'Não Informado';
                     }
                 },
                 { data: 'tipoDePlantio',
@@ -150,7 +155,7 @@
             url: `${excluirPlantaUrl}/${plantaId}`,
             type: 'DELETE',
             success: function(response) {
-                if (response.success {
+                if (response.success) {
                     toastr.success('Planta excluída com sucesso!', 'Sucesso');
                     $('#table-plantas').DataTable().ajax.reload(null, false);
                 } else {

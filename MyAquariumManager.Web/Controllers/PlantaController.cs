@@ -85,7 +85,7 @@ namespace MyAquariumManager.Web.Controllers
         }
 
 
-        [HttpPost("CadastrarAnimal")]
+        [HttpPost("CadastrarPlanta")]
         public async Task<IActionResult> CadastrarAnimal([FromBody] CriarPlantaDto model)
         {
             if (model is null)
