@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using MyAquariumManager.Application.DTOs.Planta;
+using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Core.Entities;
 using System.Net.NetworkInformation;
 
@@ -56,7 +57,7 @@ namespace MyAquariumManager.Application.Helpers
                 TipoDeCrescimento = planta.TipoDeCrescimento,
                 TipoDeIluminacao = planta.TipoDeIluminacao,
                 TipoDePlantio = planta.TipoDePlantio,
-                ExigeCO2 = planta.ExigeCO2
+                ExigeCO2 = planta.ExigeCO2 ? BaseConstants.SIM : BaseConstants.NAO,
             };
         }
 
@@ -109,6 +110,26 @@ namespace MyAquariumManager.Application.Helpers
         public static List<PlantaDto> ObterListaDePlantaDto(List<Planta> plantas)
         {
             return [.. plantas.Select(planta => ObterPlantaDto(planta))];
+        }
+
+        public static Planta AtualizarPlanta(Planta planta, AtualizarPlantaDto dto)
+        {
+            planta.Atualizar(dto.UsuarioAlteracao);
+            planta.Nome = dto.Nome;
+            planta.NomeCientifico = dto.NomeCientifico;
+            planta.LocalAquisicao = dto.LocalAquisicao;
+            planta.DataAquisicao = dto.DataAquisicao;
+            planta.FaixaDeTamanho = dto.FaixaDeTamanho;
+            planta.TipoDeCrescimento = dto.TipoDeCrescimento;
+            planta.TipoDeIluminacao = dto.TipoDeIluminacao;
+            planta.FaixaDoPH = dto.FaixaDoPH;
+            planta.FaixaDeTemperatura = dto.FaixaDeTemperatura;
+            planta.NivelDeCutivo = dto.NivelDeCutivo;
+            planta.TipoDePlantio = dto.TipoDePlantio;
+            planta.FormaDeReproducao = dto.FormaDeReproducao;
+            planta.ExigeCO2 = dto.ExigeCO2;
+            planta.InformacoesAdicionais = dto.InformacoesAdicionais;
+            return planta;
         }
     }
 }

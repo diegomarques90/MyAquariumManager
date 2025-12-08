@@ -12,6 +12,6 @@ namespace MyAquariumManager.Application.DTOs.Planta
         public TipoDeCrescimento TipoDeCrescimento { get; set; }
         public TipoDeIluminacao TipoDeIluminacao { get; set; }
         public TipoDePlantio TipoDePlantio { get; set; }
-        public bool ExigeCO2 { get; set; }
+        public string ExigeCO2 { get; set; }
     }
 }

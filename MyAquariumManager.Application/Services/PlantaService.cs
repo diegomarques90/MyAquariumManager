@@ -20,6 +20,8 @@ namespace MyAquariumManager.Application.Services
             if (planta is null)
                 return Result<PlantaDto>.Failure([BaseConstants.PLANTA_NAO_EXISTE_OU_JA_FOI_EXCLUIDA]);
 
+            planta = PlantaHelper.AtualizarPlanta(planta, model);
+
             var (isValid, errors) = planta.Validate();
 
             if (!isValid)

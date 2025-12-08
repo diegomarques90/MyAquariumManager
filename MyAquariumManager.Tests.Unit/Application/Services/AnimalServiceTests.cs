@@ -3,6 +3,7 @@ using MyAquariumManager.Application.DTOs.Animal;
 using MyAquariumManager.Application.Interfaces.Services;
 using MyAquariumManager.Application.Mappers;
 using MyAquariumManager.Application.Services;
+using MyAquariumManager.Core.Common;
 using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Core.Entities;
 using MyAquariumManager.Core.Interfaces.Repositories;
@@ -297,30 +298,66 @@ namespace MyAquariumManager.Tests.Unit.Application.Services
         public async Task ObterTableAnimais_DeveRetornarSucesso_QuandoSolicitacaoForValida()
         {
             //Arrange
+            var animais = new List<Animal>
+            {
+                new AnimalBuilder().ComTodosOsDadosValidos().Build(),
+                new AnimalBuilder().ComTodosOsDadosValidos().Build(),
+            };
+
+            var animaisTableAnimais = AnimalHelper.ObterListaDeTabelaAnimalDto(animais);
+
+            var dataTable = new DataTableResult<TableAnimalDto>
+            {
+                Dados = animaisTableAnimais,
+                TotalFiltrado = animaisTableAnimais.Count,
+                TotalGeral = animais.Count,
+            };
+
+            var dataTableFilters = new DataTableFilters("", 0, 20, "1", "desc");
+
+            _mockAnimalRepository.Setup(s => s.ObterDataTableAsync(It.IsAny<DataTableFilters>())).ReturnsAsync(animais);
 
             //Act
+            var result = await _animalService.CarregarTabelaAnimaisAsync(dataTableFilters);
 
             //Assert
+            Assert.True(result.IsSuccess, "A obtenção da tabela de animais deve ser realizada com sucesso quando a solicitação for válida.");
+            Assert.Empty(result.Errors);
+            Assert.NotNull(result.Value);
+            Assert.IsType<DataTableResult<TableAnimalDto>>(result.Value);
+            Assert.Equal(dataTable.TotalGeral, result.Value.TotalGeral);
+            _mockAnimalRepository.Verify(r => r.ObterDataTableAsync(It.IsAny<DataTableFilters>()), Times.Once, "O método ObterDataTableAsync deve ser chamado uma vez.");
         }
 
         [Fact]
         public async Task ObterTableAnimais_DeveRetornarListaVazia_QuandoNaoPossuirAnimaisCadastrados() 
         {
             //Arrange
+            var animais = new List<Animal>();
+
+            var animaisTableAnimais = AnimalHelper.ObterListaDeTabelaAnimalDto(animais);
+
+            var dataTable = new DataTableResult<TableAnimalDto>
+            {
+                Dados = animaisTableAnimais,
+                TotalFiltrado = animaisTableAnimais.Count,
+                TotalGeral = animais.Count,
+            };
+
+            var dataTableFilters = new DataTableFilters("", 0, 20, "1", "desc");
+
+            _mockAnimalRepository.Setup(s => s.ObterDataTableAsync(It.IsAny<DataTableFilters>())).ReturnsAsync(animais);
 
             //Act
+            var result = await _animalService.CarregarTabelaAnimaisAsync(dataTableFilters);
 
             //Assert
-        }
-
-        [Fact]
-        public async Task ObterTableAnimais_DeveRetornarFalha_QuandoOcorrerExcecao()
-        {
-            //Arrange
-
-            //Act
-
-            //Assert
+            Assert.True(result.IsSuccess, "A obtenção da tabela de animais deve ser realizada com sucesso mesmo quando não houver animais cadastrados.");
+            Assert.Empty(result.Errors);
+            Assert.NotNull(result.Value);
+            Assert.IsType<DataTableResult<TableAnimalDto>>(result.Value);
+            Assert.Equal(0, result.Value.TotalGeral);
+            _mockAnimalRepository.Verify(r => r.ObterDataTableAsync(It.IsAny<DataTableFilters>()), Times.Once, "O método ObterDataTableAsync deve ser chamado uma vez.");
         }
     }
 }

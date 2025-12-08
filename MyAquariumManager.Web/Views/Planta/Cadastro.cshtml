@@ -1,0 +1,253 @@
+﻿@using MyAquariumManager.Core.Enums
+@{
+    ViewData["Title"] = "Cadastrar Planta";
+}
+
+<div class="container d-flex justify-content-center">
+    <h4>CADASTRAR NOVA PLANTA</h4>
+</div>
+
+<div class="container mt-3"></div>
+
+<div class="container">
+    <form id="form-cadastro-planta">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="nome" class="form-label">Nome: </label>
+                <input type="text" id="nome" name="Nome" class="form-control" maxlength="200" required />
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="nomeCientifico" class="form-label">Nome Científico: </label>
+                <input type="text" id="nomeCientifico" name="Nome Científico" class="form-control" maxlength="200" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="localAquisicao" class="form-label">Local Aquisição: </label>
+                <input type="text" id="localAquisicao" name="Local Aquisição" class="form-control" maxlength="100" />
+            </div>
+            <div class="col-sm-12 col-md-2 mb-3">
+                <label for="dataAquisicao" class="form-label">Data Aquisição:</label>
+                <input type="date" id="dataAquisicao" name="Data da Aquisição" class="form-control" required />
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="faixaDeTamanho" class="form-label">Faixa de Tamanho: </label>
+                <input type="text" id="faixaDeTamanho" name="Faixa de Tamanho" class="form-control" maxlength="100" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-3 mb-3">
+                <label for="tipoDeCrescimento" class="form-label">Tipo de Crescimento: </label>
+                <select id="tipoDeCrescimento" name="Tipo de Crescimento" class="form-select" required>
+                    <option value="selecione"> -- Selecione --</option>
+                    @{
+                        string tipoDeCrescimento = string.Empty;
+                        foreach (var tipo in Enum.GetValues(typeof(TipoDeCrescimento)))
+                        {
+                            int valor = (int)tipo;
+
+                            switch (tipo)
+                            {
+                                case TipoDeCrescimento.Lento:
+                                    tipoDeCrescimento = "Lento";
+                                    break;
+                                case TipoDeCrescimento.Moderado:
+                                    tipoDeCrescimento = "Moderado";
+                                    break;
+                                case TipoDeCrescimento.Rapido:
+                                    tipoDeCrescimento = "Rápido";
+                                    break;
+                            }
+
+                            <option value="@valor">@tipoDeCrescimento</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-sm-12 col-md-3 mb-3">
+                <label for="tipoDeIluminacao" class="form-label">Tipo de Iluminação: </label>
+                <select id="tipoDeIluminacao" name="Tipo de Iluminação" class="form-select" required>
+                    <option value="selecione"> -- Selecione --</option>
+                    @{
+                        string tipoDeIluminacao = string.Empty;
+                        foreach (var tipo in Enum.GetValues(typeof(TipoDeIluminacao)))
+                        {
+                            int valor = (int)tipo;
+
+                            switch (tipo)
+                            {
+                                case TipoDeIluminacao.Baixa:
+                                    tipoDeIluminacao = "Baixa";
+                                    break;
+                                case TipoDeIluminacao.Media:
+                                    tipoDeIluminacao = "Media";
+                                    break;
+                                case TipoDeIluminacao.Alta:
+                                    tipoDeIluminacao = "Alta";
+                                    break;
+                            }
+
+                            <option value="@valor">@tipoDeIluminacao</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-sm-12 col-md-3 mb-3">
+                <label for="faixaDoPH" class="form-label">Faixa do PH: </label>
+                <input type="text" id="faixaDoPH" name="Faixa do PH" class="form-control" maxlength="100" />
+            </div>
+            <div class="col-sm-12 col-md-3 mb-3">
+                <label for="faixaDeTemperatura" class="form-label">Faixa de Temperatura: </label>
+                <input type="text" id="faixaDeTemperatura" name="Faixa de Temperatura" class="form-control" maxlength="100" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-3 mb-3">
+                <label for="nivelDeCultivo" class="form-label">Nível de Cultivo: </label>
+                <input type="text" id="nivelDeCultivo" name="Nível de Cultivo" class="form-control" maxlength="100" />
+            </div>
+            <div class="col-sm-12 col-md-3 mb-3">
+                <label for="tipoDePlantio" class="form-label">Tipo de Plantio: </label>
+                <select id="tipoDePlantio" name="Tipo de Plantio" class="form-select" required>
+                    <option value="selecione"> -- Selecione --</option>
+                    @{
+                        string tipoDePlantio = string.Empty;
+                        foreach (var tipo in Enum.GetValues(typeof(TipoDePlantio)))
+                        {
+                            int valor = (int)tipo;
+
+                            switch (tipo)
+                            {
+                                case TipoDePlantio.Flutuante:
+                                    tipoDePlantio = "Flutuante";
+                                    break;
+                                case TipoDePlantio.Medio:
+                                    tipoDePlantio = "Media";
+                                    break;
+                                case TipoDePlantio.Fixada:
+                                    tipoDePlantio = "Fixada";
+                                    break;
+                                case TipoDePlantio.Frontal:
+                                    tipoDePlantio = "Frontal";
+                                    break;
+                            }
+
+                            <option value="@valor">@tipoDePlantio</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-sm-12 col-md-3 mb-3">
+                <label for="formaDeReproducao" class="form-label">Forma De Reprodução: </label>
+                <input type="text" id="formaDeReproducao" name="Forma De Reprodução" class="form-control" maxlength="100" />
+            </div>
+            <div class="col-sm-12 col-md-2 mb-3">
+                <label for="exigeCO2" class="form-label">Exige CO2?</label>
+                <input type="checkbox" id="exigeCO2" name="Exige CO2?" class="form-control form-check-input" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12 mb-3">
+                <label for="informacoesAdicionais" class="form-label">Informações Adicionais: </label>
+                <textarea id="informacoesAdicionais" rows="4" cols="50" style="resize: none;" maxlength="800" class="form-control"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="container d-flex justify-content-end">
+                <a asp-action="Index" class="btn btn-outline-dark d-flex justify-content-center align-items-center mx-3">Voltar</a>
+                <button type="button" onclick="cadastrarPlanta()" class="btn btn-dark d-flex justify-content-center align-items-center">Cadastrar Planta</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    addAllEventListener();
+
+    function cadastrarPlanta() {
+        if (!validarFormulario()) {
+            return;
+        }
+
+        let criarPlantaDto = obterDadosFormulario();
+
+        let cadastrarPlantaUrl = '@Url.Action("CadastrarPlanta", "Planta")';
+
+        $.ajax({
+            url: cadastrarPlantaUrl,
+            type: 'POST',
+            data: JSON.stringify(criarPlantaDto),
+            contentType: 'application/json',
+            success: function(response) {
+                if (response.success) {
+                    toastr.success('Planta cadastrada com sucesso!', 'Sucesso');
+                    setTimeout(function() {
+                        window.location.href = '/Planta';
+                    }, 1500);
+                } else {
+                    response.errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                }
+            },
+            error: function(xhr, status, errors) {
+                if (errors && Array.isArray(errors)) {
+                    errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                }
+                else if (xhr.responseJSON && Array.isArray(xhr.responseJSON.errors)) {
+                    xhr.responseJSON.errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                } else {
+                    toastr.error('Ocorreu uma falha ao cadastrar a planta. Tente novamente mais tarde!');
+                }
+
+                console.log(`Ocorreu uma falha ao cadastrar a planta. ErrorInfo: ${xhr} + ${errors}`);
+            }
+        });
+    }
+
+    function validarFormulario() {
+        let formularioValido = true;
+
+        let camposObrigatorios = document.querySelectorAll('input[required], textarea[required], select[required]');
+
+        camposObrigatorios.forEach(campo => {
+            if (campo.value.trim() === '') {
+                toastr.warning(`O campo ${campo.name} é obrigatório.`);
+                campo.classList.add('is-invalid');
+                formularioValido = false;
+            }
+        });
+
+        return formularioValido;
+    }
+
+    function obterDadosFormulario() {
+        let planta = {
+            Nome: document.getElementById('nome').value.trim(),
+            NomeCientifico: document.getElementById('nomeCientifico').value.trim(),
+            LocalAquisicao: document.getElementById('localAquisicao').value.trim(),
+            DataAquisicao: document.getElementById('dataAquisicao').value,
+            FaixaDeTamanho: document.getElementById('faixaDeTamanho').value.trim(),
+            TipoDeCrescimento: parseInt(document.getElementById('tipoDeCrescimento').value) || 0,
+            TipoDeIluminacao: parseInt(document.getElementById('tipoDeIluminacao').value) || 0,
+            FaixaDoPH: document.getElementById('faixaDoPH').value.trim(),
+            FaixaDeTemperatura: document.getElementById('faixaDeTemperatura').value.trim(),
+            NivelDeCultivo: document.getElementById('nivelDeCultivo').value.trim(),
+            TipoDePlantio: parseInt(document.getElementById('tipoDePlantio').value) || 0,
+            FormaDeReproducao: document.getElementById('formaDeReproducao').value.trim(),
+            ExigeCO2: document.getElementById('exigeCO2').checked,
+            InformacoesAdicionais: document.getElementById('informacoesAdicionais').value.trim(),
+        }
+
+        return planta;
+    }
+</script>

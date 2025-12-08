@@ -1,0 +1,184 @@
+﻿<link rel="stylesheet" href="~/lib/datatables/datatables.min.css" asp-append-version="true" />
+<script src="~/lib/datatables/datatables.min.js" asp-append-version="true"></script>
+
+@{
+    ViewData["Title"] = "Plantas";
+}
+
+<div class="container d-flex">
+    <div class="col-12 col-sm-9 mt-3">
+        <h4>PLANTAS CADASTRADAS</h4>
+    </div>
+    <div class="col-12 col-sm-3 mt-3 justify-content-end">
+        <a asp-action="Cadastro" class="btn btn-outline-dark d-flex justify-content-center align-items-center">Cadastrar Planta<i class="fa fa-square-plus fa-2x"></i></a>
+    </div>
+</div>
+
+<div class="container mt-4"></div>
+
+<table id="table-plantas" class="display" style="width: 100%">
+    <thead>
+        <tr>
+            <th class="d-none">Id</th>
+            <th>Nome</th>
+            <th>Nome Científico</th>
+            <th>Local Aquisição</th>
+            <th>Data Aquisição</th>
+            <th>Tipo de Crescimento</th>
+            <th>Tipo de Plantio</th>
+            <th>Tipo de Iluminação</th>
+            <th>Exige CO2?</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+</table>
+
+<div class="container mt-3"></div>
+
+<script>
+    const tipoDeCrescimento = {
+        1: "Lento",
+        2: "Moderado",
+        3: "Rápido"
+    };
+
+    const tipoDePlantio = {
+        1: "Frontal",
+        2: "Medio",
+        3: "Fundo",
+        4: "Fixada",
+        5: "Flutuante"
+    };
+
+    const tipoDeIluminacao = {
+        1: "Baixa",
+        2: "Média",
+        3: "Alta"
+    };
+
+    $(document).ready(function() {
+        carregarTablePlantas();
+    });
+
+    function carregarTablePlantas() {
+        return $('#table-plantas').DataTable({
+            scrollY: 400,
+            pageLength: 25,
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ordering: true,
+            order: [[0, 'desc']],
+            searching: false,
+            paging: true,
+            ajax: {
+                url: 'Planta/carregar-table-plantas',
+                type: 'GET',
+                datatype: 'json'
+            },
+            columns: [
+                { data: 'id' },
+                { data: 'nome' },
+                { data: 'nomeCientifico' },
+                { data: 'localAquisicao' },
+                { data: 'dataAquisicao',
+                    render: function (data, type, row) {
+                        if (data) {
+                            var date = new Date(data);
+                            var dia = ('0' + date.getDate()).slice(-2);
+                            var mes = ('0' + (date.getMonth() +1)).slice(-2);
+                            var ano = date.getFullYear();
+
+                            return dia + '/' + mes + '/' + ano;
+                        }
+
+                        return '';
+                    }
+                },
+                { data: 'tipoDeCrescimento',
+                    render: function(data, type, row) {
+                        return tipoDeCrescimento[data] || 'Não Informado';
+                    }
+                },
+                { data: 'tipoDeIluminacao',
+                    render: function(data, type, row) {
+                        return tipoDeIluminacao[data] || 'Não Informado';
+                    }
+                },
+                { data: 'tipoDePlantio',
+                    render: function(data, type, row) {
+                        return tipoDePlantio[data] || 'Não Informado';
+                    }
+                },
+                { data: 'exigeCO2' },
+                { 
+                    data: null,
+                    defaultContent: '',
+                    orderable: false,
+                    width: '120px',
+                    render: function(data, type, row) {
+                        let plantaId = row.id;
+                        let html = '';
+
+                        html += '<a href="/Planta/Detalhes/' + plantaId + '" class="btn btn-sm btn-action-hover-white btn-radius-100 me-1" title="Visualizar Detalhes">' +
+                                '   <i class="fas fa-eye"></i>' +
+                                '</a>';
+
+                        html += '<a href="/Planta/Editar/' + plantaId + '" class="btn btn-sm btn-action-hover-white btn-radius-100 me-1" title="Editar">' +
+                                '   <i class="fas fa-edit"></i>' +
+                                '</a>';
+
+                        html += '<a href="javascript:void(0);" onclick="excluirPlanta(\'' + plantaId + '\')" class="btn btn-sm btn-action-hover-white btn-radius-100" title="Excluir">' +
+                                '   <i class="fas fa-trash-alt"></i>' +
+                                '</a>';
+
+                        return html;
+                    }
+                
+                },
+            ],
+            columnDefs: [
+                {
+                    targets: 0,
+                    visible: false,
+                    searchable: false
+                }
+            ]
+        });
+    };
+
+    function excluirPlanta(plantaId) {
+        let excluirPlantaUrl = '@Url.Action("ExcluirPlanta", "Planta")';
+
+        $.ajax({
+            url: `${excluirPlantaUrl}/${plantaId}`,
+            type: 'DELETE',
+            success: function(response) {
+                if (response.success) {
+                    toastr.success('Planta excluída com sucesso!', 'Sucesso');
+                    $('#table-plantas').DataTable().ajax.reload(null, false);
+                } else {
+                    response.errors.forEach(error => {
+                        toastr.warning(error);
+                    }); 
+                }
+            },
+            error: function(xhr, status, errors) {
+                if (errors && Array.isArray(errors)) {
+                    errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                }
+                else if (xhr.responseJSON && Array.isArray(xhr.responseJSON.errors)) {
+                    xhr.responseJSON.errors.forEach(error => {
+                        toastr.warning(error);
+                    });
+                } else {
+                    toastr.error('Ocorreu uma falha ao excluir a planta. Tente novamente mais tarde!');
+                }
+
+                console.log(`Ocorreu uma falha ao excluir a planta. ErrorInfo: ${xhr} + ${errors}`);
+            }
+        });
+    }
+</script>
