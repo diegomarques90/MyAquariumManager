@@ -102,7 +102,7 @@ namespace MyAquariumManager.Web.Controllers
             return Ok(new { success = true, result.Value.Id });
         }
 
-        [HttpDelete("ExcluirAnimal/{id:guid}")]
+        [HttpDelete("ExcluirPlanta/{id:guid}")]
         public async Task<IActionResult> ExcluirAnimal(Guid id)
         {
             var result = await _plantaService.ExcluirPlantaAsync(id, UsuarioLogado.Email);
