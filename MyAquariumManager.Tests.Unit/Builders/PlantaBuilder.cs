@@ -25,11 +25,11 @@ namespace MyAquariumManager.Tests.Unit.Builders
             _planta.DataAquisicao = DateTime.Now.AddDays(-10);
             _planta.FaixaDeTamanho = "10-15 cm";
             _planta.TipoDeCrescimento = TipoDeCrescimento.Lento;
-            _planta.TipoDeIluminacao = TipoDeIluminacao.Forte;
+            _planta.TipoDeIluminacao = TipoDeIluminacao.Alta;
             _planta.FaixaDoPH = "6.4 a 7.2";
             _planta.FaixaDeTemperatura = "19-22 °C";
             _planta.NivelDeCutivo = "Iniciante";
-            _planta.TipoDePlantio = TipoDePlantio.FundoEMeio;
+            _planta.TipoDePlantio = TipoDePlantio.Fundo;
             _planta.FormaDeReproducao = "Divisão de touceiras";
             _planta.ExigeCO2 = false;
             _planta.InformacoesAdicionais = " ideal para bordas de lagos, cursos d’água e áreas com drenagem deficiente.";

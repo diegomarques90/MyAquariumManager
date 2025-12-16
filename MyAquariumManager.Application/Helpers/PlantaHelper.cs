@@ -89,7 +89,7 @@ namespace MyAquariumManager.Application.Helpers
             return new AtualizarPlantaDto
             {
                 Id = planta.Id,
-                UsuarioAlteracao = planta.UsuarioAlteracao!,
+                UsuarioAlteracao = planta.UsuarioAlteracao,
                 Nome = planta.Nome,
                 NomeCientifico = planta.NomeCientifico,
                 LocalAquisicao = planta.LocalAquisicao,

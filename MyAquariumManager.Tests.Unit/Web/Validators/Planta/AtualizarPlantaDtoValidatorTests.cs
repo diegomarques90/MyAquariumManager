@@ -1,11 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using Microsoft.AspNetCore.Mvc.Routing;
 using MyAquariumManager.Application.Helpers;
 using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Tests.Unit.Builders;
 using MyAquariumManager.Web.Validators.Planta;
 
-namespace MyAquariumManager.Tests.Unit.Web.Validators
+namespace MyAquariumManager.Tests.Unit.Web.Validators.Planta
 {
     public class AtualizarPlantaDtoValidatorTests
     {

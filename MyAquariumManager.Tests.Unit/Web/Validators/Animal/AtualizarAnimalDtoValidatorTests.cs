@@ -4,26 +4,46 @@ using MyAquariumManager.Core.Constants;
 using MyAquariumManager.Tests.Unit.Builders;
 using MyAquariumManager.Web.Validators.Animal;
 
-namespace MyAquariumManager.Tests.Unit.Web.Validators
+namespace MyAquariumManager.Tests.Unit.Web.Validators.Animal
 {
-    public class CriarAnimalDtoValidatorTests()
+    public class AtualizarAnimalDtoValidatorTests
     {
-        private readonly CriarAnimalDtoValidator _validator = new CriarAnimalDtoValidator();
+        private readonly AtualizarAnimalDtoValidator _validator = new AtualizarAnimalDtoValidator();
 
         [Fact]
-        public void SemFalhas_Quando_CriarAnimalDtoForValido()
+        public void SemFalhas_Quando_AtualizarAnimalDtoForValido()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
+                .ComAtualizacao()
                 .ComTodosOsDadosValidos();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldNotHaveAnyValidationErrors();
+        }
+
+        [Fact]
+        public void DeveTerFalha_Quando_IdInvalido()
+        {
+            //Arrange
+            var animalBuilder = new AnimalBuilder()
+                .ComTodosOsDadosValidos()
+                .ComAtualizacao()
+                .ComIdInvalido();
+
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
+
+            //Act
+            var result = _validator.TestValidate(atualizarAnimalDto);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(x => x.Id)
+                .WithErrorMessage(BaseConstants.ID_NAO_PODE_SER_NULO_OU_VAZIO);
         }
 
         [Fact]
@@ -32,12 +52,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComONomeInvalido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.Nome)
@@ -50,12 +71,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComNomeMaiorQueOPermitido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.Nome)
@@ -68,12 +90,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComNomeCientificoMaiorQueOPermitido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.NomeCientifico)
@@ -86,12 +109,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComLocalAquisicaoMaiorQueOPermitido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.LocalAquisicao)
@@ -104,12 +128,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComDataAquisicaoFutura();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.DataAquisicao)
@@ -122,12 +147,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComEspecieMaiorQueOPermitido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.Especie)
@@ -140,12 +166,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComFaixaDoPHMaiorQueOPermitido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.FaixaDoPH)
@@ -158,12 +185,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComOrigemMaiorQueOPermitido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.Origem)
@@ -176,12 +204,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComComportamentoMaiorQueOPermitido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.Comportamento)
@@ -194,12 +223,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComQuantidadeMinimaIdealIgualAZero();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.QuantidadeMinima)
@@ -212,12 +242,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComLitragemMinimaIdealIgualAZero();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.LitragemMinima)
@@ -230,30 +261,32 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComTipoDeAlimentacaoInvalido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.TipoDeAlimentacao)
                 .WithErrorMessage(BaseConstants.TIPO_ALIMENTACAO_INVALIDO);
         }
-        
+
         [Fact]
         public void DeveTerFalha_Quando_FaixaDeTamanho_ExcederCaracteres()
         {
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComFaixaDeTamanhoMaiorQueOPermitido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.FaixaDeTamanho)
@@ -266,12 +299,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComFaixaDeTemperaturaMaiorQueOPermitido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.FaixaDeTemperatura)
@@ -284,12 +318,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComTipoDeAguaInvalido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.TipoDeAgua)
@@ -303,12 +338,13 @@ namespace MyAquariumManager.Tests.Unit.Web.Validators
             //Arrange
             var animalBuilder = new AnimalBuilder()
                 .ComTodosOsDadosValidos()
+                .ComAtualizacao()
                 .ComInformacoesAdicionaisMaiorQueOPermitido();
 
-            var criarAnimalDto = AnimalHelper.ObterCriarAnimalDto(animalBuilder.Build());
+            var atualizarAnimalDto = AnimalHelper.ObterAtualizarAnimalDto(animalBuilder.Build());
 
             //Act
-            var result = _validator.TestValidate(criarAnimalDto);
+            var result = _validator.TestValidate(atualizarAnimalDto);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.InformacoesAdicionais)
