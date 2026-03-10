@@ -140,7 +140,7 @@ Update-Database -Project MyAquariumManager.Infrastructure -TargetMigration <Nome
 Update-Database -Project MyAquariumManager.Infrastructure -TargetMigration 0
 ```
 ---
-## ▶️ Como Rodar a Aplicação
+## ▶️ Como Rodar a Aplicação (debug)
 1. Abra a solução MyAquariumManager.sln no Visual Studio.
 2. Certifique-se de que o projeto MyAquariumManager.Web esteja definido como o projeto de inicialização.
 3. Pressione F5 para compilar e executar a aplicação.
@@ -148,6 +148,30 @@ Update-Database -Project MyAquariumManager.Infrastructure -TargetMigration 0
 ```Bash
 dotnet run
 ```
+
+## ▶️ Como Rodar a Aplicação com Docker (local)
+Para rodar a aplicação em containers e garantir a comunicação com o banco de dados SQL Server, siga os passos abaixo:
+### 1. Build da Imagem
+Certifique-se de estar na raiz da solução (onde está o arquivo `.sln`) e execute:
+```bash
+docker build -t my-aquarium-web .
+```
+### 2. Configuração de Rede
+Para que a aplicação consiga se comunicar com o container do SQL Server, crie uma rede bridge personalizada:
+```bash
+docker network create aquarium-net
+```
+Conecte o seu container de banco de dados existente a esta rede:
+```bash
+docker network connect aquarium-net sqlserver
+```
+### 3. Execução do container
+Agora, suba o container da aplicação passando as variáveis de ambiente necessárias para sobrescrever as configurações de desenvolvimento:
+```bash
+docker run -d --name aquarium-app --network aquarium-net -p 5080:8080 -e "ASPNETCORE_ENVIRONMENT=Development" -e "ConnectionStrings__MAMConnection=Server=sqlserver;Database=MAManagerDb;User Id=sa;Password=SUA_SENHA_AQUI;TrustServerCertificate=true;MultipleActiveResultSets=true;" my-aquarium-web
+```
+***Nota:*** O endereço do servidor na ConnectionString deve ser o nome do container do banco (sqlserver). A porta interna padrão do .NET 8 no container é a 8080, mapeada aqui para a 5080 do host.
+
 
 ## 🏛️ Estrutura do Projeto (Arquitetura de Cebola)
 Este projeto segue o padrão de Arquitetura de Cebola (ou Hexagonal), promovendo uma clara separação de responsabilidades e facilitando a manutenibilidade e testabilidade.
